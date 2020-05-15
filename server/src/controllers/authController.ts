@@ -1,10 +1,32 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+
+import { User } from '../models/User';
+import db from '../database';
 
 export class AuthController {
     
-
     public async signup (req: Request, res: Response): Promise<void> {
-        res.send('signup');
+        //Saving new user
+        const user: User = new User();
+        user.username = req.body.username;
+        user.email = req.body.email;
+        user.password = req.body.password;
+        user.card_id = req.body.card_id;
+        user.phone = req.body.phone;
+        user.roll = req.body.roll;
+        user.state = req.body.state;
+
+        //Encrypting password
+        user.password = await user.encryptPassword(user.password);
+
+        //Creating new user
+        await db.query('INSERT INTO users set ?', user)
+        const savedUser =  await db.query('SELECT * FROM users WHERE email = ?', [user.email]);
+
+        //Creating new token
+        const token: string = jwt.sign({_id: savedUser[0].id}, process.env.TOKEN_SECRET || 'tokentest');
+        res.header('auth-token', token).json(savedUser[0]);
     } 
 
     public async signin (req: Request, res: Response) {

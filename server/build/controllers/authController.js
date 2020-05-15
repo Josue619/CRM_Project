@@ -8,12 +8,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const User_1 = require("../models/User");
+const database_1 = __importDefault(require("../database"));
 class AuthController {
     signup(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.send('signup');
+            //Saving new user
+            const user = new User_1.User();
+            user.username = req.body.username;
+            user.email = req.body.email;
+            user.password = req.body.password;
+            user.card_id = req.body.card_id;
+            user.phone = req.body.phone;
+            user.roll = req.body.roll;
+            user.state = req.body.state;
+            //Encrypting password
+            user.password = yield user.encryptPassword(user.password);
+            //Creating new user
+            yield database_1.default.query('INSERT INTO users set ?', user);
+            const savedUser = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [user.email]);
+            //Creating new token
+            const token = jsonwebtoken_1.default.sign({ _id: savedUser[0].id }, process.env.TOKEN_SECRET || 'tokentest');
+            res.header('auth-token', token).json(savedUser[0]);
         });
     }
     signin(req, res) {
