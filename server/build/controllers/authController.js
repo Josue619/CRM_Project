@@ -40,12 +40,26 @@ class AuthController {
     }
     signin(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.send('signin');
+            const userClass = new User_1.User();
+            const user = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [req.body.email]);
+            if (!user[0])
+                return res.status(400).json('Email or password is wrong');
+            const correctPass = yield userClass.validatedPassword(req.body.password, user[0].password);
+            if (!correctPass)
+                return res.status(400).json('Invalid Password');
+            const token = jsonwebtoken_1.default.sign({ _id: user[0].id }, process.env.TOKEN_SECRET || 'tokentest', {
+                expiresIn: 60 * 60 * 24
+            });
+            res.header('auth-token', token).json(user[0]);
         });
     }
     profile(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.send('profile');
+            const user = yield database_1.default.query('SELECT * FROM users WHERE id = ?', [req.userId]);
+            user[0].password = '0';
+            if (!user[0])
+                return res.status(404).json('No User Found');
+            res.json(user[0]);
         });
     }
     ;

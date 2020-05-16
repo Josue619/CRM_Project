@@ -30,11 +30,26 @@ export class AuthController {
     } 
 
     public async signin (req: Request, res: Response) {
-        res.send('signin');
+        const userClass: User = new User();
+
+        const user = await db.query('SELECT * FROM users WHERE email = ?', [req.body.email]);
+        if (!user[0]) return res.status(400).json('Email or password is wrong');
+
+        const correctPass: boolean = await userClass.validatedPassword(req.body.password, user[0].password);
+        if (!correctPass) return res.status(400).json('Invalid Password');
+
+        const token: string = jwt.sign({_id: user[0].id}, process.env.TOKEN_SECRET || 'tokentest', {
+            expiresIn: 60 * 60 * 24
+        });
+
+        res.header('auth-token', token).json(user[0]);
     } 
 
     public async profile(req: Request, res: Response) {
-        res.send('profile');
+        const user = await db.query('SELECT * FROM users WHERE id = ?', [req.userId]);
+        user[0].password = '0';
+        if (!user[0]) return res.status(404).json('No User Found');
+        res.json(user[0]);
     };
     
 }
