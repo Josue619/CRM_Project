@@ -1,3 +1,4 @@
+import db from '../database';
 import bcrypt from 'bcryptjs';
 
 export class User { 
@@ -19,6 +20,12 @@ export class User {
 
     public async validatedPassword(password: string, pass: string): Promise<boolean> {
         return await bcrypt.compare(password, pass);
+    }
+
+    public async verifyEmail(email: string): Promise<boolean> {
+        let db_user: Array<User> = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        if (db_user.length > 0) return true;
+        return false;
     }
   
 }

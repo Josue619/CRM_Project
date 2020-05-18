@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const database_1 = __importDefault(require("../database"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 class User {
     constructor() {
@@ -33,6 +34,14 @@ class User {
     validatedPassword(password, pass) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield bcryptjs_1.default.compare(password, pass);
+        });
+    }
+    verifyEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let db_user = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [email]);
+            if (db_user.length > 0)
+                return true;
+            return false;
         });
     }
 }
