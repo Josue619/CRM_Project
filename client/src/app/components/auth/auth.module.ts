@@ -8,6 +8,8 @@ import { SignupComponent } from './signup/signup.component';
 import { MainService } from '../../services/main.service';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
+import { AfterLoginService } from 'src/app/services/after-login.service';
+import { BeforeLoginService } from 'src/app/services/before-login.service';
 
 
 
@@ -19,6 +21,6 @@ import { TokenService } from '../../services/token.service';
     AuthRoutingModule,
     HttpClientModule
   ],
-  providers: [ MainService, AuthService, TokenService ]
+  providers: [ MainService, AuthService, TokenService, AfterLoginService, BeforeLoginService ]
 })
 export class AuthModule { }

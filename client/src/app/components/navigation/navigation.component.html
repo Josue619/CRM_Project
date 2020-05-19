@@ -1,8 +1,34 @@
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand">Navbar</a>
-    
-    <div>
-      <a class="navbar-brand" routerLink="login">Login</a>
-      <a class="navbar-brand" routerLink="profile">Profile</a>
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"> CRM <span class="text-primary">System</span>
+    <img src="https://img.icons8.com/color/48/000000/casta-rica-circular.png"/>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <ul class="navbar-nav mx-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="#" routerLink="/">Home <span class="sr-only">(current)</span></a>
+    </li>
+  </ul>
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="login" *ngIf="!loggedIn">Login <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="signup" *ngIf="!loggedIn">Register</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="profile" *ngIf="loggedIn">Profile</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="#" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+  

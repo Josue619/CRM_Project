@@ -18,4 +18,8 @@ export class MainService {
     return this.http.post(`${this.baseUrl}/signin`, data);
   }
 
+  signup(data) {
+    return this.http.post(`${this.baseUrl}/signup`, data);
+  }
+
 }

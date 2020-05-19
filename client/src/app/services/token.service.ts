@@ -7,6 +7,7 @@ export class TokenService {
 
   private iss = {
     signin: 'http://localhost:300/api/auth/signin',
+    signup: 'http://localhost:300/api/auth/signup'
   };
 
   constructor() { }

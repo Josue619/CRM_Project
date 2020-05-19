@@ -1,1 +1,75 @@
-<p>signup works!</p>
+<div class="row">
+    <div class="col-md-6 mx-auto mt-5">
+      <div class="card">
+        <div class="card-header">Register Here</div>
+        <div class="card-body">
+  
+          <form #signupForm=ngForm (ngSubmit)="addUser()">
+
+            <div class="alert alert-danger" [hidden]="!error[0]">
+              <li *ngFor="let err of error">
+                {{ err.msg }}
+              </li>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Full Name</label>
+                <input type="username" name="username" id="username" class="form-control" placeholder="Name" [(ngModel)]="form.username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="ejemplo@email.com" [(ngModel)]="form.email" required>
+            </div>
+  
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" [(ngModel)]="form.password" class="form-control" placeholder="Password" required>
+            </div>
+  
+            <div class="form-group">
+              <label for="card_id">Card ID</label>
+              <input type="number" name="card_id" id="card_id" [(ngModel)]="form.card_id" class="form-control" placeholder="ID Number" required>
+            </div>
+  
+            <div class="form-group">
+  
+              <div class="input-group">
+                <label for="telephone"> Phone Number-> </label>
+        
+                <div class="input-group-addon">
+                  <select name="code_phone" id="code_phone" class="form-control" [(ngModel)]="form.code_phone" required>
+                      <option value="+1">(+1) US</option>
+                      <option value="+506">(+506) Costa Rica</option>
+                  </select>
+                </div>
+  
+                <span class="input-group-addon">-</span>
+  
+                <input type="number" name="phone" class="form-control" id="phone" [(ngModel)]="form.phone" placeholder="phone" required>
+  
+              </div>
+  
+            </div>
+
+            <div class="form-group">
+                <label for="card_id">Roll</label>
+                <select name="roll" id="roll" class="form-control" [(ngModel)]="form.roll" required>
+                    <option value="Super Admin">Super Admin</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Client">Client</option>
+                </select>
+            </div>
+  
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-info mr-2" [disabled]="!signupForm.valid">Sign Up</button>
+                <a routerLink="/login" class="btn btn-success">Login</a>
+            </div>
+            
+          </form>
+          
+        </div>
+      </div>
+    </div>
+</div>
+  

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 interface IPayload {
     _id: string;
+    iss: string;
     iat: number;
     exp: number;
 }

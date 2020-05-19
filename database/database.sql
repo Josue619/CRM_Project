@@ -8,6 +8,7 @@ CREATE TABLE users(
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     card_id INT NOT NULL,
+    code_phone TEXT NOT NULL,
     phone INT NOT NULL,
     roll TEXT NOT NULL,
     state BOOLEAN NOT NULL,

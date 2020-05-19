@@ -22,9 +22,10 @@ class AuthController {
             //Saving new user
             const user = new User_1.User();
             user.username = req.body.username;
-            user.email = req.body.email;
+            user.email = req.body.email.toLowerCase();
             user.password = req.body.password;
             user.card_id = req.body.card_id;
+            user.code_phone = req.body.code_phone;
             user.phone = req.body.phone;
             user.roll = req.body.roll;
             user.state = req.body.state;
@@ -33,26 +34,32 @@ class AuthController {
             //Creating new user
             yield database_1.default.query('INSERT INTO users set ?', user);
             const savedUser = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [user.email]);
+            const iss = 'http://localhost:300/api/auth/signup';
             //Creating new token
-            const token = jsonwebtoken_1.default.sign({ _id: savedUser[0].id }, process.env.TOKEN_SECRET || 'tokentest');
-            res.header('auth-token', token).json(savedUser[0]);
+            const token = jsonwebtoken_1.default.sign({ _id: savedUser[0].id, iss: iss }, process.env.TOKEN_SECRET || 'tokentest');
+            res.header('auth-token', token).json({
+                'auth_token': token,
+                'user': savedUser[0]
+            });
         });
     }
     signin(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const userClass = new User_1.User();
-            const user = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [req.body.email]);
+            const email = req.body.email.toLowerCase();
+            const iss = 'http://localhost:300/api/auth/signin';
+            const user = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [email]);
             if (!user[0])
                 return res.status(400).json('Email or password is wrong');
             const correctPass = yield userClass.validatedPassword(req.body.password, user[0].password);
             if (!correctPass)
                 return res.status(400).json('Invalid Password');
-            const token = jsonwebtoken_1.default.sign({ _id: user[0].id }, process.env.TOKEN_SECRET || 'tokentest', {
+            const token = jsonwebtoken_1.default.sign({ _id: user[0].id, iss: iss }, process.env.TOKEN_SECRET || 'tokentest', {
                 expiresIn: 60 * 60 * 24
             });
             //console.log(token);
             //res.header('auth-token', token).json(user[0]);
-            res.json({
+            res.header('auth-token', token).json({
                 'auth_token': token,
                 'user': user[0]
             });

@@ -7,6 +7,7 @@ export class User {
     email: string = '';
     password: string = '';
     card_id: number = 0;
+    code_phone: string = '';
     phone: number = 0;
     roll: string = '';
     state: boolean = true;

@@ -21,6 +21,7 @@ class User {
         this.email = '';
         this.password = '';
         this.card_id = 0;
+        this.code_phone = '';
         this.phone = 0;
         this.roll = '';
         this.state = true;
