@@ -42,7 +42,13 @@ export class AuthController {
             expiresIn: 60 * 60 * 24
         });
 
-        res.header('auth-token', token).json(user[0]);
+        //console.log(token);
+
+        //res.header('auth-token', token).json(user[0]);
+        res.json({
+            'auth_token': token,
+            'user': user[0]
+        })
     } 
 
     public async profile(req: Request, res: Response) {

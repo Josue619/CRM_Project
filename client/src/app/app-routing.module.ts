@@ -5,7 +5,7 @@ import {} from './components/auth/auth.module'
 
 const routes: Routes = [
   { path: '', redirectTo: '/components', pathMatch: 'full' },
-  { path: 'auth', loadChildren: './components/auth/auth.module#AuthModule' },
+  { path: '', loadChildren: './components/auth/auth.module#AuthModule' },
 ];
 
 @NgModule({

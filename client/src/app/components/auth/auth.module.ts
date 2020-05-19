@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AuthService } from '../../services/auth.service';
 
 
 
@@ -15,6 +16,7 @@ import { SignupComponent } from './signup/signup.component';
     FormsModule,
     AuthRoutingModule,
     HttpClientModule
-  ]
+  ],
+  providers: [AuthService]
 })
 export class AuthModule { }

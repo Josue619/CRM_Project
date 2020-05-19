@@ -50,7 +50,12 @@ class AuthController {
             const token = jsonwebtoken_1.default.sign({ _id: user[0].id }, process.env.TOKEN_SECRET || 'tokentest', {
                 expiresIn: 60 * 60 * 24
             });
-            res.header('auth-token', token).json(user[0]);
+            //console.log(token);
+            //res.header('auth-token', token).json(user[0]);
+            res.json({
+                'auth_token': token,
+                'user': user[0]
+            });
         });
     }
     profile(req, res) {

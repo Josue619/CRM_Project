@@ -1,0 +1,11 @@
+.btn{
+    width: 32%;
+}
+
+.ng-invalid:not(form){
+    border-right: 5px solid red;
+}
+
+.ng-valid:not(form){
+    border-right: 5px solid green;
+}
