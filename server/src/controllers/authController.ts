@@ -4,32 +4,30 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 import db from '../database';
 
+import mailController, { MailController } from './mailController';
+
 export class AuthController {
     
     public async signup (req: Request, res: Response): Promise<void> {
+        const userClass: User = new User();
+
         //Saving new user
-        const user: User = new User();
-        user.username = req.body.username;
-        user.email = req.body.email.toLowerCase();
-        user.password = req.body.password;
-        user.card_id = req.body.card_id;
-        user.code_phone = req.body.code_phone;
-        user.phone = req.body.phone;
-        user.roll = req.body.roll;
-        user.state = req.body.state;
+        let user: User = req.body;
+        user.email.toLocaleLowerCase();
 
         //Encrypting password
-        user.password = await user.encryptPassword(user.password);
+        user.password = await userClass.encryptPassword(user.password);
 
         //Creating new user
         await db.query('INSERT INTO users set ?', user)
         const savedUser =  await db.query('SELECT * FROM users WHERE email = ?', [user.email]);
-        const iss = 'http://localhost:300/api/auth/signup';
+        const iss = 'http://localhost:3000/api/auth/signup';
 
         //Creating new token
         const token: string = jwt.sign({_id: savedUser[0].id, iss: iss}, process.env.TOKEN_SECRET || 'tokentest');
+        mailController.sendMail(user);
 
-        res.header('auth-token', token).json({
+        res.header('auth_token', token).json({
             'auth_token': token,
             'user': savedUser[0]
         })
@@ -38,7 +36,7 @@ export class AuthController {
     public async signin (req: Request, res: Response) {
         const userClass: User = new User();
         const email = req.body.email.toLowerCase();
-        const iss = 'http://localhost:300/api/auth/signin';
+        const iss = 'http://localhost:3000/api/auth/signin';
 
         const user = await db.query('SELECT * FROM users WHERE email = ?', [email]);
         if (!user[0]) return res.status(400).json('Email or password is wrong');
@@ -50,10 +48,7 @@ export class AuthController {
             expiresIn: 60 * 60 * 24
         });
 
-        //console.log(token);
-
-        //res.header('auth-token', token).json(user[0]);
-        res.header('auth-token', token).json({
+        res.header('auth_token', token).json({
             'auth_token': token,
             'user': user[0]
         })

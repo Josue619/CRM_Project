@@ -16,28 +16,24 @@ exports.AuthController = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const database_1 = __importDefault(require("../database"));
+const mailController_1 = __importDefault(require("./mailController"));
 class AuthController {
     signup(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const userClass = new User_1.User();
             //Saving new user
-            const user = new User_1.User();
-            user.username = req.body.username;
-            user.email = req.body.email.toLowerCase();
-            user.password = req.body.password;
-            user.card_id = req.body.card_id;
-            user.code_phone = req.body.code_phone;
-            user.phone = req.body.phone;
-            user.roll = req.body.roll;
-            user.state = req.body.state;
+            let user = req.body;
+            user.email.toLocaleLowerCase();
             //Encrypting password
-            user.password = yield user.encryptPassword(user.password);
+            user.password = yield userClass.encryptPassword(user.password);
             //Creating new user
             yield database_1.default.query('INSERT INTO users set ?', user);
             const savedUser = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [user.email]);
-            const iss = 'http://localhost:300/api/auth/signup';
+            const iss = 'http://localhost:3000/api/auth/signup';
             //Creating new token
             const token = jsonwebtoken_1.default.sign({ _id: savedUser[0].id, iss: iss }, process.env.TOKEN_SECRET || 'tokentest');
-            res.header('auth-token', token).json({
+            mailController_1.default.sendMail(user);
+            res.header('auth_token', token).json({
                 'auth_token': token,
                 'user': savedUser[0]
             });
@@ -47,7 +43,7 @@ class AuthController {
         return __awaiter(this, void 0, void 0, function* () {
             const userClass = new User_1.User();
             const email = req.body.email.toLowerCase();
-            const iss = 'http://localhost:300/api/auth/signin';
+            const iss = 'http://localhost:3000/api/auth/signin';
             const user = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [email]);
             if (!user[0])
                 return res.status(400).json('Email or password is wrong');
@@ -57,9 +53,7 @@ class AuthController {
             const token = jsonwebtoken_1.default.sign({ _id: user[0].id, iss: iss }, process.env.TOKEN_SECRET || 'tokentest', {
                 expiresIn: 60 * 60 * 24
             });
-            //console.log(token);
-            //res.header('auth-token', token).json(user[0]);
-            res.header('auth-token', token).json({
+            res.header('auth_token', token).json({
                 'auth_token': token,
                 'user': user[0]
             });
