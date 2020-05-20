@@ -1,6 +1,5 @@
 import { User } from "models/User";
 import nodemailer from 'nodemailer';
-import sendgrid from '@sendgrid/mail';
 
 export class MailController {
 
