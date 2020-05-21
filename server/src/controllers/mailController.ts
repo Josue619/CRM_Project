@@ -30,7 +30,7 @@ export class MailController {
         });
 
         const info = await transport.sendMail({
-            from: "'CRM SYSTEM' <8f820a0b5aed69>",
+            from: "'CRM SYSTEM' <crm@test.com>",
             to: user.email,
             subject: 'Formulario de contacto del sitio web',
             html: contentHTML

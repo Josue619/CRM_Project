@@ -13,6 +13,7 @@ export class AuthService {
 
   changeAuthStatus(value: boolean) {
     this.loggedIn.next(value);
+    window.location.replace('http://localhost:4200/profile');
   }
 
   constructor(private Token: TokenService) { }
