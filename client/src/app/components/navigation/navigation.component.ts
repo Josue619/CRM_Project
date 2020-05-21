@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/services/token.service';
 export class NavigationComponent implements OnInit {
 
   public loggedIn: boolean;
+  public toggled = 'toggled';
 
   constructor(
     private Auth: AuthService,
@@ -28,6 +29,14 @@ export class NavigationComponent implements OnInit {
     this.Token.remove();
     this.Auth.changeAuthStatus(false);
     this.route.navigateByUrl('/login');
+  }
+
+  sideBar() {
+    if (this.toggled) {
+      this.toggled = '';
+    }else {
+      this.toggled = 'toggled';
+    }
   }
 
 
