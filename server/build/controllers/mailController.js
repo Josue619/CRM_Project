@@ -67,7 +67,7 @@ class MailController {
                 service: 'gmail',
                 auth: {
                     user: "josue.martinez.mc@gmail.com",
-                    pass: "Shadow619"
+                    pass: ""
                 },
                 tls: {
                     rejectUnauthorized: false

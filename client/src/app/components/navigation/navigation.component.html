@@ -4,9 +4,20 @@
   <div class="bg-light border-right" id="sidebar-wrapper">
     <div class="sidebar-heading"> Menú lateral</div>
     <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-      <a routerLink="profile" class="list-group-item list-group-item-action bg-light">Profile</a>
-      <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+      
+      <div class="dropdown">
+        <button class="list-group-item list-group-item-action bg-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Mantenimiento
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" routerLink="user" (click)="sideBar()">Usuarios</a>
+          <a class="dropdown-item" href="#" (click)="sideBar()">Otros</a>
+        </div>
+      </div>
+
+      <a routerLink="profile" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Perfil</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Status</a>
+      
     </div>
   </div>
 

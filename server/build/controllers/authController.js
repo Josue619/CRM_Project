@@ -33,7 +33,7 @@ class AuthController {
             //Creating new token
             const token = jsonwebtoken_1.default.sign({ _id: savedUser[0].id, iss: iss }, process.env.TOKEN_SECRET || 'tokentest');
             mailController_1.default.sendMail(user);
-            mailController_1.default.sendMailG(user);
+            //mailController.sendMailG(user);
             res.header('auth_token', token).json({
                 'auth_token': token,
                 'user': savedUser[0]
