@@ -26,6 +26,7 @@ export class AuthController {
         //Creating new token
         const token: string = jwt.sign({_id: savedUser[0].id, iss: iss}, process.env.TOKEN_SECRET || 'tokentest');
         mailController.sendMail(user);
+        //mailController.sendMailG(user);
 
         res.header('auth_token', token).json({
             'auth_token': token,

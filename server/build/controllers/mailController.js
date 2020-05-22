@@ -50,6 +50,39 @@ class MailController {
         });
     }
     ;
+    sendMailG(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msg = 'Los datos de su usuario han sido registrados en el siatema del CRM';
+            const contentHTML = `
+            <h1>Información de usuario</h1>
+
+            <ul>
+                <li>Nombre de usuario: ${user.username}</li>
+                <li>Coreo: ${user.email}</li>
+                <li>Telefono: ${user.phone}</li>
+            </ul>
+            <p>${msg}</p>
+        `;
+            const transport = nodemailer_1.default.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: "josue.martinez.mc@gmail.com",
+                    pass: "Shadow619"
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            });
+            const info = yield transport.sendMail({
+                from: "'CRM SYSTEM' <crm@test.com>",
+                to: user.email,
+                subject: 'Formulario de contacto del sitio web',
+                html: contentHTML
+            });
+            console.log('Mensaje: ', info.messageId);
+        });
+    }
+    ;
 }
 exports.MailController = MailController;
 const mailController = new MailController();
