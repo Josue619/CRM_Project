@@ -21,6 +21,7 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    //revisar estatus
     this.Auth.authStatus.subscribe(value => this.loggedIn = value);
   }
 
