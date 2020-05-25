@@ -10,7 +10,7 @@ import { TokenService } from 'src/app/services/token.service';
 })
 export class NavigationComponent implements OnInit {
 
-  public loggedIn: boolean;
+  public loggedIn: boolean = false;
   public toggled = 'toggled';
 
   constructor(

@@ -7,8 +7,7 @@ import { AfterLoginService } from 'src/app/services/after-login.service';
 
 const routes: Routes = [
   { path: 'user', component: UserComponent, canActivate: [AfterLoginService] }
-
-    
+  
 ];
 
 @NgModule({

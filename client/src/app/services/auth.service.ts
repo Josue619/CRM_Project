@@ -18,5 +18,4 @@ export class AuthService {
 
   constructor(private Token: TokenService) { }
 
-
 }
