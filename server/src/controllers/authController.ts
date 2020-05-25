@@ -28,7 +28,7 @@ export class AuthController {
         mailController.sendMail(user);
         //mailController.sendMailG(user);
 
-        res.header('auth_token', token).json({
+        res.status(200).header('auth_token', token).json({
             'auth_token': token,
             'user': savedUser[0]
         })
@@ -41,6 +41,7 @@ export class AuthController {
 
         const user = await db.query('SELECT * FROM users WHERE email = ?', [email]);
         if (!user[0]) return res.status(400).json('Email or password is wrong');
+        if (user[0].roll == 'Client') return res.status(400).json('This user does not have authorization in the system');
 
         const correctPass: boolean = await userClass.validatedPassword(req.body.password, user[0].password);
         if (!correctPass) return res.status(400).json('Invalid Password');
@@ -49,7 +50,7 @@ export class AuthController {
             expiresIn: 60 * 60 * 24
         });
 
-        res.header('auth_token', token).json({
+        res.status(200).header('auth_token', token).json({
             'auth_token': token,
             'user': user[0]
         })

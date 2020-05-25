@@ -45,6 +45,11 @@ class User {
             return false;
         });
     }
+    generatePassword() {
+        const code = Math.floor(Math.random() * 90000) + 10000;
+        const password = 'crm' + code.toString();
+        return password;
+    }
 }
 exports.User = User;
 //# sourceMappingURL=User.js.map

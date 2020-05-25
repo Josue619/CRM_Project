@@ -28,5 +28,11 @@ export class User {
         if (db_user.length > 0) return true;
         return false;
     }
+
+    public generatePassword() {
+        const code = Math.floor(Math.random() * 90000) + 10000;
+        const password = 'crm' + code.toString();
+        return password;
+    }
   
 }

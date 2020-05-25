@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import { UserValidation } from '../libs/verifyUser';
 import { TokenValidation } from '../libs/verifyToken';
 import authController from '../controllers/authController';
+import userController from '../controllers/userController';
 
 const router: Router = Router();
 const user: User = new User();
@@ -21,6 +22,17 @@ router.post('/signup',
 );
 
 router.post('/signin', authController.signin);
+
+router.post('/client', 
+[
+    check('email').isEmail().withMessage('Wrong email format').custom(async email => {
+      if (await user.verifyEmail(email)) {
+        throw new Error('Email already registered')
+      }
+    })
+  ], 
+    UserValidation, TokenValidation, userController.createClient
+);
 
 
 router.get('/profile', TokenValidation, authController.profile);
