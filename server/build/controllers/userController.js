@@ -41,6 +41,19 @@ class UserController {
             });
         });
     }
+    getClients(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const users = yield database_1.default.query('SELECT * FROM users WHERE roll = ?', 'Client');
+            console.log(users);
+            res.status(200).json(users);
+        });
+    }
+    searchClients(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const users = yield database_1.default.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ?", 'Client');
+            res.status(200).json(users);
+        });
+    }
 }
 exports.UserController = UserController;
 const userController = new UserController();

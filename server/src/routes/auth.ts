@@ -35,6 +35,8 @@ router.post('/client',
 );
 
 
-router.get('/profile', TokenValidation, authController.profile);
+router.get('/clients', TokenValidation, userController.getClients);
+
+router.post('/serarchClient', TokenValidation, userController.searchClients);
 
 export default router;

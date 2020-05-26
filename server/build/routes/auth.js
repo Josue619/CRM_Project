@@ -37,6 +37,7 @@ router.post('/client', [
         }
     }))
 ], verifyUser_1.UserValidation, verifyToken_1.TokenValidation, userController_1.default.createClient);
-router.get('/profile', verifyToken_1.TokenValidation, authController_1.default.profile);
+router.get('/clients', verifyToken_1.TokenValidation, userController_1.default.getClients);
+router.post('/serarchClient', verifyToken_1.TokenValidation, userController_1.default.searchClients);
 exports.default = router;
 //# sourceMappingURL=auth.js.map

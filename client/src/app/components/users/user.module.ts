@@ -8,11 +8,12 @@ import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { AfterLoginService } from 'src/app/services/after-login.service';
 import { UserComponent } from '../users/user/user.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 
 @NgModule({
-  declarations: [UserComponent],
+  declarations: [UserComponent, UserListComponent],
   imports: [
     CommonModule,
     FormsModule,

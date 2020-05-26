@@ -4,6 +4,7 @@ export interface User {
     email?: string;
     password?: string;
     card_id?: number;
+    code_phone?: number;
     phone?: number;
     roll?: string;
     state?: boolean;

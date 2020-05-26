@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenService } from 'src/app/services/token.service';
+import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 
 @Injectable({
@@ -29,6 +31,14 @@ export class MainService {
 
   addClient(data) {
     return this.http.post(`${this.baseUrl}/client`, data, {headers: this.headers});
+  }
+
+  getClients(): Observable<User> {
+    return this.http.get(`${this.baseUrl}/clients`, {headers: this.headers});
+  }
+
+  searchClients(data): Observable<User> {
+    return this.http.post(`${this.baseUrl}/serarchClient`, data, {headers: this.headers});
   }
 
 }

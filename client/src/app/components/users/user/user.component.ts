@@ -43,7 +43,7 @@ export class UserComponent implements OnInit {
   }
 
   handleResponse(data) {
-    this.router.navigateByUrl('/profile');
+    this.router.navigateByUrl('/users');
   }
 
   handleError(error) {

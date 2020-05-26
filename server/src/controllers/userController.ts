@@ -34,6 +34,17 @@ export class UserController {
         });
 
     } 
+
+    public async getClients (req: Request, res: Response) {
+        const users = await db.query('SELECT * FROM users WHERE roll = ?', 'Client');
+        console.log(users);
+        res.status(200).json(users);
+    } 
+
+    public async searchClients (req: Request, res: Response) {
+        const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ?", 'Client');
+        res.status(200).json(users);
+    } 
     
 }
 
