@@ -50,7 +50,7 @@ class UserController {
     }
     searchClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield database_1.default.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ?", 'Client');
+            const users = yield database_1.default.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", 'Client');
             res.status(200).json(users);
         });
     }
@@ -74,7 +74,7 @@ class UserController {
     deleteClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            req.body.status = false;
+            req.body.state = false;
             yield database_1.default.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
             res.json({ message: 'The user was deleted' });
         });

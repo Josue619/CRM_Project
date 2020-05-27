@@ -42,7 +42,7 @@ export class UserController {
     } 
 
     public async searchClients (req: Request, res: Response) {
-        const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ?", 'Client');
+        const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", 'Client');
         res.status(200).json(users);
     } 
 
@@ -63,7 +63,7 @@ export class UserController {
 
     public async deleteClient (req: Request, res: Response): Promise<void> {
         const { id } = req.params; 
-        req.body.status = false; 
+        req.body.state = false; 
         await db.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
         res.json({message: 'The user was deleted'});
     }

@@ -26,7 +26,6 @@ export class UserListComponent implements OnInit {
     private userC: UserComponent) { }
 
   ngOnInit(): void {
-    this.editMethod();
     this.getClients();
   }
 
@@ -51,9 +50,10 @@ export class UserListComponent implements OnInit {
   statusDelete(id: string) {
     this.delete = true;
     this.form.id = id;
+    this.editMethod(id);
   }
 
-  editMethod() {
+  editMethod(id: string) {
     if (this.form.id) {
       this.Service.getClient(this.form.id).subscribe(
         res => {
