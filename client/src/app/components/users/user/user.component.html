@@ -4,7 +4,7 @@
         <div class="card-header">Register Here</div>
         <div class="card-body">
   
-          <form #clientForm=ngForm (ngSubmit)="addUser()">
+          <form #clientForm=ngForm (ngSubmit)="edit ? updateUser() : addUser()">
 
             <div class="alert alert-danger" [hidden]="!error[0]">
               <li *ngFor="let err of error">
@@ -60,7 +60,7 @@
             </div>
   
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary mr-2" [disabled]="!clientForm.valid">Create</button>
+                <button type="submit" class="btn btn-primary mr-2" [disabled]="!clientForm.valid">Save</button>
             </div>
             
           </form>

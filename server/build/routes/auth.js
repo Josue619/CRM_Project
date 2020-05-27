@@ -39,5 +39,8 @@ router.post('/client', [
 ], verifyUser_1.UserValidation, verifyToken_1.TokenValidation, userController_1.default.createClient);
 router.get('/clients', verifyToken_1.TokenValidation, userController_1.default.getClients);
 router.post('/serarchClient', verifyToken_1.TokenValidation, userController_1.default.searchClients);
+router.get('/client/:id', verifyToken_1.TokenValidation, userController_1.default.getOne);
+router.put('/clients/:id', verifyToken_1.TokenValidation, userController_1.default.updateClient);
+router.put('/client/:id', verifyToken_1.TokenValidation, userController_1.default.deleteClient);
 exports.default = router;
 //# sourceMappingURL=auth.js.map

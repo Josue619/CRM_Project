@@ -41,4 +41,16 @@ export class MainService {
     return this.http.post(`${this.baseUrl}/serarchClient`, data, {headers: this.headers});
   }
 
+  getClient(id: string): Observable<User> {
+    return this.http.get(`${this.baseUrl}/client/${id}`, {headers: this.headers});
+  }
+
+  updateClient(id: string|number, user: User): Observable<User> {
+    return this.http.put(`${this.baseUrl}/clients/${id}`, user, {headers: this.headers});
+  }
+
+  deleteClient(id: string|number, user: User): Observable<User> {
+    return this.http.put(`${this.baseUrl}/client/${id}`, user, {headers: this.headers});
+  }
+
 }

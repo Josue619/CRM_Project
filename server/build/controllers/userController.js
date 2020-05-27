@@ -44,7 +44,7 @@ class UserController {
     getClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield database_1.default.query('SELECT * FROM users WHERE roll = ?', 'Client');
-            console.log(users);
+            //console.log(users);
             res.status(200).json(users);
         });
     }
@@ -52,6 +52,31 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield database_1.default.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ?", 'Client');
             res.status(200).json(users);
+        });
+    }
+    getOne(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const users = yield database_1.default.query('SELECT * FROM users WHERE id = ?', [id]);
+            if (users.length > 0) {
+                return res.json(users[0]);
+            }
+            res.status(404).json({ text: 'The user dosen´t exists' });
+        });
+    }
+    updateClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            yield database_1.default.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
+            res.json({ message: 'The user was updated' });
+        });
+    }
+    deleteClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            req.body.status = false;
+            yield database_1.default.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
+            res.json({ message: 'The user was deleted' });
         });
     }
 }

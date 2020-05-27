@@ -39,4 +39,10 @@ router.get('/clients', TokenValidation, userController.getClients);
 
 router.post('/serarchClient', TokenValidation, userController.searchClients);
 
+router.get('/client/:id', TokenValidation, userController.getOne);
+
+router.put('/clients/:id', TokenValidation, userController.updateClient);
+
+router.put('/client/:id', TokenValidation, userController.deleteClient);
+
 export default router;

@@ -37,7 +37,7 @@ export class UserController {
 
     public async getClients (req: Request, res: Response) {
         const users = await db.query('SELECT * FROM users WHERE roll = ?', 'Client');
-        console.log(users);
+        //console.log(users);
         res.status(200).json(users);
     } 
 
@@ -45,6 +45,28 @@ export class UserController {
         const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ?", 'Client');
         res.status(200).json(users);
     } 
+
+    public async getOne (req: Request, res: Response): Promise<any> {
+        const { id } = req.params;   
+        const users = await db.query('SELECT * FROM users WHERE id = ?', [id]); 
+        if (users.length > 0) {
+            return res.json(users[0]);
+        }
+        res.status(404).json({text: 'The user dosen´t exists'});
+    } 
+
+    public async updateClient (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;  
+        await db.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
+        res.json({message: 'The user was updated'});
+    }
+
+    public async deleteClient (req: Request, res: Response): Promise<void> {
+        const { id } = req.params; 
+        req.body.status = false; 
+        await db.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
+        res.json({message: 'The user was deleted'});
+    }
     
 }
 
