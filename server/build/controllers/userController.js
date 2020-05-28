@@ -43,14 +43,14 @@ class UserController {
     }
     getClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield database_1.default.query('SELECT * FROM users WHERE roll = ?', 'Client');
+            const users = yield database_1.default.query('SELECT * FROM users WHERE roll = ? AND state = ?', ['Client', true]);
             //console.log(users);
             res.status(200).json(users);
         });
     }
     searchClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield database_1.default.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", 'Client');
+            const users = yield database_1.default.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", ['Client', true]);
             res.status(200).json(users);
         });
     }

@@ -23,7 +23,7 @@ export class UserController {
         //Creating new user
         await db.query('INSERT INTO users set ?', user)
         const savedUser =  await db.query('SELECT * FROM users WHERE email = ?', [user.email]);
-        const iss = 'http://localhost:3000/api/auth/client'
+        const iss = 'http://localhost:3000/api/auth/client';
         //Creating new token
         const token: string = jwt.sign({_id: savedUser[0].id, iss: iss}, process.env.TOKEN_SECRET || 'tokentest');
         mailController.sendMailClient(user, code);
@@ -36,13 +36,13 @@ export class UserController {
     } 
 
     public async getClients (req: Request, res: Response) {
-        const users = await db.query('SELECT * FROM users WHERE roll = ?', 'Client');
+        const users = await db.query('SELECT * FROM users WHERE roll = ? AND state = ?', ['Client', true]);
         //console.log(users);
         res.status(200).json(users);
     } 
 
     public async searchClients (req: Request, res: Response) {
-        const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", 'Client');
+        const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", ['Client', true]);
         res.status(200).json(users);
     } 
 
