@@ -35,7 +35,7 @@
         </th>
     </tr>
   
-      <tr *ngFor="let user of users">
+      <tr *ngFor="let user of users | paginate: { itemsPerPage: 2, currentPage: pageActual }">
         <input type="hidden" name="id" id="id" [(ngModel)]="form.id" value="{{user.id}}">
         <td class="text-info">{{user.username}} </td>
         <td class="text-info">{{user.email}} </td>
@@ -58,5 +58,7 @@
     </tr>
   
   </table>
+
+  <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
       
 </div>

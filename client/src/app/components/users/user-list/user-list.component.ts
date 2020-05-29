@@ -11,6 +11,8 @@ import { UserComponent } from '../user/user.component';
 })
 export class UserListComponent implements OnInit {
 
+  public pageActual: number = 1;
+
   public delete = false;
   public users: any = [];
   public error = [];

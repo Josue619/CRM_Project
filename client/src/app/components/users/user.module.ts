@@ -10,6 +10,8 @@ import { AfterLoginService } from 'src/app/services/after-login.service';
 import { UserComponent } from '../users/user/user.component';
 import { UserListComponent } from './user-list/user-list.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { UserListComponent } from './user-list/user-list.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    UserRoutingModule
+    UserRoutingModule,
+    NgxPaginationModule
   ],
   providers: [ MainService, AuthService, TokenService, AfterLoginService ]
 })
