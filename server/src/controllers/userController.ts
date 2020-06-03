@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-
-import { User } from '../models/User';
 import db from '../database';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/User';
 
-import mailController, { MailController } from './mailController';
+import { Request, Response } from 'express';
+import mailController from './mailController';
 
 export class UserController {
     

@@ -11,7 +11,8 @@ import { User } from '../models/user';
 export class MainService {
 
   private headers = new HttpHeaders();
-  private baseUrl = 'http://localhost:3000/api/auth';
+  private baseAuthUrl = 'http://localhost:3000/api/auth';
+  private baseUserUrl = 'http://localhost:3000/api/user';
 
   constructor(
     private http: HttpClient,
@@ -21,36 +22,35 @@ export class MainService {
   }
 
   signin(data) {
-    console.log(`${this.baseUrl}/signin`)
-    return this.http.post(`${this.baseUrl}/signin`, data);
+    return this.http.post(`${this.baseAuthUrl}/signin`, data);
   }
 
   signup(data) {
-    return this.http.post(`${this.baseUrl}/signup` ,data);
+    return this.http.post(`${this.baseAuthUrl}/signup` ,data);
   }
 
   addClient(data) {
-    return this.http.post(`${this.baseUrl}/client`, data, {headers: this.headers});
+    return this.http.post(`${this.baseUserUrl}/client`, data, {headers: this.headers});
   }
 
   getClients(): Observable<User> {
-    return this.http.get(`${this.baseUrl}/clients`, {headers: this.headers});
+    return this.http.get(`${this.baseUserUrl}/clients`, {headers: this.headers});
   }
 
   searchClients(data): Observable<User> {
-    return this.http.post(`${this.baseUrl}/serarchClient`, data, {headers: this.headers});
+    return this.http.post(`${this.baseUserUrl}/serarchClient`, data, {headers: this.headers});
   }
 
   getClient(id: string): Observable<User> {
-    return this.http.get(`${this.baseUrl}/client/${id}`, {headers: this.headers});
+    return this.http.get(`${this.baseUserUrl}/client/${id}`, {headers: this.headers});
   }
 
   updateClient(id: string|number, user: User): Observable<User> {
-    return this.http.put(`${this.baseUrl}/clients/${id}`, user, {headers: this.headers});
+    return this.http.put(`${this.baseUserUrl}/clients/${id}`, user, {headers: this.headers});
   }
 
   deleteClient(id: string|number, user: User): Observable<User> {
-    return this.http.put(`${this.baseUrl}/client/${id}`, user, {headers: this.headers});
+    return this.http.put(`${this.baseUserUrl}/client/${id}`, user, {headers: this.headers});
   }
 
 }
