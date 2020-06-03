@@ -15,7 +15,7 @@ export const TokenValidation = (req: Request, res: Response, next: NextFunction)
     if (!token) return res.status(401).json({ errors: [{
         "location": "body",
         "msg": "Access denied, invalid token",
-        "param": "aunt_token"
+        "param": "auth_token"
         }]
     });
 

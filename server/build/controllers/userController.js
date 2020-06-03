@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
-const database_1 = __importDefault(require("../database"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
+const database_1 = __importDefault(require("../database"));
 const mailController_1 = __importDefault(require("./mailController"));
 class UserController {
     createClient(req, res) {
@@ -44,14 +44,19 @@ class UserController {
     getClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield database_1.default.query('SELECT * FROM users WHERE roll = ? AND state = ?', ['Client', true]);
-            //console.log(users);
             res.status(200).json(users);
         });
     }
     searchClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield database_1.default.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", ['Client', true]);
-            res.status(200).json(users);
+            if (users.length > 0) {
+                return res.status(200).json(users);
+            }
+            return res.status(401).json({ errors: [{
+                        "msg": "There is no match with the filter",
+                    }]
+            });
         });
     }
     getOne(req, res) {
@@ -82,5 +87,6 @@ class UserController {
 }
 exports.UserController = UserController;
 const userController = new UserController();
+//Traer rutas del respectivo controlador
 exports.default = userController;
 //# sourceMappingURL=userController.js.map

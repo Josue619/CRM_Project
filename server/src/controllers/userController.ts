@@ -1,8 +1,9 @@
-import db from '../database';
-import jwt from 'jsonwebtoken';
-import { User } from '../models/User';
-
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+
+import { User } from '../models/User';
+import db from '../database';
+
 import mailController from './mailController';
 
 export class UserController {
@@ -36,13 +37,18 @@ export class UserController {
 
     public async getClients (req: Request, res: Response) {
         const users = await db.query('SELECT * FROM users WHERE roll = ? AND state = ?', ['Client', true]);
-        //console.log(users);
         res.status(200).json(users);
     } 
 
     public async searchClients (req: Request, res: Response) {
         const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", ['Client', true]);
-        res.status(200).json(users);
+        if (users.length > 0) {
+            return res.status(200).json(users);
+        }
+        return res.status(401).json({ errors: [{
+            "msg": "There is no match with the filter",
+            }]
+        });
     } 
 
     public async getOne (req: Request, res: Response): Promise<any> {
@@ -70,4 +76,5 @@ export class UserController {
 }
 
 const userController = new UserController();
+//Traer rutas del respectivo controlador
 export default userController;

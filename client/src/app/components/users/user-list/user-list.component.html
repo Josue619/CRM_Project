@@ -1,17 +1,4 @@
 <div class="container">
-  <div class="buttons row" *ngIf="delete">
-    <div class="form-group row  mx-auto mt-6">
-      <div class="text-center">
-
-          <h2>¿Esta seguro que desea eliminar este usuario?</h2>
-          <div class="form-group text-center">
-            <a (click)="deleteClient()" class="btn btn-primary mr-2">Aceptar</a>
-            <a routerLink="/users" (click)="delete = false" class="btn btn-success">Cancelar</a>
-          </div>
-      </div>
-    </div>
-
-  </div>
   
   <h1>Usuarios</h1>
     
@@ -23,7 +10,7 @@
         <th>Teléfono</th>
         <th>
           <div style="text-align:center">
-              <button class="btn btn-success" [disabled]="delete" (click)="createClient()"><i class="fa fa-plus-circle"></i></button>
+              <button class="btn btn-success" [disabled]="roll" [disabled]="delete" (click)="createClient()"><i class="fa fa-plus-circle"></i></button>
               <br>
               <br>
               <div class="input-group" style="justify-content: center;">
@@ -44,12 +31,12 @@
         <td style="text-align:right">
           <div class="form-group row  mx-auto mt-3">
               <div class="col-sm-6">
-                <button class="btn btn-warning" [routerLink]="['/user/edit', user.id]" [disabled]="delete">
+                <button class="btn btn-warning" [routerLink]="['/user/edit', user.id]" [disabled]="delete" [disabled]="roll">
                   <i class="fas fa-pen-square"></i>
                 </button>
               </div>
               <div class="col-sm-2">
-                <button class="btn btn-danger" [disabled]="delete" (click)="statusDelete(user.id)">
+                <button class="btn btn-danger" [disabled]="delete" [disabled]="roll" (click)="statusDelete(user.id)">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>

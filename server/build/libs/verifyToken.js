@@ -13,7 +13,7 @@ exports.TokenValidation = (req, res, next) => {
         return res.status(401).json({ errors: [{
                     "location": "body",
                     "msg": "Access denied, invalid token",
-                    "param": "aunt_token"
+                    "param": "auth_token"
                 }]
         });
     const payload = jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET || 'tokentest');
