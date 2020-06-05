@@ -14,6 +14,20 @@ export class MainService {
   private baseAuthUrl = 'http://localhost:3000/api/auth';
   private baseUserUrl = 'http://localhost:3000/api/user';
 
+  public edit: boolean = false;
+  public form: User = {
+    id: 0,
+    username: null,
+    email: null,
+    password: null,
+    card_id: null,
+    code_phone: null,
+    phone: null,
+    roll: null,
+    state: true,
+    created_at: new Date()
+  };
+
   constructor(
     private http: HttpClient,
     private Token: TokenService

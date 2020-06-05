@@ -30,7 +30,9 @@ router.post('/client', [
 router.get('/clients', verifyToken_1.TokenValidation, userController_1.default.getClients);
 router.post('/serarchClient', verifyToken_1.TokenValidation, userController_1.default.searchClients);
 router.get('/client/:id', verifyToken_1.TokenValidation, userController_1.default.getOne);
-router.put('/clients/:id', verifyToken_1.TokenValidation, userController_1.default.updateClient);
+router.put('/clients/:id', [
+    express_validator_1.check('email').isEmail().withMessage('Wrong email format')
+], verifyUser_1.UserValidation, verifyToken_1.TokenValidation, userController_1.default.updateClient);
 router.put('/client/:id', verifyToken_1.TokenValidation, userController_1.default.deleteClient);
 exports.default = router;
 //# sourceMappingURL=userRoutes.js.map

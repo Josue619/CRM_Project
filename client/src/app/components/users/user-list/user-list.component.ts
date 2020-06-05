@@ -48,10 +48,6 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  createClient() {
-    this.router.navigateByUrl('/user');
-  }
-
   searchClients() {
     return this.Service.searchClients(this.form).subscribe(
       result => this.loadUser(result),
@@ -59,30 +55,38 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  statusDelete(id: string) {
-    //this.delete = true;
-    this.form.id = id;
-    this.editMethod();
+  statusDelete(form: User) {
+    this.form.id = form.id;
+    this.Service.form = Object.assign({}, form);
     this.showModal();
   }
 
-  editMethod() {
-    if (this.form.id) {
-      this.Service.getClient(this.form.id).subscribe(
-        res => {
-          this.userC.form = res;
-        },
-        err => console.error(err)
-      );
-    }
+  editMethod(form: User) {
+    this.Service.form = Object.assign({}, form);
+    this.Service.edit = true;
   }
 
   deleteClient() {
-    this.delete = false;
-    return this.Service.deleteClient(this.form.id, this.userC.form).subscribe(
+    return this.Service.deleteClient(this.form.id, this.Service.form).subscribe(
       data => this.handleResponse(),
       error => this.handleError(error)
     );
+  }
+
+  resetForm() {
+    this.Service.edit = false;
+    this.Service.form  = {
+      id: 0,
+      username: null,
+      email: null,
+      password: null,
+      card_id: null,
+      code_phone: null,
+      phone: null,
+      roll: null,
+      state: true,
+      created_at: new Date()
+    };
   }
 
   loadUser(result) {

@@ -16,3 +16,16 @@ CREATE TABLE users(
 );
 
 DESCRIBE users;
+
+CREATE TABLE requests(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_Client INT NOT NULL,
+    query TEXT NOT NULL,
+    solution TEXT,
+    priority_color TEXT,
+    state BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FOREIGN KEY fk_requests_users (id_Client) REFERENCES users (id)
+);
+
+DESCRIBE requests;

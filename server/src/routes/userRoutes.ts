@@ -25,7 +25,11 @@ router.post('/serarchClient', TokenValidation, userController.searchClients);
 
 router.get('/client/:id', TokenValidation, userController.getOne);
 
-router.put('/clients/:id', TokenValidation, userController.updateClient);
+router.put('/clients/:id', 
+[ 
+  check('email').isEmail().withMessage('Wrong email format')
+],
+UserValidation, TokenValidation, userController.updateClient);
 
 router.put('/client/:id', TokenValidation, userController.deleteClient);
 
