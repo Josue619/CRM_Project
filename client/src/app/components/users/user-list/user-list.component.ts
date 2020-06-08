@@ -33,8 +33,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private Service: MainService,
     private Token: TokenService,
-    private router: Router,
-    private userC: UserComponent) { }
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getClients();

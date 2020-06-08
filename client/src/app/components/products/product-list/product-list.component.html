@@ -1,0 +1,47 @@
+<div class="container">
+  
+    <h1>Productos</h1>
+      
+    <table class="table table-striped table-bordered" style="text-align:center">
+        <tr>
+          <th>#</th>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>
+            <div style="text-align:center">
+                <button class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
+                <br>
+                <br>
+                <div class="input-group" style="justify-content: center;">
+                  <form #listvForm=ngForm (ngSubmit)="searchProducts()">
+                    <input type="text" name="search" id="search" [(ngModel)]="form.search" class="form-control" placeholder="Search video">
+                  </form>
+                </div>
+            </div>
+          </th>
+      </tr>
+    
+        <tr *ngFor="let product of products; index as i">
+          <input type="hidden" name="id" id="id" [(ngModel)]="form.id" value="{{product.id}}">
+          <td scope="row">{{i+1}}</td>
+          <td class="text-info">{{product.code}} </td>
+          <td class="text-info">{{product.name}} </td>
+          <td style="text-align:right">
+            <div class="form-group row  mx-auto mt-3">
+                <div class="col-sm-6">
+                  <button class="btn btn-warning" (click)="editMethod()">
+                    <i class="fas fa-pen-square"></i>
+                  </button>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-danger" (click)="statusDelete()">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+            </div>
+          </td>
+      </tr>
+    
+    </table>
+        
+</div>
