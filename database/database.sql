@@ -29,3 +29,45 @@ CREATE TABLE requests(
 );
 
 DESCRIBE requests;
+
+CREATE TABLE products(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    code INT NOT NULL,
+    fullname TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DESCRIBE products;
+
+CREATE TABLE supports(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_Client INT NOT NULL,
+    support TEXT NOT NULL,
+    f_support DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FOREIGN KEY fk_supports_users (id_Client) REFERENCES users (id)
+);
+
+DESCRIBE supports;
+
+CREATE TABLE future_needs(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_Client INT NOT NULL,
+    future_needs TEXT NOT NULL,
+    f_future_needs DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FOREIGN KEY fk_needs_users (id_Client) REFERENCES users (id)
+);
+
+DESCRIBE future_needs;
+
+CREATE TABLE notes(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_Client INT NOT NULL,
+    title TEXT NOT NULL,
+    completed BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FOREIGN KEY fk_notes_users (id_Client) REFERENCES users (id)
+);
+
+DESCRIBE notes;
