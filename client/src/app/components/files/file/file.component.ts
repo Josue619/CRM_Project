@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from 'src/app/services/main.service';
+import { Router } from '@angular/router';
+import { RequestsComponent } from '../requests/requests.component';
 
 @Component({
+  providers: [RequestsComponent],
   selector: 'app-file',
   templateUrl: './file.component.html',
   styleUrls: ['./file.component.css']
@@ -16,7 +19,7 @@ export class FileComponent implements OnInit {
     id: null,
   };
 
-  constructor(private Service: MainService) { }
+  constructor(private Service: MainService, private req: RequestsComponent) { }
 
   ngOnInit(): void {
   }
@@ -37,6 +40,10 @@ export class FileComponent implements OnInit {
 
   loadUser(result) {
     result.length == 0 ? this.getClients() : this.users = result;
+  }
+
+  request(id: string) {
+    this.req.loadRequests(id);
   }
 
   handleError(error) {

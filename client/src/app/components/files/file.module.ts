@@ -8,11 +8,12 @@ import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { AfterLoginService } from 'src/app/services/after-login.service';
 import { FileComponent } from '../files/file/file.component';
+import { RequestsComponent } from './requests/requests.component';
 
 
 
 @NgModule({
-  declarations: [FileComponent],
+  declarations: [FileComponent, RequestsComponent],
   imports: [
     CommonModule,
     FormsModule,

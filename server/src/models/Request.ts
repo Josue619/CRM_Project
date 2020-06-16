@@ -1,4 +1,4 @@
-export class Request { 
+export class RequestC { 
 
     id_Client: number = 0;
     query: string = '';

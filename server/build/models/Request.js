@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Request = void 0;
-class Request {
+exports.RequestC = void 0;
+class RequestC {
     constructor() {
         this.id_Client = 0;
         this.query = '';
@@ -10,5 +10,5 @@ class Request {
         this.state = true;
     }
 }
-exports.Request = Request;
+exports.RequestC = RequestC;
 //# sourceMappingURL=Request.js.map
