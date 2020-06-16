@@ -13,7 +13,7 @@ export class FileController {
         if (request.length > 0) {
             return res.json(request);
         }
-        res.status(404).json({text: 'This client has no queries'});
+        return res.status(401).json({ errors: [{ "msg": "This client has no queries" }] });
     }
     
 }

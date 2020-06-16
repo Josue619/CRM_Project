@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FileRoutingModule } from './file-routing.module';
 import { MainService } from '../../services/main.service';
+import { FileService } from 'src/app/services/file.service';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { AfterLoginService } from 'src/app/services/after-login.service';
@@ -20,6 +21,6 @@ import { RequestsComponent } from './requests/requests.component';
     HttpClientModule,
     FileRoutingModule,
   ],
-  providers: [ MainService, AuthService, TokenService, AfterLoginService ]
+  providers: [ MainService, FileService, AuthService, TokenService, AfterLoginService ]
 })
 export class FileModule { }

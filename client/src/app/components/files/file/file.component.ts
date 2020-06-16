@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MainService } from 'src/app/services/main.service';
 import { Router } from '@angular/router';
 import { RequestsComponent } from '../requests/requests.component';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   providers: [RequestsComponent],
@@ -19,9 +20,10 @@ export class FileComponent implements OnInit {
     id: null,
   };
 
-  constructor(private Service: MainService, private req: RequestsComponent) { }
+  constructor(private Service: MainService, private ServiceF: FileService, private req: RequestsComponent) { }
 
   ngOnInit(): void {
+    this.getClients();
   }
 
   getClients() {
@@ -44,6 +46,10 @@ export class FileComponent implements OnInit {
 
   request(id: string) {
     this.req.loadRequests(id);
+  }
+
+  clearRequest() {
+    this.ServiceF.requests = null;
   }
 
   handleError(error) {

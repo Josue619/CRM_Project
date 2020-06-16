@@ -36,7 +36,7 @@ export class UserController {
     } 
 
     public async getClients (req: Request, res: Response) {
-        const users = await db.query('SELECT * FROM users WHERE roll = ? AND state = ?', ['Client', true]);
+        const users = await db.query('SELECT * FROM users WHERE roll = ? AND state = ? LIMIT 10', ['Client', true]);
         res.status(200).json(users);
     } 
 

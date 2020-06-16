@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MainService } from 'src/app/services/main.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-requests',
@@ -11,10 +11,9 @@ export class RequestsComponent implements OnInit {
   public error = [];
   public color: string;
 
-  constructor(public Service: MainService) { }
+  constructor(public Service: FileService) { }
 
   ngOnInit(): void {
-    this.priority(this.Service.requests.priority_color);
   }
 
   loadRequests(id: string) {
@@ -34,8 +33,8 @@ export class RequestsComponent implements OnInit {
   }
 
   handleError(error) {
-    this.error = error.error.errors;
-    console.log(this.error[0]);
+    this.Service.error = error.error.errors;
+    console.log(this.Service.error[0]);
   }
 
 }

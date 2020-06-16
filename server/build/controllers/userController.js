@@ -43,7 +43,7 @@ class UserController {
     }
     getClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield database_1.default.query('SELECT * FROM users WHERE roll = ? AND state = ?', ['Client', true]);
+            const users = yield database_1.default.query('SELECT * FROM users WHERE roll = ? AND state = ? LIMIT 10', ['Client', true]);
             res.status(200).json(users);
         });
     }

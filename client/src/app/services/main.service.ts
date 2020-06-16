@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenService } from 'src/app/services/token.service';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
-import { RequestC } from '../models/requestC';
 
 
 @Injectable({
@@ -14,11 +13,8 @@ export class MainService {
   private headers = new HttpHeaders();
   private baseAuthUrl = 'http://localhost:3000/api/auth';
   private baseUserUrl = 'http://localhost:3000/api/user';
-  private baseFileUrl = 'http://localhost:3000/api/file';
 
   public edit: boolean = false;
-  public idClient: string = '0';
-  public requests: any = [];
   public form: User = {
     id: 0,
     username: null,
@@ -69,10 +65,6 @@ export class MainService {
 
   deleteClient(id: string|number, user: User): Observable<User> {
     return this.http.put(`${this.baseUserUrl}/client/${id}`, user, {headers: this.headers});
-  }
-
-  getRequest(id: string): Observable<RequestC> {
-    return this.http.get(`${this.baseFileUrl}/request/${id}`, {headers: this.headers});
   }
 
 }
