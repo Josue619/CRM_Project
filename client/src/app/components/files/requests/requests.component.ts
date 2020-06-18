@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from 'src/app/services/file.service';
+import { RequestC } from '../../../models/requestC';
 
 @Component({
   selector: 'app-requests',
@@ -8,8 +9,11 @@ import { FileService } from 'src/app/services/file.service';
 })
 export class RequestsComponent implements OnInit {
 
+  public reqOne: RequestC;
   public error = [];
   public color: string;
+  public edit = false;
+  public solution = '';
 
   constructor(public Service: FileService) { }
 
@@ -17,7 +21,7 @@ export class RequestsComponent implements OnInit {
   }
 
   loadRequests(id: string) {
-    return this.Service.getRequest(id).subscribe(
+    return this.Service.getRequests(id).subscribe(
       result => { this.Service.requests = result },
       error => this.handleError(error)
     );
@@ -30,6 +34,28 @@ export class RequestsComponent implements OnInit {
       return 'btn btn-warning';
     }
     return 'btn btn-success';
+  }
+
+  tryEdit(id: string, solution: string) {
+    this.edit = true;
+    this.solution = solution;
+    this.getReqClientByID(id);
+  }
+
+  editRequest(id: string, id_client: string) {
+    this.edit = false;
+    this.reqOne.solution = this.solution;
+    delete this.reqOne.created_at;
+    return this.Service.updateRequest(id, this.reqOne).subscribe(
+      data => this.loadRequests(id_client),
+      error => this.handleError(error)
+    );
+  }
+
+  getReqClientByID(id: string) {
+    return this.Service.getRequest(id).subscribe(
+      result => { this.reqOne = result },
+    );
   }
 
   handleError(error) {

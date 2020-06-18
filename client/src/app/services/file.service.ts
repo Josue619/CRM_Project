@@ -23,7 +23,16 @@ export class FileService {
     this.headers = this.headers.append('auth_token', this.Token.get());
   }
 
+  getRequests(id: string): Observable<RequestC> {
+    return this.http.get(`${this.baseFileUrl}/requests/${id}`, {headers: this.headers});
+  }
+
   getRequest(id: string): Observable<RequestC> {
     return this.http.get(`${this.baseFileUrl}/request/${id}`, {headers: this.headers});
   }
+
+  updateRequest(id: string|number, req: RequestC): Observable<RequestC> {
+    return this.http.put(`${this.baseFileUrl}/request/${id}`, req, {headers: this.headers});
+  }
+
 }

@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileController = void 0;
 const database_1 = __importDefault(require("../database"));
 class FileController {
-    getRequest(req, res) {
+    getRequests(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ?', [id]);
@@ -23,6 +23,23 @@ class FileController {
                 return res.json(request);
             }
             return res.status(401).json({ errors: [{ "msg": "This client has no queries" }] });
+        });
+    }
+    getRequest(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const request = yield database_1.default.query('SELECT * FROM requests WHERE id = ?', [id]);
+            if (request.length > 0) {
+                return res.json(request[0]);
+            }
+            return res.status(401).json({ errors: [{ "msg": "A problem occurred while selecting the query" }] });
+        });
+    }
+    updateRequest(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            yield database_1.default.query('UPDATE requests set ? WHERE id = ?', [req.body, id]);
+            res.json({ message: 'The request was updated' });
         });
     }
 }

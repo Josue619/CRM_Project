@@ -24,7 +24,7 @@
                           <div style="text-align:center">
                               <div class="input-group" style="justify-content: center;">
                                 <form #listvForm=ngForm>
-                                  <input type="text" name="search" id="search" class="form-control" placeholder="Search request">
+                                  <input type="text" name="search" class="form-control" placeholder="Search request">
                                 </form>
                               </div>
                           </div>
@@ -36,7 +36,11 @@
                     <tr *ngFor="let req of Service.requests; index as i">
                         <td scope="row">{{i+1}}</td>
                         <td class="text-info">{{req.query}} </td>
-                        <td class="text-info">{{req.solution}} </td>
+                        <td class="text-info">
+                          <br>
+                           <input type="text" value="{{req.solution}}" readonly (dblclick)="tryEdit(req.id, req.solution)" *ngIf="!edit">
+                           <input type="text" [(ngModel)]="solution" (keyup.enter)="editRequest(req.id, req.id_Client)" *ngIf="edit">
+                        </td>
                         <br>
                         <td class="text-info {{priority(req.priority_color)}}"> <i class="far fa-flag"></i> </td>
                         <td style="text-align:right">
