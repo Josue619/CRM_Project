@@ -10,10 +10,11 @@ import { RequestC } from '../../../models/requestC';
 export class RequestsComponent implements OnInit {
 
   public reqOne: RequestC;
-  public error = [];
   public color: string;
-  public edit = false;
-  public solution = '';
+  public editS = false;
+  public editP = false;
+  public solution: string = '';
+  public priorityC: string = '';
 
   constructor(public Service: FileService) { }
 
@@ -36,24 +37,49 @@ export class RequestsComponent implements OnInit {
     return 'btn btn-success';
   }
 
-  tryEdit(id: string, solution: string) {
-    this.edit = true;
-    this.solution = solution;
-    this.getReqClientByID(id);
+  tryEditS(req: RequestC) {
+    this.editS = true;
+    this.solution = req.solution;
+    this.getReqClientByID(req.id);
   }
 
-  editRequest(id: string, id_client: string) {
-    this.edit = false;
-    this.reqOne.solution = this.solution;
+  tryEditP(req: RequestC) {
+    this.editP = true;
+    req.state = false;
+    this.priorityC = req.priority_color;
+    this.getReqClientByID(req.id);
+  }
+
+  editRequestS(req: RequestC) {
+    if (req.solution.trim().length === 0) {
+      req.solution = this.solution;
+    }
+    
+    this.editS = false;
+    this.reqOne.solution = req.solution;
     delete this.reqOne.created_at;
-    return this.Service.updateRequest(id, this.reqOne).subscribe(
-      data => this.loadRequests(id_client),
+    return this.Service.updateRequest(req.id, this.reqOne).subscribe(
+      data => this.loadRequests(req.id_Client),
       error => this.handleError(error)
     );
   }
 
-  getReqClientByID(id: string) {
-    return this.Service.getRequest(id).subscribe(
+  editRequestP(req: RequestC) {
+    if (req.priority_color.trim().length === 0) {
+      req.priority_color = this.priorityC;
+    }
+
+    this.editP = false;
+    this.reqOne.priority_color = req.priority_color;
+    delete this.reqOne.created_at;
+    return this.Service.updateRequest(req.id, this.reqOne).subscribe(
+      data => this.loadRequests(req.id_Client),
+      error => this.handleError(error)
+    );
+  }
+
+  getReqClientByID(id: number) {
+    return this.Service.getRequest(id.toString()).subscribe(
       result => { this.reqOne = result },
     );
   }

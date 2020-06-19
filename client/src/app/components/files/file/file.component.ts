@@ -49,7 +49,8 @@ export class FileComponent implements OnInit {
   }
 
   clearRequest() {
-    this.ServiceF.requests = null;
+    this.ServiceF.requests = [];
+    this.ServiceF.error = [];
   }
 
   handleError(error) {

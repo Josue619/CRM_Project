@@ -1,4 +1,6 @@
-<div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="container">
+
+  <div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header justify-content-around">
@@ -38,11 +40,25 @@
                         <td class="text-info">{{req.query}} </td>
                         <td class="text-info">
                           <br>
-                           <input type="text" value="{{req.solution}}" readonly (dblclick)="tryEdit(req.id, req.solution)" *ngIf="!edit">
-                           <input type="text" [(ngModel)]="solution" (keyup.enter)="editRequest(req.id, req.id_Client)" *ngIf="edit">
+                           <input type="text" [(ngModel)]="req.solution" readonly (dblclick)="tryEditS(req)" *ngIf="!editS">
+                           <input type="text" [(ngModel)]="req.solution" (blur)="editRequestS(req)" (keyup.enter)="editRequestS(req)" *ngIf="editS" autofocus>
                         </td>
-                        <br>
-                        <td class="text-info {{priority(req.priority_color)}}"> <i class="far fa-flag"></i> </td>
+
+                        <td class="text-info"> 
+                          <br>
+                          <button class="{{priority(req.priority_color)}}" (dblclick)="tryEditP(req)" *ngIf="!editP">
+                            <i class="far fa-flag"></i>
+                          </button>
+                          <!--input type="text" [(ngModel)]="req.priority_color" (blur)="editRequestP(req)" (keyup.enter)="editRequestP(req)" *ngIf="editP" autofocus-->
+
+                          <select class="form-control" [(ngModel)]="req.priority_color" (blur)="editRequestP(req)" (dblclick)="editRequestP(req)" *ngIf="editP;" required autofocus>
+                            <option value="1">Rojo</option>
+                            <option value="2">Amarillo</option>
+                            <option value="3">Verde</option>
+                         </select>
+
+                        </td>
+                        
                         <td style="text-align:right">
               
                           <div class="form-group row  mx-auto justify-content-center">
@@ -58,4 +74,6 @@
   
       </div>
     </div>
+</div>
+
 </div>

@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AutofocusDirective } from './Directives/autofocus.directive';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     AppComponent,
     NavigationComponent,
     ProfileComponent,
+    AutofocusDirective,
   ],
   imports: [
     BrowserModule,
