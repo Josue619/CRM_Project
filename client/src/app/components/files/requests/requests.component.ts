@@ -71,6 +71,7 @@ export class RequestsComponent implements OnInit {
 
     this.editP = false;
     this.reqOne.priority_color = req.priority_color;
+    this.reqOne.state = true;
     delete this.reqOne.created_at;
     return this.Service.updateRequest(req.id, this.reqOne).subscribe(
       data => this.loadRequests(req.id_Client),

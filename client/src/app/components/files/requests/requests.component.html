@@ -46,12 +46,12 @@
 
                         <td class="text-info"> 
                           <br>
-                          <button class="{{priority(req.priority_color)}}" (dblclick)="tryEditP(req)" *ngIf="!editP">
+                          <button class="{{priority(req.priority_color)}}" (dblclick)="tryEditP(req)" *ngIf="!editP || req.state">
                             <i class="far fa-flag"></i>
                           </button>
                           <!--input type="text" [(ngModel)]="req.priority_color" (blur)="editRequestP(req)" (keyup.enter)="editRequestP(req)" *ngIf="editP" autofocus-->
 
-                          <select class="form-control" [(ngModel)]="req.priority_color" (blur)="editRequestP(req)" (dblclick)="editRequestP(req)" *ngIf="editP;" required autofocus>
+                          <select class="form-control" [(ngModel)]="req.priority_color" (blur)="editRequestP(req)" (dblclick)="editRequestP(req)" *ngIf="editP && !req.state;" required autofocus>
                             <option value="1">Rojo</option>
                             <option value="2">Amarillo</option>
                             <option value="3">Verde</option>
