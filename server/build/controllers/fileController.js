@@ -18,7 +18,7 @@ class FileController {
     getRequests(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ?', [id]);
+            const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ? AND state = ?', [id, true]);
             if (request.length > 0) {
                 return res.json(request);
             }
@@ -28,7 +28,7 @@ class FileController {
     getRequest(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const request = yield database_1.default.query('SELECT * FROM requests WHERE id = ?', [id]);
+            const request = yield database_1.default.query('SELECT * FROM requests WHERE id = ? AND state = ?', [id, true]);
             if (request.length > 0) {
                 return res.json(request[0]);
             }
@@ -40,6 +40,14 @@ class FileController {
             const { id } = req.params;
             yield database_1.default.query('UPDATE requests set ? WHERE id = ?', [req.body, id]);
             res.json({ message: 'The request was updated' });
+        });
+    }
+    deleteRequest(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            req.body.state = false;
+            yield database_1.default.query('UPDATE requests set ? WHERE id = ?', [req.body, id]);
+            res.json({ message: 'The request was deleted' });
         });
     }
 }

@@ -6,6 +6,7 @@ const router: Router = Router();
 
 router.get('/requests/:id', TokenValidation, fileController.getRequests);
 router.get('/request/:id', TokenValidation, fileController.getRequest);
-router.put('/request/:id', TokenValidation, fileController.updateRequest);
+router.put('/requests/:id', TokenValidation, fileController.updateRequest);
+router.put('/request/:id', TokenValidation, fileController.deleteRequest);
 
 export default router;

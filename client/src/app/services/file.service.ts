@@ -32,6 +32,10 @@ export class FileService {
   }
 
   updateRequest(id: string|number, req: RequestC): Observable<RequestC> {
+    return this.http.put(`${this.baseFileUrl}/requests/${id}`, req, {headers: this.headers});
+  }
+
+  deleteRequest(id: string|number, req: RequestC): Observable<RequestC> {
     return this.http.put(`${this.baseFileUrl}/request/${id}`, req, {headers: this.headers});
   }
 

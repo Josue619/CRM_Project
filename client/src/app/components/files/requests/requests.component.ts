@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from 'src/app/services/file.service';
 import { RequestC } from '../../../models/requestC';
+import { Router } from '@angular/router';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-requests',
@@ -16,7 +19,7 @@ export class RequestsComponent implements OnInit {
   public solution: string = '';
   public priorityC: string = '';
 
-  constructor(public Service: FileService) { }
+  constructor(public Service: FileService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -83,6 +86,63 @@ export class RequestsComponent implements OnInit {
     return this.Service.getRequest(id.toString()).subscribe(
       result => { this.reqOne = result },
     );
+  }
+
+  requestDelete(req: RequestC) {
+    this.getReqClientByID(req.id);
+    this.showModal(req);
+  }
+
+  deleteRequest(req: RequestC) {
+    return this.Service.deleteRequest(req.id, req).subscribe(
+      data =>  this.loadRequests(req.id_Client),
+      error => this.handleError(error)
+    );
+  }
+
+  showModal(req: RequestC) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true,
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: '¿Esta seguro que desea eliminar está consulta?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        swalWithBootstrapButtons.fire(
+          'Eliminada',
+          'La consulta ha sido eliminado.',
+          'success'
+        )
+        this.deleteRequest(req);
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'No se ha realizado ningún cambio',
+          'error'
+        )
+        this.router.navigateByUrl('/file');
+      }
+    })
+  }
+
+  handleResponse() {
+    this.router.navigateByUrl('/file');
   }
 
   handleError(error) {
