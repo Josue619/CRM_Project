@@ -8,6 +8,7 @@ dotenv.config();
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import fileRoutes from './routes/fileRoutes';
+import productRoutes from './routes/productRoutes';
 
 class Server {
 
@@ -31,6 +32,7 @@ class Server {
         this.app.use('/api/auth', authRoutes);
         this.app.use('/api/user', userRoutes);
         this.app.use('/api/file', fileRoutes);
+        this.app.use('/api/product', productRoutes);
     }
 
     start(): void {

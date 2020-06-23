@@ -48,6 +48,10 @@ export class FileComponent implements OnInit {
     this.req.loadRequests(id);
   }
 
+  service(id: string) {
+    this.req.loadRequests(id);
+  }
+
   clearRequest() {
     this.ServiceF.requests = [];
     this.ServiceF.error = [];

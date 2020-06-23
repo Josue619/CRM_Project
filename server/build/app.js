@@ -11,6 +11,7 @@ dotenv_1.default.config();
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const fileRoutes_1 = __importDefault(require("./routes/fileRoutes"));
+const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -28,6 +29,7 @@ class Server {
         this.app.use('/api/auth', authRoutes_1.default);
         this.app.use('/api/user', userRoutes_1.default);
         this.app.use('/api/file', fileRoutes_1.default);
+        this.app.use('/api/product', productRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

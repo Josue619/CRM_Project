@@ -41,7 +41,7 @@
                         <td class="text-info">{{req.query}} </td>
                         <td class="text-info">
                           <br>
-                           <input type="text" [(ngModel)]="req.solution" readonly (dblclick)="tryEditS(req)" *ngIf="!editS">
+                           <input type="text" [(ngModel)]="req.solution" readonly (dblclick)="tryEditS(req)" *ngIf="!editS" autofocus>
                            <input type="text" [(ngModel)]="req.solution" (blur)="editRequestS(req)" (keyup.enter)="editRequestS(req)" *ngIf="editS" autofocus>
                         </td>
 
