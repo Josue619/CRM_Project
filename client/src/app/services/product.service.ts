@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
 
+  public addService: Boolean;
   private headers = new HttpHeaders();
   private baseProductUrl = 'http://localhost:3000/api/product';
 
@@ -16,6 +17,7 @@ export class ProductService {
     private http: HttpClient,
     private Token: TokenService) { 
     this.headers = this.headers.append('auth_token', this.Token.get());
+    this.addService = false;
   }
 
   getProducts(): Observable<Product> {

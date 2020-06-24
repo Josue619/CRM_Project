@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from '../../../models/product';
+import { newArray } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-product-list',
@@ -9,17 +10,16 @@ import { Product } from '../../../models/product';
 })
 export class ProductListComponent implements OnInit {
 
-  public product: Product;
-  public products: any = [];
   public productsUser: any = [];
+  public isChecked: boolean;
+  public products: any = [];
   public error = [];
-  public assigned = false;
   public form = {
     search: null,
     id: null,
   };
 
-  constructor(private Service: ProductService) { }
+  constructor(public Service: ProductService) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -47,12 +47,16 @@ export class ProductListComponent implements OnInit {
     result.length == 0 ? this.getProducts() : this.products = result;
   }
 
-  test(product) {
-    const i =+ this.productsUser.length;
-    this.product = product;
-    this.productsUser[i] = this.product;
-    
-  }
+  changed = (evt, product) => {   
+    this.isChecked = evt.target.checked;
+    if (this.isChecked) {
+      this.productsUser.push(product);
+    }else {
+      var i = this.productsUser.indexOf( product );
+      this.productsUser.splice( i, 1 );
+    }
+    console.log(this.isChecked);
+    }
 
   editMethod() {
   }

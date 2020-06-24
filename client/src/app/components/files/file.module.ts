@@ -7,6 +7,7 @@ import { MainService } from '../../services/main.service';
 import { FileService } from 'src/app/services/file.service';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
+import { ProductService } from 'src/app/services/product.service';
 import { AfterLoginService } from 'src/app/services/after-login.service';
 import { FileComponent } from '../files/file/file.component';
 import { RequestsComponent } from './requests/requests.component';
@@ -22,6 +23,6 @@ import { ListServiceComponent } from './list-service/list-service.component';
     HttpClientModule,
     FileRoutingModule,
   ],
-  providers: [ MainService, FileService, AuthService, TokenService, AfterLoginService ]
+  providers: [ MainService, FileService, AuthService, TokenService, ProductService, AfterLoginService ]
 })
 export class FileModule { }

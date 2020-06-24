@@ -9,7 +9,7 @@
           <th>Nombre</th>
           <th>
             <div style="text-align:center">
-                <button class="btn btn-success" (click)="add()"> gregar<i class="fa fa-plus-circle"></i></button>
+                <button class="btn btn-success" [disabled]="!Service.addService" (click)="add()"> gregar<i class="fa fa-plus-circle"></i></button>
                 <br>
                 <br>
                 <div class="input-group" style="justify-content: center;">
@@ -26,11 +26,11 @@
           <td scope="row">{{i+1}}</td>
           <td class="text-info">{{product.code}} </td>
           <td class="text-info">{{product.fullname}} </td>
-          <td style="text-align:right">
+          <td style="text-align:right" *ngIf="Service.addService">
             <div class="form-group row  mx-auto mt-3">
 
               <div class="col-sm-7">
-                <input type="checkbox" (change)="test(product)" (select)="true">
+                <input type="checkbox" (change)="changed($event, product)" [disabled]="!Service.addService">
               </div>
               
             </div>

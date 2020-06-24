@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-list-service',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListServiceComponent implements OnInit {
 
-  constructor() { }
+  constructor(private Service: ProductService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  addService() {
+    var element = document.getElementById("closeButton");
+    element.click();
+    this.Service.addService = true;
+    this.router.navigateByUrl('/products');
   }
 
 }
