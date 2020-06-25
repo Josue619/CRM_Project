@@ -12,11 +12,12 @@ import { AfterLoginService } from 'src/app/services/after-login.service';
 import { FileComponent } from '../files/file/file.component';
 import { RequestsComponent } from './requests/requests.component';
 import { ListServiceComponent } from './list-service/list-service.component';
+import { ServicessComponent } from './servicess/servicess.component';
 
 
 
 @NgModule({
-  declarations: [FileComponent, RequestsComponent, ListServiceComponent],
+  declarations: [FileComponent, RequestsComponent, ListServiceComponent, ServicessComponent],
   imports: [
     CommonModule,
     FormsModule,
