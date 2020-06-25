@@ -33,6 +33,27 @@ class ProductController {
             });
         });
     }
+    getClientServices(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const serviceC = yield database_1.default.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
+            if (serviceC.length > 0) {
+                return res.json(serviceC);
+            }
+            return res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
+        });
+    }
+    addServices(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const services = req.body;
+            for (let i = 0; i < services.length; i++) {
+                console.log(services[i]);
+                //res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
+                //await db.query('DELETE FROM todos WHERE id = ?', [todos[i]]);          
+            }
+            res.json({ message: 'The todo was deleted' });
+        });
+    }
 }
 exports.ProductController = ProductController;
 const productController = new ProductController();

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/app/models/product';
+import { User } from 'src/app/models/user';
+import { UserComponent } from '../../users/user/user.component';
 
 @Component({
   selector: 'app-servicess',
@@ -8,7 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ServicessComponent implements OnInit {
 
-  public productsUser: any = [];
+  public productsUser: Product[] = [];
   public isChecked: boolean;
   public products: any = [];
   public error = [];
@@ -24,7 +27,9 @@ export class ServicessComponent implements OnInit {
   }
 
   add() {
-    console.log(this.productsUser);
+    //console.log(this.Service.id_Client); 
+    //console.log(this.productsUser);
+    this.addServices();
   }
 
   getProducts() {
@@ -54,6 +59,12 @@ export class ServicessComponent implements OnInit {
       this.productsUser.splice( i, 1 );
     }
     console.log(this.isChecked);
+  }
+
+  addServices() {
+    return this.Service.addServices(this.productsUser).subscribe(
+      error => this.handleError(error)
+    );
   }
 
   handleError(error) {

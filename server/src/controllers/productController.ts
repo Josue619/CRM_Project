@@ -17,7 +17,26 @@ export class ProductController {
             "msg": "There is no match with the filter",
             }]
         });
-    } 
+    }
+
+    public async getClientServices (req: Request, res: Response) {
+        const { id } = req.params;   
+        const serviceC = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
+        if (serviceC.length > 0) {
+            return res.json(serviceC);
+        }
+        return res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
+    }
+
+    public async addServices (req: Request, res: Response): Promise<void> {
+        const services: [] = req.body;
+        for (let i = 0; i < services.length; i++) {
+            console.log(services[i]);
+            //res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
+            //await db.query('DELETE FROM todos WHERE id = ?', [todos[i]]);          
+        }
+        res.json({message: 'The todo was deleted'});
+    }
     
 }
 

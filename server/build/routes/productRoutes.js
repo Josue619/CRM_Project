@@ -8,6 +8,8 @@ const verifyToken_1 = require("../libs/verifyToken");
 const productController_1 = __importDefault(require("../controllers/productController"));
 const router = express_1.Router();
 router.get('/products', verifyToken_1.TokenValidation, productController_1.default.getProducts);
+router.get('/services/:id', verifyToken_1.TokenValidation, productController_1.default.getClientServices);
+router.post('/services', verifyToken_1.TokenValidation, productController_1.default.addServices);
 router.post('/serarch', verifyToken_1.TokenValidation, productController_1.default.searchProduct);
 exports.default = router;
 //# sourceMappingURL=productRoutes.js.map

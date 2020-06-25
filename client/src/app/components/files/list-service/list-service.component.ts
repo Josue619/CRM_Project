@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ListServiceComponent implements OnInit {
 
-  constructor(private Service: ProductService, private router: Router) { }
+  constructor(public Service: ProductService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -17,8 +17,20 @@ export class ListServiceComponent implements OnInit {
   addService() {
     var element = document.getElementById("closeButton");
     element.click();
-    this.Service.addService = true;
     this.router.navigateByUrl('/products');
+  }
+
+  loadService(id: string) {
+    this.Service.id_Client = id;
+    return this.Service.getClientServices(id).subscribe(
+      result => { this.Service.service = result },
+      error => this.handleError(error)
+    );
+  }
+
+  handleError(error) {
+    this.Service.error = error.error.errors;
+    console.log(this.Service.error[0]);
   }
 
 }

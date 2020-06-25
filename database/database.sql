@@ -30,6 +30,18 @@ CREATE TABLE requests(
 
 DESCRIBE requests;
 
+CREATE TABLE client_services(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_Client INT NOT NULL,
+    code INT NOT NULL,
+    fullname TEXT NOT NULL,
+    state BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FOREIGN KEY fk_client_services_users (id_Client) REFERENCES users (id)
+);
+
+DESCRIBE client_services;
+
 CREATE TABLE products(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     code INT NOT NULL,
