@@ -15,7 +15,7 @@ export class ProductService {
   private baseProductUrl = 'http://localhost:3000/api/product';
 
   public service: any = [];
-  public id_Client: string;
+  public id_Client: number;
   public error = [];
 
   constructor(
@@ -36,8 +36,8 @@ export class ProductService {
     return this.http.post(`${this.baseProductUrl}/serarch`, data, {headers: this.headers});
   }
 
-  addServices(data) {
-    return this.http.post(`${this.baseProductUrl}/services`, data, {headers: this.headers});
+  addServices(id: number, data) {
+    return this.http.post(`${this.baseProductUrl}/services/${id}`, data, {headers: this.headers});
   }
 
 }

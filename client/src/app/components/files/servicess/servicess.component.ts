@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
-import { User } from 'src/app/models/user';
-import { UserComponent } from '../../users/user/user.component';
+import { ServiceC } from 'src/app/models/serviceC';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-servicess',
@@ -12,15 +12,16 @@ import { UserComponent } from '../../users/user/user.component';
 export class ServicessComponent implements OnInit {
 
   public productsUser: Product[] = [];
-  public isChecked: boolean;
   public products: any = [];
+  public services: ServiceC;
+  public isChecked: boolean;
   public error = [];
   public form = {
     search: null,
     id: null,
   };
 
-  constructor(public Service: ProductService) { }
+  constructor(public Service: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -52,24 +53,62 @@ export class ServicessComponent implements OnInit {
 
   changed = (evt, product) => {   
     this.isChecked = evt.target.checked;
-    if (this.isChecked) {
-      this.productsUser.push(product);
+    if (this.isChecked) {  
+      this.productsUser.push(this.setServices(product));
     }else {
-      var i = this.productsUser.indexOf( product );
+      var i = this.productsUser.indexOf( this.setServices(product) );
       this.productsUser.splice( i, 1 );
     }
     console.log(this.isChecked);
   }
 
+  setServices(product: Product) {
+    const serv: ServiceC = new ServiceC();
+    serv.id_Client = this.Service.id_Client; 
+    serv.id_Product = product.id;
+    serv.code = product.code;
+    serv.fullname = product.fullname;
+    serv.state = true;
+    
+    return serv;
+  }
+
   addServices() {
-    return this.Service.addServices(this.productsUser).subscribe(
+    return this.Service.addServices(this.Service.id_Client, this.productsUser).subscribe(
+      result => this.handleResponse(result),
       error => this.handleError(error)
     );
   }
 
+  clearService() {
+    //var checkbox = (<HTMLInputElement>document.getElementById("checkService"));
+    //checkbox.checked = false;
+    //this.ngOnInit();
+    
+  }
+
+  loadService() {
+    this.error;
+    return this.Service.getClientServices(this.Service.id_Client.toString()).subscribe(
+      result => { this.Service.service = result },
+      error => this.handleError(error)
+    );
+  }
+
+  handleResponse(data) {
+    if (data == 'Redirect') {
+      var elementClose = document.getElementById("closeProduct") as any;
+      var elementCkeck = document.getElementById("checkService") as any;
+      elementClose.click();
+      elementCkeck.checked = false;
+      this.isChecked = false;
+      this.loadService();
+      this.router.navigateByUrl('/file');
+    }
+  }
+  
   handleError(error) {
     this.error = error.error.errors;
-    console.log(this.error[0]);
   }
 
 }

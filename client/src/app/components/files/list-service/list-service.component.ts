@@ -20,9 +20,9 @@ export class ListServiceComponent implements OnInit {
     this.router.navigateByUrl('/products');
   }
 
-  loadService(id: string) {
+  loadService(id: number) {
     this.Service.id_Client = id;
-    return this.Service.getClientServices(id).subscribe(
+    return this.Service.getClientServices(id.toString()).subscribe(
       result => { this.Service.service = result },
       error => this.handleError(error)
     );
@@ -30,7 +30,7 @@ export class ListServiceComponent implements OnInit {
 
   handleError(error) {
     this.Service.error = error.error.errors;
-    console.log(this.Service.error[0]);
+    //console.log(this.Service.error[0]);
   }
 
 }

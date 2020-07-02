@@ -5,7 +5,13 @@
         <div class="modal-content">
           <div class="modal-header justify-content-around">
             <h5 class="modal-title" id="exampleModalLabel">Productos</h5>
-            <button type="button" id="closeButton" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+            <button type="button" id="closeProduct" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+          </div>
+
+          <div class="alert alert-danger" [hidden]="!error[0]">
+            <li *ngFor="let err of error">
+              {{ err.msg }}
+            </li>
           </div>
   
           <div class="modal-body">
@@ -17,7 +23,7 @@
                             <th>Nombre</th>
                             <th>
                               <div style="text-align:center">
-                                  <button class="btn btn-success" (click)="add()"> Agregar<i class="fa fa-plus-circle"></i></button>
+                                  <button class="btn btn-success" (click)="addServices()"> Agregar<i class="fa fa-plus-circle"></i></button>
                                   <br>
                                   <br>
                                   <div class="input-group" style="justify-content: center;">
@@ -40,7 +46,7 @@
                               <div class="form-group row  mx-auto mt-3">
                             
                                 <div class="col-sm-7">
-                                  <input type="checkbox" (change)="changed($event, product)">
+                                  <input type="checkbox" id="checkService" (change)="changed($event, product)">
                                 </div>
 
                               </div>

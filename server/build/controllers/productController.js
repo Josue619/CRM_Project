@@ -45,13 +45,22 @@ class ProductController {
     }
     addServices(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
             const services = req.body;
+            const servClient = yield database_1.default.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
             for (let i = 0; i < services.length; i++) {
-                console.log(services[i]);
-                //res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
-                //await db.query('DELETE FROM todos WHERE id = ?', [todos[i]]);          
+                if (servClient.length > 0) {
+                    for (let j = 0; j < servClient.length; j++) {
+                        if (services[i].id_Product != servClient[j].id_Product) {
+                            yield database_1.default.query('INSERT INTO client_services set ?', [services[i]]);
+                            return res.json('Redirect');
+                        }
+                        return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });
+                    }
+                }
+                yield database_1.default.query('INSERT INTO client_services set ?', [services[i]]);
+                return res.json('Redirect');
             }
-            res.json({ message: 'The todo was deleted' });
         });
     }
 }

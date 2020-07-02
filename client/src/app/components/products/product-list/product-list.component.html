@@ -18,11 +18,11 @@
           </th>
       </tr>
     
-        <tr *ngFor="let product of products; index as i">
-          <input type="hidden" name="id" id="id" [(ngModel)]="form.id" value="{{product.id}}">
-          <td scope="row">{{i+1}}</td>
-          <td class="text-info">{{product.code}} </td>
-          <td class="text-info">{{product.fullname}} </td>
+      <tr *ngFor="let product of products; index as i">
+        <input type="hidden" name="id" id="id" [(ngModel)]="form.id" value="{{product.id}}">
+        <td scope="row">{{i+1}}</td>
+        <td class="text-info">{{product.code}} </td>
+        <td class="text-info">{{product.fullname}} </td>
       </tr>
     
     </table>

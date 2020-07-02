@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import db from '../database';
+import { Service } from 'models/Service';
 
 export class ProductController {
 
@@ -28,14 +29,32 @@ export class ProductController {
         return res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
     }
 
-    public async addServices (req: Request, res: Response): Promise<void> {
-        const services: [] = req.body;
-        for (let i = 0; i < services.length; i++) {
-            console.log(services[i]);
-            //res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
-            //await db.query('DELETE FROM todos WHERE id = ?', [todos[i]]);          
+    public async addServices (req: Request, res: Response) {
+        const { id } = req.params;   
+        const services: Service[] = req.body;
+        const servClient = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
+        
+        for (let i = 0; i < services.length; i++) {  
+
+            if (servClient.length > 0) {
+
+                for (let j = 0; j < servClient.length; j++) {
+                
+                    if (services[i].id_Product != servClient[j].id_Product) {
+                        await db.query('INSERT INTO client_services set ?', [services[i]]); 
+                        return res.json('Redirect');
+                    }
+
+                    return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });      
+    
+                }  
+
+            }
+            await db.query('INSERT INTO client_services set ?', [services[i]]);
+            return res.json('Redirect'); 
+            
         }
-        res.json({message: 'The todo was deleted'});
+    
     }
     
 }

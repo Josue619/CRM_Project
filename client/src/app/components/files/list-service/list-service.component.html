@@ -5,7 +5,7 @@
         <div class="modal-content">
           <div class="modal-header justify-content-around">
             <h5 class="modal-title" id="exampleModalLabel">Servicios Asociados</h5>
-            <button type="button" id="closeButton" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+            <button type="button" id="closService" class="close btn btn-danger" data-dismiss="modal">&times;</button>
           </div>
 
           <div class="alert alert-danger" [hidden]="!Service.error[0]">
@@ -26,17 +26,23 @@
                             <br>
                             <br>
                             <div style="text-align:center">
-                                <div class="input-group" style="justify-content: center;">
-                                  <form #listvForm=ngForm>
-                                    <input type="text" name="search" class="form-control" placeholder="Search product">
-                                  </form>
-                                </div>
+                              <div class="input-group" style="justify-content: center;">
+                                <form #listvForm=ngForm>
+                                  <input type="text" name="search" class="form-control" placeholder="Search service">
+                                </form>
+                              </div>
                             </div>
                           </th>
                       </tr>
                   </thead>  
                   
                   <tbody style="text-align:center">
+                    <tr *ngFor="let serv of Service.service; index as i">
+                      <td scope="row">{{i+1}}</td>
+                      <td class="text-info">{{serv.code}} </td>
+                      <td class="text-info">{{serv.fullname}} </td>
+                      <td class="text-info">{{serv.created_at | date:'dd/MM/yyyy'}} </td>
+                    </tr>
                   </tbody>
               
               </table>

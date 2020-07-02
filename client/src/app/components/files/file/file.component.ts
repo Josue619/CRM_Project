@@ -54,7 +54,7 @@ export class FileComponent implements OnInit {
     this.req.loadRequests(id);
   }
 
-  service(id: string) {
+  service(id: number) {
     this.clientS.loadService(id);
   }
 
