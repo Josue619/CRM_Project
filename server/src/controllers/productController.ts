@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import db from '../database';
-import { Service } from 'models/Service';
+import { Service } from '../models/Service';
+import { Product } from 'models/Product';
 
 export class ProductController {
 
@@ -30,30 +31,32 @@ export class ProductController {
     }
 
     public async addServices (req: Request, res: Response) {
-        const { id } = req.params;   
-        const services: Service[] = req.body;
-        const servClient = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
+        const { id } = req.params;  
+        const product: Product[] = req.body;
         
-        for (let i = 0; i < services.length; i++) {  
+        const serv: Service = new Service();
+        const servClient = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);   
 
-            if (servClient.length > 0) {
+        serv.test(id, product);
 
-                for (let j = 0; j < servClient.length; j++) {
-                
-                    if (services[i].id_Product != servClient[j].id_Product) {
-                        await db.query('INSERT INTO client_services set ?', [services[i]]); 
-                        return res.json('Redirect');
-                    }
-
-                    return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });      
-    
-                }  
-
-            }
-            await db.query('INSERT INTO client_services set ?', [services[i]]);
-            return res.json('Redirect'); 
-            
-        }
+        //if (!services[0])  return res.status(401).json({ errors: [{ "msg": "You must select the services you want to add." }] });
+        //for (let index = 0; index < services.length; index++) {
+        //    
+        //    if (servClient.length > 0) {
+//
+        //        for (let i = 0; index < servClient.length; i++) {
+        //            
+        //            if (services[i].id_Product != servClient[i].id_Product) {
+        //                await db.query('INSERT INTO client_services set ?', [services[i]]); 
+        //                return res.json('Redirect');
+        //            }
+        //            return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });   
+        //        }
+        //        
+        //    }
+        //    await db.query('INSERT INTO client_services set ?', [services[index]]);
+        //    return res.json('Redirect');    
+        //}
     
     }
     
