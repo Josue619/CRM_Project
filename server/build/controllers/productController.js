@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const database_1 = __importDefault(require("../database"));
+const Service_1 = require("../models/Service");
 class ProductController {
     getProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -46,21 +47,28 @@ class ProductController {
     addServices(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const services = req.body;
+            const product = req.body;
+            const serv = new Service_1.Service();
             const servClient = yield database_1.default.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
-            for (let i = 0; i < services.length; i++) {
-                if (servClient.length > 0) {
-                    for (let j = 0; j < servClient.length; j++) {
-                        if (services[i].id_Product != servClient[j].id_Product) {
-                            yield database_1.default.query('INSERT INTO client_services set ?', [services[i]]);
-                            return res.json('Redirect');
-                        }
-                        return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });
-                    }
-                }
-                yield database_1.default.query('INSERT INTO client_services set ?', [services[i]]);
-                return res.json('Redirect');
-            }
+            serv.test(id, product);
+            //if (!services[0])  return res.status(401).json({ errors: [{ "msg": "You must select the services you want to add." }] });
+            //for (let index = 0; index < services.length; index++) {
+            //    
+            //    if (servClient.length > 0) {
+            //
+            //        for (let i = 0; index < servClient.length; i++) {
+            //            
+            //            if (services[i].id_Product != servClient[i].id_Product) {
+            //                await db.query('INSERT INTO client_services set ?', [services[i]]); 
+            //                return res.json('Redirect');
+            //            }
+            //            return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });   
+            //        }
+            //        
+            //    }
+            //    await db.query('INSERT INTO client_services set ?', [services[index]]);
+            //    return res.json('Redirect');    
+            //}
         });
     }
 }

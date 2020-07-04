@@ -54,9 +54,9 @@ export class ServicessComponent implements OnInit {
   changed = (evt, product) => {   
     this.isChecked = evt.target.checked;
     if (this.isChecked) {  
-      this.productsUser.push(this.setServices(product));
+      this.productsUser.push(product);
     }else {
-      var i = this.productsUser.indexOf( this.setServices(product) );
+      var i = this.productsUser.indexOf( product );
       this.productsUser.splice( i, 1 );
     }
     console.log(this.isChecked);
@@ -88,7 +88,7 @@ export class ServicessComponent implements OnInit {
   }
 
   loadService() {
-    this.error;
+    console.log(this.Service.id_Client);
     return this.Service.getClientServices(this.Service.id_Client.toString()).subscribe(
       result => { this.Service.service = result },
       error => this.handleError(error)
@@ -96,19 +96,29 @@ export class ServicessComponent implements OnInit {
   }
 
   handleResponse(data) {
-    if (data == 'Redirect') {
-      var elementClose = document.getElementById("closeProduct") as any;
-      var elementCkeck = document.getElementById("checkService") as any;
-      elementClose.click();
-      elementCkeck.checked = false;
+    //if (data == 'Redirect') {
+    //  var elementClose = document.getElementById("closeProduct") as any;
+    //  elementClose.click();
+    //  this.loadService();
+    //  this.router.navigateByUrl('/file');
+    //}
+  }
+  clearCheck() {
+    var elementCkeck = document.getElementById("checkService") as any;
+    if (this.isChecked) {
+      elementCkeck.checked=0;
       this.isChecked = false;
-      this.loadService();
-      this.router.navigateByUrl('/file');
-    }
+    } 
+  }
+
+  clearError() {
+    this.error = [];
+    this.clearCheck();
   }
   
   handleError(error) {
     this.error = error.error.errors;
+    //this.clearCheck();
   }
 
 }

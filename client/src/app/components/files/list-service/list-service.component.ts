@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
+import { ServicessComponent } from '../servicess/servicess.component';
 
 @Component({
   selector: 'app-list-service',
@@ -9,7 +10,8 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ListServiceComponent implements OnInit {
 
-  constructor(public Service: ProductService, private router: Router) { }
+  constructor(public Service: ProductService,
+     private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -26,6 +28,10 @@ export class ListServiceComponent implements OnInit {
       result => { this.Service.service = result },
       error => this.handleError(error)
     );
+  }
+
+  clearError() {
+    //this.Service.error = [];
   }
 
   handleError(error) {

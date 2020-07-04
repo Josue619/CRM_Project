@@ -4,9 +4,10 @@ import { RequestsComponent } from '../requests/requests.component';
 import { ListServiceComponent } from '../list-service/list-service.component';
 import { FileService } from 'src/app/services/file.service';
 import { ProductService } from 'src/app/services/product.service';
+import { ServicessComponent } from '../servicess/servicess.component';
 
 @Component({
-  providers: [RequestsComponent, ListServiceComponent],
+  providers: [RequestsComponent, ListServiceComponent, ServicessComponent],
   selector: 'app-file',
   templateUrl: './file.component.html',
   styleUrls: ['./file.component.css']
@@ -26,7 +27,8 @@ export class FileComponent implements OnInit {
     private ServiceF: FileService, 
     private ServiceP: ProductService, 
     private req: RequestsComponent,
-    private clientS: ListServiceComponent) { }
+    private clientS: ListServiceComponent,
+    private services: ServicessComponent) { }
 
   ngOnInit(): void {
     this.getClients();
@@ -55,6 +57,7 @@ export class FileComponent implements OnInit {
   }
 
   service(id: number) {
+    //this.services.productsUser = [];
     this.clientS.loadService(id);
   }
 
