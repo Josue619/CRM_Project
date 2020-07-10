@@ -47,28 +47,38 @@ class ProductController {
     addServices(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const product = req.body;
-            const serv = new Service_1.Service();
+            const servClass = new Service_1.Service();
+            const service = req.body;
+            const serv = [];
             const servClient = yield database_1.default.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
-            serv.test(id, product);
-            //if (!services[0])  return res.status(401).json({ errors: [{ "msg": "You must select the services you want to add." }] });
-            //for (let index = 0; index < services.length; index++) {
-            //    
-            //    if (servClient.length > 0) {
-            //
-            //        for (let i = 0; index < servClient.length; i++) {
-            //            
-            //            if (services[i].id_Product != servClient[i].id_Product) {
-            //                await db.query('INSERT INTO client_services set ?', [services[i]]); 
-            //                return res.json('Redirect');
-            //            }
-            //            return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });   
-            //        }
-            //        
-            //    }
-            //    await db.query('INSERT INTO client_services set ?', [services[index]]);
-            //    return res.json('Redirect');    
-            //}
+            if (servClient.length > 0) {
+                for (let i = 0; i < servClient.length; i++) {
+                    serv.push(servClient[i].id_Product);
+                }
+                if (!serv.includes(service.id_Product)) {
+                    yield database_1.default.query('INSERT INTO client_services set ?', [service]);
+                    res.json("Redirect");
+                }
+                else {
+                    res.status(401).json({ errors: [{ "msg": "The client already has the selected service" }] });
+                }
+            }
+            if (servClient.length == 0) {
+                yield database_1.default.query('INSERT INTO client_services set ?', [service]);
+                res.json("Redirect");
+            }
+        });
+    }
+    searchService(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const product = yield database_1.default.query('SELECT * FROM client_services WHERE fullname' + " like '%" + req.body.search + "%' AND id_Client = ? AND state = ?", [req.body.id, true]);
+            if (product.length > 0) {
+                return res.status(200).json(product);
+            }
+            return res.status(401).json({ errors: [{
+                        "msg": "There is no match with the filter",
+                    }]
+            });
         });
     }
 }

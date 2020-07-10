@@ -3,6 +3,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
 import { ServiceC } from 'src/app/models/serviceC';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-servicess',
@@ -11,10 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ServicessComponent implements OnInit {
 
-  public productsUser: Product[] = [];
-  public products: any = [];
   public services: ServiceC;
-  public isChecked: boolean;
   public error = [];
   public form = {
     search: null,
@@ -27,15 +25,9 @@ export class ServicessComponent implements OnInit {
     this.getProducts();
   }
 
-  add() {
-    //console.log(this.Service.id_Client); 
-    //console.log(this.productsUser);
-    this.addServices();
-  }
-
   getProducts() {
     return this.Service.getProducts().subscribe(
-      result => { this.products = result },
+      result => { this.Service.products = result },
       error => this.handleError(error)
     );
   }
@@ -48,18 +40,7 @@ export class ServicessComponent implements OnInit {
   }
 
   loadProduct(result) {
-    result.length == 0 ? this.getProducts() : this.products = result;
-  }
-
-  changed = (evt, product) => {   
-    this.isChecked = evt.target.checked;
-    if (this.isChecked) {  
-      this.productsUser.push(product);
-    }else {
-      var i = this.productsUser.indexOf( product );
-      this.productsUser.splice( i, 1 );
-    }
-    console.log(this.isChecked);
+    result.length == 0 ? this.getProducts() : this.Service.products = result;
   }
 
   setServices(product: Product) {
@@ -69,56 +50,60 @@ export class ServicessComponent implements OnInit {
     serv.code = product.code;
     serv.fullname = product.fullname;
     serv.state = true;
-    
     return serv;
   }
 
-  addServices() {
-    return this.Service.addServices(this.Service.id_Client, this.productsUser).subscribe(
+  addServices(product: Product) {
+    this.services = this.setServices(product);
+    
+    return this.Service.addServices(this.Service.id_Client, this.services).subscribe(
       result => this.handleResponse(result),
       error => this.handleError(error)
     );
   }
 
-  clearService() {
-    //var checkbox = (<HTMLInputElement>document.getElementById("checkService"));
-    //checkbox.checked = false;
-    //this.ngOnInit();
-    
-  }
-
   loadService() {
-    console.log(this.Service.id_Client);
     return this.Service.getClientServices(this.Service.id_Client.toString()).subscribe(
       result => { this.Service.service = result },
       error => this.handleError(error)
     );
   }
 
-  handleResponse(data) {
-    //if (data == 'Redirect') {
-    //  var elementClose = document.getElementById("closeProduct") as any;
-    //  elementClose.click();
-    //  this.loadService();
-    //  this.router.navigateByUrl('/file');
-    //}
+  showModal() {
+    var msg = 'There is no match with the filter';
+
+    Swal.fire({
+      position: 'top',
+      icon: this.error[0].msg != msg ? 'error' : 'info',
+      title: this.error[0].msg,
+      showConfirmButton: false,
+      timer: 2500
+    })
+
   }
-  clearCheck() {
-    var elementCkeck = document.getElementById("checkService") as any;
-    if (this.isChecked) {
-      elementCkeck.checked=0;
-      this.isChecked = false;
-    } 
+
+  handleResponse(data) {
+    
+    if (data == 'Redirect') {
+      var elementClose = document.getElementById("closeProduct") as any;
+      this.loadService();
+      this.Service.error = [];
+      elementClose.click();
+    }
+  
   }
 
   clearError() {
     this.error = [];
-    this.clearCheck();
+    this.form.search = '';
+    this.Service.service;
+    this.getProducts();
   }
   
   handleError(error) {
     this.error = error.error.errors;
-    //this.clearCheck();
+    this.showModal();
+    //console.log(this.error[0].msg != '');
   }
 
 }

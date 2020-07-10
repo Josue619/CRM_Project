@@ -4,7 +4,6 @@ import { TokenService } from './token.service';
 import { Product } from '../models/product';
 import { ServiceC } from '../models/serviceC';
 import { Observable } from 'rxjs';
-import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +15,7 @@ export class ProductService {
 
   public service: any = [];
   public id_Client: number;
+  public products: any = [];
   public error = [];
 
   constructor(
@@ -38,6 +38,10 @@ export class ProductService {
 
   addServices(id: number, data) {
     return this.http.post(`${this.baseProductUrl}/services/${id}`, data, {headers: this.headers});
+  }
+
+  searchServices(data): Observable<ServiceC> {
+    return this.http.post(`${this.baseProductUrl}/serarchS`, data, {headers: this.headers});
   }
 
 }

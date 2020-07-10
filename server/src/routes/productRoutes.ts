@@ -8,5 +8,6 @@ router.get('/products', TokenValidation, productController.getProducts);
 router.get('/services/:id', TokenValidation, productController.getClientServices);
 router.post('/services/:id', TokenValidation, productController.addServices);
 router.post('/serarch', TokenValidation, productController.searchProduct);
+router.post('/serarchS', TokenValidation, productController.searchService);
 
 export default router;

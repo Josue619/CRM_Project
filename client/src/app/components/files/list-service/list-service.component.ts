@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { ServicessComponent } from '../servicess/servicess.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-service',
@@ -10,10 +11,26 @@ import { ServicessComponent } from '../servicess/servicess.component';
 })
 export class ListServiceComponent implements OnInit {
 
-  constructor(public Service: ProductService,
-     private router: Router) { }
+  public form = {
+    search: null,
+    id: null,
+  };
+
+  constructor(public Service: ProductService,private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  searchServices() {
+    this.form.id = this.Service.id_Client;
+    return this.Service.searchServices(this.form).subscribe(
+      result => this.loadServices(result),
+      error => this.handleError(error)
+    );
+  }
+
+  loadServices(result) {
+    result.length == 0 ? this.getServices(this.Service.id_Client) : this.Service.service = result;
   }
 
   addService() {
@@ -22,7 +39,7 @@ export class ListServiceComponent implements OnInit {
     this.router.navigateByUrl('/products');
   }
 
-  loadService(id: number) {
+  getServices(id: number) {
     this.Service.id_Client = id;
     return this.Service.getClientServices(id.toString()).subscribe(
       result => { this.Service.service = result },
@@ -30,12 +47,24 @@ export class ListServiceComponent implements OnInit {
     );
   }
 
+  showModal() {
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: this.Service.error[0].msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   clearError() {
-    //this.Service.error = [];
+    this.Service.error = [];
+    this.form.search = '';
   }
 
   handleError(error) {
     this.Service.error = error.error.errors;
+    this.showModal();
     //console.log(this.Service.error[0]);
   }
 

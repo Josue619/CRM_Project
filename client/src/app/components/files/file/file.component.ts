@@ -58,7 +58,7 @@ export class FileComponent implements OnInit {
 
   service(id: number) {
     //this.services.productsUser = [];
-    this.clientS.loadService(id);
+    this.clientS.getServices(id);
   }
 
   clearRequest() {

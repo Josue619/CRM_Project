@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Service = void 0;
-class Service {
+exports.ProductS = void 0;
+class ProductS {
     constructor() {
-        this.id_Client = '0';
-        this.id_Product = 0;
+        this.id = 0;
         this.code = 0;
         this.fullname = '';
         this.state = true;
     }
 }
-exports.Service = Service;
-//# sourceMappingURL=Service.js.map
+exports.ProductS = ProductS;
+//# sourceMappingURL=ProductS.js.map

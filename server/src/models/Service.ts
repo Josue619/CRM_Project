@@ -1,18 +1,13 @@
-import { Product } from './Product';
+import db from "../database";
 
 export class Service {
 
-    id_Client?: number;
-    id_Product?: number;
-    code?: number;
-    fullname?: string;
-    state?: boolean;
+    id_Client: string = '0';
+    id_Product: number = 0;
+    code: number = 0;
+    fullname: string = '';
+    state: boolean = true;
 
     constructor( ) { }
 
-    public async test(id: string, product: Product[]): Promise<void> {
-        console.log(id);
-        console.log(product);
-        //return bcrypt.hash(password, salt);
-    }
 }

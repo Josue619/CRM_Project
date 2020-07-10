@@ -32,32 +32,45 @@ export class ProductController {
 
     public async addServices (req: Request, res: Response) {
         const { id } = req.params;  
-        const product: Product[] = req.body;
+        const servClass = new Service();
+        const service: Service = req.body;
+        const serv: any[] = [];
         
-        const serv: Service = new Service();
-        const servClient = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);   
+        const servClient = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
+        
+        if (servClient.length > 0) {
 
-        serv.test(id, product);
+            for (let i = 0; i < servClient.length; i++) {
+                serv.push(servClient[i].id_Product);
+            }
+            if (!serv.includes(service.id_Product)) {
+                await db.query('INSERT INTO client_services set ?', [service]); 
+                res.json("Redirect");
+            }else {
+                res.status(401).json({ errors: [{ "msg": "The client already has the selected service" }] });
+            }
+            
+        }
+        
 
-        //if (!services[0])  return res.status(401).json({ errors: [{ "msg": "You must select the services you want to add." }] });
-        //for (let index = 0; index < services.length; index++) {
-        //    
-        //    if (servClient.length > 0) {
-//
-        //        for (let i = 0; index < servClient.length; i++) {
-        //            
-        //            if (services[i].id_Product != servClient[i].id_Product) {
-        //                await db.query('INSERT INTO client_services set ?', [services[i]]); 
-        //                return res.json('Redirect');
-        //            }
-        //            return res.status(401).json({ errors: [{ "msg": "This customer already owns some of these products" }] });   
-        //        }
-        //        
-        //    }
-        //    await db.query('INSERT INTO client_services set ?', [services[index]]);
-        //    return res.json('Redirect');    
-        //}
+        if (servClient.length == 0) {
+            await db.query('INSERT INTO client_services set ?', [service]); 
+            res.json("Redirect");
+        }
+        
     
+    }
+
+    public async searchService (req: Request, res: Response) {
+
+        const product = await db.query('SELECT * FROM client_services WHERE fullname' + " like '%" + req.body.search + "%' AND id_Client = ? AND state = ?", [req.body.id, true]);
+        if (product.length > 0) {
+            return res.status(200).json(product);
+        }
+        return res.status(401).json({ errors: [{
+            "msg": "There is no match with the filter",
+            }]
+        });
     }
     
 }

@@ -1,17 +1,11 @@
-<div class="container">
+<div class="container" (click)="clearError()">
 
     <div class="modal fade" id="modalProducts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header justify-content-around">
             <h5 class="modal-title" id="exampleModalLabel">Productos</h5>
-            <button type="button" id="closeProduct" class="close btn btn-danger" data-dismiss="modal" (click)="clearCheck()" (click)="clearError()">&times;</button>
-          </div>
-
-          <div class="alert alert-danger" [hidden]="!error[0]">
-            <li *ngFor="let err of error">
-              {{ err.msg }}
-            </li>
+            <button type="button" id="closeProduct" class="close btn btn-danger" data-dismiss="modal" (click)="clearError()">&times;</button>
           </div>
   
           <div class="modal-body">
@@ -23,8 +17,6 @@
                             <th>Nombre</th>
                             <th>
                               <div style="text-align:center">
-                                  <button class="btn btn-success" (click)="addServices()"> Agregar<i class="fa fa-plus-circle"></i></button>
-                                  <br>
                                   <br>
                                   <div class="input-group" style="justify-content: center;">
                                     <form #listvForm=ngForm (ngSubmit)="searchProducts()">
@@ -37,7 +29,7 @@
                     </thead>  
 
                     <tbody style="text-align:center">
-                        <tr *ngFor="let product of products; index as i">
+                        <tr *ngFor="let product of Service.products; index as i">
                             <input type="hidden" name="id" id="id" [(ngModel)]="form.id" value="{{product.id}}">
                             <td scope="row">{{i+1}}</td>
                             <td class="text-info">{{product.code}} </td>
@@ -45,8 +37,8 @@
                             <td style="text-align:right">
                               <div class="form-group row  mx-auto mt-3">
                             
-                                <div class="col-sm-7">
-                                  <input type="checkbox" id="checkService" (change)="changed($event, product)">
+                                <div class="mx-auto mt-3">
+                                  <button class="btn btn-primary" (click)="addServices(product)"> <i class="fas fa-check-square"></i> </button>
                                 </div>
 
                               </div>
