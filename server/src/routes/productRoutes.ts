@@ -9,5 +9,6 @@ router.get('/services/:id', TokenValidation, productController.getClientServices
 router.post('/services/:id', TokenValidation, productController.addServices);
 router.post('/serarch', TokenValidation, productController.searchProduct);
 router.post('/serarchS', TokenValidation, productController.searchService);
+router.delete('/services', TokenValidation, productController.deleteService);
 
 export default router;

@@ -32,7 +32,6 @@ export class ProductController {
 
     public async addServices (req: Request, res: Response) {
         const { id } = req.params;  
-        const servClass = new Service();
         const service: Service = req.body;
         const serv: any[] = [];
         
@@ -71,6 +70,12 @@ export class ProductController {
             "msg": "There is no match with the filter",
             }]
         });
+    }
+
+    public async deleteService (req: Request, res: Response): Promise<void> {
+        const service: Service = req.body;        
+        await db.query('DELETE FROM client_services WHERE id_Client = ? AND id_Product = ?', [service.id_Client, service.id_Product]);
+        res.status(200).json({ errors: [{"msg": "The service was removed from the client file"}]});
     }
     
 }

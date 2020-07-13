@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { ServicessComponent } from '../servicess/servicess.component';
 import Swal from 'sweetalert2';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-list-service',
@@ -57,9 +58,61 @@ export class ListServiceComponent implements OnInit {
     })
   }
 
+  deleteService(service: any) {
+    return this.Service.deleteService(service).subscribe(
+      data => this.getServices(this.Service.id_Client),
+      error => this.handleError(error)
+    );
+  }
+
+  showModalDelete(service: any) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true,
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: '¿Esta seguro que desea eliminar este usuario?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        swalWithBootstrapButtons.fire(
+          'Eliminado',
+          'El servicio ha sido removido.',
+          'success'
+        )
+        this.deleteService(service);
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'No se ha realizado ningún cambio',
+          'error'
+        )
+        this.router.navigateByUrl('/file');
+      }
+    })
+  }
+
   clearError() {
     this.Service.error = [];
     this.form.search = '';
+  }
+
+  handleResponse() {
+    this.router.navigateByUrl('/file');
   }
 
   handleError(error) {

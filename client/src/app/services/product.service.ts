@@ -44,4 +44,13 @@ export class ProductService {
     return this.http.post(`${this.baseProductUrl}/serarchS`, data, {headers: this.headers});
   }
 
+  deleteService(service: any) {
+    const httpOptions = {
+      headers: this.headers,
+      body: service
+    };
+
+    return this.http.delete(`${this.baseProductUrl}/services`, httpOptions);
+  }
+
 }

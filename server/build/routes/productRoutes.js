@@ -12,5 +12,6 @@ router.get('/services/:id', verifyToken_1.TokenValidation, productController_1.d
 router.post('/services/:id', verifyToken_1.TokenValidation, productController_1.default.addServices);
 router.post('/serarch', verifyToken_1.TokenValidation, productController_1.default.searchProduct);
 router.post('/serarchS', verifyToken_1.TokenValidation, productController_1.default.searchService);
+router.delete('/services', verifyToken_1.TokenValidation, productController_1.default.deleteService);
 exports.default = router;
 //# sourceMappingURL=productRoutes.js.map
