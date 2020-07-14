@@ -35,6 +35,18 @@ class FileController {
             return res.status(401).json({ errors: [{ "msg": "A problem occurred while selecting the query" }] });
         });
     }
+    searchRequest(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const product = yield database_1.default.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%'");
+            if (product.length > 0) {
+                return res.status(200).json(product);
+            }
+            return res.status(401).json({ errors: [{
+                        "msg": "There is no match with the filter",
+                    }]
+            });
+        });
+    }
     updateRequest(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;

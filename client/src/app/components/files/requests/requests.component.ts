@@ -18,14 +18,31 @@ export class RequestsComponent implements OnInit {
   public editP = false;
   public solution: string = '';
   public priorityC: string = '';
+  public form = {
+    search: null,
+    id: null,
+  };
 
   constructor(public Service: FileService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  loadRequests(id: string) {
-    return this.Service.getRequests(id).subscribe(
+  searchRequest() {
+    this.form.id = this.Service.id_Client;
+    return this.Service.searchRequest(this.form).subscribe(
+      result => this.loadRequest(result),
+      error => this.handleError(error)
+    );
+  }
+
+  loadRequest(result) {
+    result.length == 0 ? this.getRequests(this.Service.id_Client) : this.Service.requests = result;
+  }
+
+  getRequests(id: number) {
+    this.Service.id_Client = id
+    return this.Service.getRequests(id.toString()).subscribe(
       result => { this.Service.requests = result },
       error => this.handleError(error)
     );
@@ -62,7 +79,7 @@ export class RequestsComponent implements OnInit {
     this.reqOne.solution = req.solution;
     delete this.reqOne.created_at;
     return this.Service.updateRequest(req.id, this.reqOne).subscribe(
-      data => this.loadRequests(req.id_Client),
+      data => this.getRequests(req.id_Client),
       error => this.handleError(error)
     );
   }
@@ -77,7 +94,7 @@ export class RequestsComponent implements OnInit {
     this.reqOne.state = true;
     delete this.reqOne.created_at;
     return this.Service.updateRequest(req.id, this.reqOne).subscribe(
-      data => this.loadRequests(req.id_Client),
+      data => this.getRequests(req.id_Client),
       error => this.handleError(error)
     );
   }
@@ -95,7 +112,7 @@ export class RequestsComponent implements OnInit {
 
   deleteRequest(req: RequestC) {
     return this.Service.deleteRequest(req.id, req).subscribe(
-      data =>  this.loadRequests(req.id_Client),
+      data =>  this.getRequests(req.id_Client),
       error => this.handleError(error)
     );
   }
@@ -141,13 +158,24 @@ export class RequestsComponent implements OnInit {
     })
   }
 
+  showModalError() {
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: this.Service.error[0].msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   handleResponse() {
     this.router.navigateByUrl('/file');
   }
 
   handleError(error) {
     this.Service.error = error.error.errors;
-    console.log(this.Service.error[0]);
+    this.showModalError();
+    //console.log(this.Service.error[0]);
   }
 
 }

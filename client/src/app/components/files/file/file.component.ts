@@ -6,6 +6,8 @@ import { FileService } from 'src/app/services/file.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ServicessComponent } from '../servicess/servicess.component';
 
+import Swal from 'sweetalert2';
+
 @Component({
   providers: [RequestsComponent, ListServiceComponent, ServicessComponent],
   selector: 'app-file',
@@ -52,8 +54,8 @@ export class FileComponent implements OnInit {
     result.length == 0 ? this.getClients() : this.users = result;
   }
 
-  request(id: string) {
-    this.req.loadRequests(id);
+  request(id: number) {
+    this.req.getRequests(id);
   }
 
   service(id: number) {
@@ -69,8 +71,19 @@ export class FileComponent implements OnInit {
 
   }
 
+  showModalError() {
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: this.error[0].msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   handleError(error) {
     this.error = error.error.errors;
+    this.showModalError();
     console.log(this.error[0]);
   }
 

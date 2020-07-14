@@ -25,6 +25,17 @@ export class FileController {
         return res.status(401).json({ errors: [{ "msg": "A problem occurred while selecting the query" }] });
     }
 
+    public async searchRequest(req: Request, res: Response) {
+        const product = await db.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%'");
+        if (product.length > 0) {
+            return res.status(200).json(product);
+        }
+        return res.status(401).json({ errors: [{
+            "msg": "There is no match with the filter",
+            }]
+        });
+    }
+
     public async updateRequest (req: Request, res: Response): Promise<void> {
         const { id } = req.params;  
         await db.query('UPDATE requests set ? WHERE id = ?', [req.body, id]);

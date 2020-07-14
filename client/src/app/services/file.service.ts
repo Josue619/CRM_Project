@@ -15,6 +15,7 @@ export class FileService {
   private baseFileUrl = 'http://localhost:3000/api/file';
 
   public requests: any = [];
+  public id_Client: number;
   public error = [];
 
   constructor(
@@ -37,6 +38,10 @@ export class FileService {
 
   deleteRequest(id: string|number, req: RequestC): Observable<RequestC> {
     return this.http.put(`${this.baseFileUrl}/request/${id}`, req, {headers: this.headers});
+  }
+
+  searchRequest(data): Observable<RequestC> {
+    return this.http.post(`${this.baseFileUrl}/serarch`, data, {headers: this.headers});
   }
 
 }

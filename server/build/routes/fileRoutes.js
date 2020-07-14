@@ -11,5 +11,6 @@ router.get('/requests/:id', verifyToken_1.TokenValidation, fileController_1.defa
 router.get('/request/:id', verifyToken_1.TokenValidation, fileController_1.default.getRequest);
 router.put('/requests/:id', verifyToken_1.TokenValidation, fileController_1.default.updateRequest);
 router.put('/request/:id', verifyToken_1.TokenValidation, fileController_1.default.deleteRequest);
+router.post('/serarch', verifyToken_1.TokenValidation, fileController_1.default.searchRequest);
 exports.default = router;
 //# sourceMappingURL=fileRoutes.js.map

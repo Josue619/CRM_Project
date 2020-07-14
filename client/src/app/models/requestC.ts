@@ -1,6 +1,6 @@
 export interface RequestC {
     id?: number;
-    id_Client?: string;
+    id_Client?: number;
     query?: string;
     solution?: string;
     priority_color?: string;
