@@ -44,6 +44,8 @@ export class FileComponent implements OnInit {
   }
 
   searchClients() {
+    console.log(this.form.search);
+    
     return this.Service.searchClients(this.form).subscribe(
       result => this.loadUser(result),
       error => this.handleError(error)

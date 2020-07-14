@@ -9,45 +9,43 @@
           </div>
   
           <div class="modal-body">
-              <table class="table table-striped table-bordered" style="text-align:center">
-                  <thead class="thead-dark">
-                      <tr>
-                          <th>#</th>
-                          <th>Código</th>
-                          <th>Producto</th>
-                          <th>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#modalProducts" (click)="clearError()"> Agregar <i class="fa fa-plus-circle"></i></button>
-                            <br>
-                            <br>
-                            <div style="text-align:center">
-                              <div class="input-group" style="justify-content: center;">
-                                <form #listvForm=ngForm (ngSubmit)="searchServices()">
-                                  <input type="text" name="search" [(ngModel)]="form.search" class="form-control" placeholder="Search service">
-                                </form>
-                              </div>
-                            </div>
-                          </th>
-                      </tr>
-                  </thead>  
-                  
-                  <tbody style="text-align:center">
-                    <tr *ngFor="let serv of Service.service; index as i">
-                      <td scope="row">{{i+1}}</td>
-                      <td class="text-info">{{serv.code}} </td>
-                      <td class="text-info">{{serv.fullname}} </td>
-                      <td class="text-info">
-                        <div class="form-group row  mx-auto mt-3">
-                            
-                          <div class="mx-auto mt-3">
-                            <button class="btn btn-danger" (click)="showModalDelete(serv)"> <i class="fas fa-check-square"></i> </button>
-                          </div>
 
-                        </div>
-                      </td>
+            <div class="form-group row  mx-auto justify-content-center">
+              <form #listvForm=ngForm class="form-inline my-2 my-lg-0" (ngSubmit)="searchServices()">
+                <input class="form-control mr-sm-2" type="search" name="search" [(ngModel)]="form.search" placeholder="Search service" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+
+            <table class="table table-striped table-bordered" style="text-align:center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>
+                          <button class="btn btn-success" data-toggle="modal" data-target="#modalProducts" (click)="clearError()"> Agregar <i class="fa fa-plus-circle"></i></button>
+                        </th>
                     </tr>
-                  </tbody>
-              
-              </table>
+                </thead>  
+                
+                <tbody style="text-align:center">
+                  <tr *ngFor="let serv of Service.service; index as i">
+                    <td scope="row">{{i+1}}</td>
+                    <td class="text-info">{{serv.code}} </td>
+                    <td class="text-info">{{serv.fullname}} </td>
+                    <td class="text-info">
+                      <div class="form-group row  mx-auto mt-3">
+                          
+                        <div class="mx-auto mt-3">
+                          <button class="btn btn-danger" (click)="showModalDelete(serv)"> <i class="fas fa-folder-times"></i> </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+            
+            </table>
           </div>
     
         </div>
