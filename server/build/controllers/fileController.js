@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileController = void 0;
 const database_1 = __importDefault(require("../database"));
 class FileController {
+    /** ------------------------------------------------- Request ---------------------------------------------------- */
     getRequests(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
@@ -60,6 +61,29 @@ class FileController {
             req.body.state = false;
             yield database_1.default.query('UPDATE requests set ? WHERE id = ?', [req.body, id]);
             res.json({ message: 'The request was deleted' });
+        });
+    }
+    /** ------------------------------------------------- Future Needs ---------------------------------------------------- */
+    getNeedsClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const needC = yield database_1.default.query('SELECT * FROM future_needs WHERE id_Client = ?', [id]);
+            if (needC.length > 0) {
+                return res.json(needC);
+            }
+            return res.status(401).json({ errors: [{ "msg": "This client does not have associated future needs" }] });
+        });
+    }
+    searchNeeds(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const needC = yield database_1.default.query('SELECT * FROM future_needs WHERE future_needs' + " like '%" + req.body.search + "%'");
+            if (needC.length > 0) {
+                return res.status(200).json(needC);
+            }
+            return res.status(401).json({ errors: [{
+                        "msg": "There is no match with the filter",
+                    }]
+            });
         });
     }
 }

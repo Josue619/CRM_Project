@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-
-import { RequestC } from '../models/Request';
 import db from '../database';
 
 
 export class FileController {
+
+    /** ------------------------------------------------- Request ---------------------------------------------------- */
     
     public async getRequests (req: Request, res: Response) {
         const { id } = req.params;   
@@ -47,6 +46,28 @@ export class FileController {
         req.body.state = false; 
         await db.query('UPDATE requests set ? WHERE id = ?', [req.body, id]);
         res.json({message: 'The request was deleted'});
+    }
+
+    /** ------------------------------------------------- Future Needs ---------------------------------------------------- */
+
+    public async getNeedsClient (req: Request, res: Response) {
+        const { id } = req.params;   
+        const needC = await db.query('SELECT * FROM future_needs WHERE id_Client = ?', [id]);
+        if (needC.length > 0) {
+            return res.json(needC);
+        }
+        return res.status(401).json({ errors: [{ "msg": "This client does not have associated future needs" }] });
+    }
+
+    public async searchNeeds(req: Request, res: Response) {
+        const needC = await db.query('SELECT * FROM future_needs WHERE future_needs' + " like '%" + req.body.search + "%'");
+        if (needC.length > 0) {
+            return res.status(200).json(needC);
+        }
+        return res.status(401).json({ errors: [{
+            "msg": "There is no match with the filter",
+            }]
+        });
     }
     
 }

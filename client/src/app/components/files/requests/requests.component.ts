@@ -168,6 +168,11 @@ export class RequestsComponent implements OnInit {
     })
   }
 
+  clearError() {
+    this.Service.error = [];
+    this.form.search = '';
+  }
+
   handleResponse() {
     this.router.navigateByUrl('/file');
   }

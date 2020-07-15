@@ -13,11 +13,13 @@ import { FileComponent } from '../files/file/file.component';
 import { RequestsComponent } from './requests/requests.component';
 import { ListServiceComponent } from './list-service/list-service.component';
 import { ServicessComponent } from './servicess/servicess.component';
+import { ListNeedsComponent } from './list-needs/list-needs.component';
+import { NeedsComponent } from './needs/needs.component';
 
 
 
 @NgModule({
-  declarations: [FileComponent, RequestsComponent, ListServiceComponent, ServicessComponent],
+  declarations: [FileComponent, RequestsComponent, ListServiceComponent, ServicessComponent, ListNeedsComponent, NeedsComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
-import { ServicessComponent } from '../servicess/servicess.component';
 import Swal from 'sweetalert2';
-import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-list-service',
@@ -17,7 +15,7 @@ export class ListServiceComponent implements OnInit {
     id: null,
   };
 
-  constructor(public Service: ProductService,private router: Router) { }
+  constructor(public Service: ProductService, private router: Router) { }
 
   ngOnInit(): void {
   }

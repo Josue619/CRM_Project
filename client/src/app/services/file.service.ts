@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenService } from 'src/app/services/token.service';
 import { Observable } from 'rxjs';
 import { RequestC } from '../models/requestC';
+import { NeedC } from '../models/needC';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class FileService {
   private baseFileUrl = 'http://localhost:3000/api/file';
 
   public requests: any = [];
+  public needs: any = [];
   public id_Client: number;
   public error = [];
 
@@ -42,6 +44,14 @@ export class FileService {
 
   searchRequest(data): Observable<RequestC> {
     return this.http.post(`${this.baseFileUrl}/serarch`, data, {headers: this.headers});
+  }
+
+  getNeedsClient(id: string): Observable<NeedC> {
+    return this.http.get(`${this.baseFileUrl}/needs/${id}`, {headers: this.headers});
+  }
+
+  searchNeeds(data): Observable<NeedC> {
+    return this.http.post(`${this.baseFileUrl}/serarchN`, data, {headers: this.headers});
   }
 
 }
