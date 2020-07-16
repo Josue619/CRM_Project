@@ -3,6 +3,7 @@ import { FileService } from 'src/app/services/file.service';
 import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
+import { NeedC } from 'src/app/models/needC';
 
 @Component({
   selector: 'app-list-needs',
@@ -40,7 +41,84 @@ export class ListNeedsComponent implements OnInit {
       result => { this.Service.needs = result },
       error => this.handleError(error)
     );
+  }
+
+  addNeed() {
+    this.closeNeeds();
+    this.clearError();
+    this.resetNeed()
+  }
+
+  editNeed(need: NeedC) {
+    this.Service.need = Object.assign({}, need);
+    this.Service.edit = true;
+    this.closeNeeds();
+  }
+
+  deleteNeed(need: NeedC) {
+    console.log(need.id);
     
+    return this.Service.deleteNeed(need.id ,need).subscribe(
+      data => this.getNeeds(this.Service.id_Client),
+      error => this.handleError(error)
+    );
+  }
+
+  closeNeeds() {
+    var element = document.getElementById("closeNeeds");
+    element.click();
+  }
+
+  resetNeed() {
+    this.Service.edit = false;
+    this.Service.need  = {
+      id: 0,
+      id_Client: null,
+      future_needs: null,
+      f_future_needs: new Date(),
+      created_at: new Date()
+    };
+  }
+
+  showModalDelete(need: NeedC) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true,
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: '¿Está seguro que desea eliminar la necesidad del registro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        swalWithBootstrapButtons.fire(
+          'Eliminado',
+          'La necesidad ha sido removida del registro.',
+          'success'
+        )
+        this.deleteNeed(need);
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'No se ha realizado ningún cambio',
+          'error'
+        )
+        this.router.navigateByUrl('/file');
+      }
+    })
   }
 
   showModal() {

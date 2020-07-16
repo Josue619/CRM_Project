@@ -86,6 +86,57 @@ class FileController {
             });
         });
     }
+    addNeed(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const need = req.body;
+            const dateA = new Date();
+            const dateN = new Date(need.f_future_needs);
+            var msg = '';
+            const needC = yield database_1.default.query('SELECT * FROM future_needs WHERE id_Client = ?', [need.id_Client]);
+            if (needC.length > 0) {
+                for (let i = 0; i < needC.length; i++) {
+                    if (need.future_needs == needC[i].future_needs) {
+                        msg = 'This need already exists in the registry';
+                    }
+                }
+            }
+            if (need.future_needs == null || need.f_future_needs == null)
+                msg = 'You must complete the requested fields';
+            if (dateN <= dateA)
+                msg = 'The date must be greater than the current date';
+            if (msg == '') {
+                yield database_1.default.query('INSERT INTO future_needs set ?', [need]);
+                return res.json("Redirect");
+            }
+            return res.status(401).json({ errors: [{ "msg": msg }] });
+        });
+    }
+    updateNeed(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const need = req.body;
+            const dateA = new Date();
+            const dateN = new Date(need.f_future_needs);
+            var msg = '';
+            if (need.future_needs == null || need.future_needs == '')
+                msg = 'You must complete the requested fields';
+            if (dateN <= dateA)
+                msg = 'The date must be greater than the current date';
+            if (msg == '') {
+                yield database_1.default.query('UPDATE future_needs set ? WHERE id = ? AND id_Client = ?', [need, id, need.id_Client]);
+                return res.json("Redirect");
+            }
+            return res.status(401).json({ errors: [{ "msg": msg }] });
+        });
+    }
+    deleteNeed(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const need = req.body;
+            yield database_1.default.query('DELETE FROM future_needs WHERE id = ? AND id_Client = ?', [id, need.id_Client]);
+            res.status(200).json({ errors: [{ "msg": "The need was removed from the client file" }] });
+        });
+    }
 }
 exports.FileController = FileController;
 const fileController = new FileController();

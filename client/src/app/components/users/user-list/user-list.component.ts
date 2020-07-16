@@ -124,7 +124,7 @@ export class UserListComponent implements OnInit {
     })
     
     swalWithBootstrapButtons.fire({
-      title: '¿Esta seguro que desea eliminar este usuario?',
+      title: '¿Está seguro que desea eliminar este usuario?',
       text: "¡No podrás revertir esto!",
       icon: 'warning',
       showCancelButton: true,

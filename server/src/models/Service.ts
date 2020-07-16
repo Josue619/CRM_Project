@@ -1,5 +1,3 @@
-import db from "../database";
-
 export class Service {
 
     id_Client: string = '0';

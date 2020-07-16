@@ -20,6 +20,15 @@ export class FileService {
   public id_Client: number;
   public error = [];
 
+  public edit: boolean = false;
+  public need: NeedC = {
+    id: 0,
+    id_Client: null,
+    future_needs: null,
+    f_future_needs: new Date(),
+    created_at: new Date()
+  };
+
   constructor(
     private http: HttpClient,
     private Token: TokenService) {
@@ -52,6 +61,23 @@ export class FileService {
 
   searchNeeds(data): Observable<NeedC> {
     return this.http.post(`${this.baseFileUrl}/serarchN`, data, {headers: this.headers});
+  }
+
+  addNeed(data): Observable<NeedC> {
+    return this.http.post(`${this.baseFileUrl}/need`, data, {headers: this.headers});
+  }
+
+  updateNeed(id: string|number, need: NeedC): Observable<NeedC> {
+    return this.http.put(`${this.baseFileUrl}/need/${id}`, need, {headers: this.headers});
+  }
+
+  deleteNeed(id: string|number, need: NeedC) {
+    const httpOptions = {
+      headers: this.headers,
+      body: need
+    };
+
+    return this.http.delete(`${this.baseFileUrl}/need/${id}`, httpOptions);
   }
 
 }

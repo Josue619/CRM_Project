@@ -31,8 +31,7 @@ export class FileComponent implements OnInit {
     private ServiceP: ProductService, 
     private req: RequestsComponent,
     private clientS: ListServiceComponent,
-    private needC: ListNeedsComponent,
-    private services: ServicessComponent) { }
+    private needC: ListNeedsComponent) { }
 
   ngOnInit(): void {
     this.getClients();
@@ -46,8 +45,6 @@ export class FileComponent implements OnInit {
   }
 
   searchClients() {
-    console.log(this.form.search);
-    
     return this.Service.searchClients(this.form).subscribe(
       result => this.loadUser(result),
       error => this.handleError(error)
@@ -68,6 +65,7 @@ export class FileComponent implements OnInit {
   }
 
   need(id: number) {
+    this.ServiceF.needs = [];
     this.needC.getNeeds(id);
   }
 

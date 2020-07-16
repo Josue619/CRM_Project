@@ -127,7 +127,7 @@ export class RequestsComponent implements OnInit {
     })
     
     swalWithBootstrapButtons.fire({
-      title: '¿Esta seguro que desea eliminar está consulta?',
+      title: '¿Está seguro que desea eliminar está consulta?',
       text: "¡No podrás revertir esto!",
       icon: 'warning',
       showCancelButton: true,

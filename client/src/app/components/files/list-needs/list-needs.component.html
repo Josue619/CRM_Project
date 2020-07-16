@@ -1,11 +1,11 @@
 <div class="container" (mouseenter)="clearError()">
 
-    <div class="modal fade" id="modalNeeds" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalNeeds" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" #content>
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header justify-content-around">
             <h5 class="modal-title" id="exampleModalLabel">Futuras Necesidades</h5>
-            <button type="button" id="closService" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+            <button type="button" id="closeNeeds" class="close btn btn-danger" data-dismiss="modal">&times;</button>
           </div>
   
           <div class="modal-body">
@@ -24,7 +24,7 @@
                         <th>Necesidad</th>
                         <th>Fecha</th>
                         <th>
-                          <button class="btn btn-success" data-toggle="modal" data-target="#modalNeed" (click)="clearError()"> Agregar <i class="fa fa-plus-circle"></i></button>
+                          <button class="btn btn-success" data-toggle="modal" data-target="#modalNeed" (click)="addNeed()"> Agregar <i class="fa fa-plus-circle"></i></button>
                         </th>
                     </tr>
                 </thead>  
@@ -33,12 +33,18 @@
                   <tr *ngFor="let need of Service.needs; index as i">
                     <td scope="row">{{i+1}}</td>
                     <td class="text-info">{{need.future_needs}} </td>
-                    <td class="text-info">{{need.f_future_needs}} </td>
+                    <td class="text-info">{{need.f_future_needs | date:'yyyy-MM-dd'}} </td>
                     <td class="text-info">
                       <div class="form-group row  mx-auto mt-3">
+
+                        <div class="mx-auto mt-3">
+                          <button class="btn btn-warning" (click)="editNeed(need)" data-toggle="modal" data-target="#modalNeed">
+                            <i class="fas fa-pen-square"></i>
+                          </button>
+                        </div>
                           
                         <div class="mx-auto mt-3">
-                          <button class="btn btn-danger"> <i class="fas fa-folder-times"></i> </button>
+                          <button class="btn btn-danger" (click)="showModalDelete(need)"> <i class="fas fa-trash"></i> </button>
                         </div>
                       </div>
                     </td>

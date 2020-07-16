@@ -12,18 +12,18 @@ export class UserComponent implements OnInit {
 
   public error = [];
   
-  public form: User = {
-    id: 0,
-    username: null,
-    email: null,
-    password: null,
-    card_id: null,
-    code_phone: null,
-    phone: null,
-    roll: null,
-    state: true,
-    created_at: new Date()
-  };
+  //public form: User = {
+  //  id: 0,
+  //  username: null,
+  //  email: null,
+  //  password: null,
+  //  card_id: null,
+  //  code_phone: null,
+  //  phone: null,
+  //  roll: null,
+  //  state: true,
+  //  created_at: new Date()
+  //};
 
   constructor(
     public Service: MainService,

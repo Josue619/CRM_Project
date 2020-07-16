@@ -13,5 +13,8 @@ router.post('/serarch', TokenValidation, fileController.searchRequest);
 /** ------------------------------ Future Needs ------------------------------------ */
 router.get('/needs/:id', TokenValidation, fileController.getNeedsClient);
 router.post('/serarchN', TokenValidation, fileController.searchNeeds);
+router.post('/need', TokenValidation, fileController.addNeed);
+router.put('/need/:id', TokenValidation, fileController.updateNeed);
+router.delete('/need/:id', TokenValidation, fileController.deleteNeed);
 
 export default router;

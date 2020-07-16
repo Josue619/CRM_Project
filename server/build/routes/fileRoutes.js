@@ -16,5 +16,8 @@ router.post('/serarch', verifyToken_1.TokenValidation, fileController_1.default.
 /** ------------------------------ Future Needs ------------------------------------ */
 router.get('/needs/:id', verifyToken_1.TokenValidation, fileController_1.default.getNeedsClient);
 router.post('/serarchN', verifyToken_1.TokenValidation, fileController_1.default.searchNeeds);
+router.post('/need', verifyToken_1.TokenValidation, fileController_1.default.addNeed);
+router.put('/need/:id', verifyToken_1.TokenValidation, fileController_1.default.updateNeed);
+router.delete('/need/:id', verifyToken_1.TokenValidation, fileController_1.default.deleteNeed);
 exports.default = router;
 //# sourceMappingURL=fileRoutes.js.map

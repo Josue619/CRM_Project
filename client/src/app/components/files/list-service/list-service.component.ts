@@ -73,7 +73,7 @@ export class ListServiceComponent implements OnInit {
     })
     
     swalWithBootstrapButtons.fire({
-      title: '¿Esta seguro que desea eliminar este usuario?',
+      title: '¿Está seguro que desea eliminar este servicio?',
       text: "¡No podrás revertir esto!",
       icon: 'warning',
       showCancelButton: true,

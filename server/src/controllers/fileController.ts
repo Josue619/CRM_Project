@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import db from '../database';
+import { Need } from 'models/Need';
 
 
 export class FileController {
@@ -68,6 +69,67 @@ export class FileController {
             "msg": "There is no match with the filter",
             }]
         });
+    }
+
+    public async addNeed(req: Request, res: Response) {
+        const need: Need = req.body;
+        const dateA = new Date();
+        const dateN = new Date(need.f_future_needs);
+        var msg: string = '';
+
+        const needC = await db.query('SELECT * FROM future_needs WHERE id_Client = ?', [need.id_Client]);
+
+        if (needC.length > 0) {
+            for (let i = 0; i < needC.length; i++) {
+                
+                if (need.future_needs == needC[i].future_needs) {
+                    msg = 'This need already exists in the registry'
+                }
+                
+            }
+        }
+        
+        if (need.future_needs == null || need.f_future_needs == null) msg = 'You must complete the requested fields';
+
+        if (dateN <= dateA) msg = 'The date must be greater than the current date';
+
+        if (msg == '') {
+            await db.query('INSERT INTO future_needs set ?', [need]); 
+            return res.json("Redirect");
+        }
+        
+        return res.status(401).json({ errors: [{ "msg": msg }] });  
+    }
+
+    public async updateNeed (req: Request, res: Response) {
+        const { id } = req.params;  
+        const need: Need = req.body;
+        const dateA = new Date();
+        const dateN = new Date(need.f_future_needs);
+        var msg: string = '';
+        
+        
+        
+        
+        
+        if (need.future_needs == null || need.future_needs == '') msg = 'You must complete the requested fields';
+
+        if (dateN <= dateA) msg = 'The date must be greater than the current date';
+        if (msg == '') {
+            await db.query('UPDATE future_needs set ? WHERE id = ? AND id_Client = ?', [need, id, need.id_Client]);
+            return res.json("Redirect");
+        }
+        
+        return res.status(401).json({ errors: [{ "msg": msg }] }); 
+
+    }
+
+    public async deleteNeed (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;  
+        const need: Need = req.body;  
+              
+        await db.query('DELETE FROM future_needs WHERE id = ? AND id_Client = ?', [id, need.id_Client]);
+        res.status(200).json({ errors: [{"msg": "The need was removed from the client file"}]});
     }
     
 }
