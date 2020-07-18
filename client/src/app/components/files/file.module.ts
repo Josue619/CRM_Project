@@ -15,11 +15,13 @@ import { ListServiceComponent } from './list-service/list-service.component';
 import { ServicessComponent } from './servicess/servicess.component';
 import { ListNeedsComponent } from './list-needs/list-needs.component';
 import { NeedsComponent } from './needs/needs.component';
+import { ListSupportComponent } from './list-support/list-support.component';
+import { SupportComponent } from './support/support.component';
 
 
 
 @NgModule({
-  declarations: [FileComponent, RequestsComponent, ListServiceComponent, ServicessComponent, ListNeedsComponent, NeedsComponent],
+  declarations: [FileComponent, RequestsComponent, ListServiceComponent, ServicessComponent, ListNeedsComponent, NeedsComponent, ListSupportComponent, SupportComponent],
   imports: [
     CommonModule,
     FormsModule,

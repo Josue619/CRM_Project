@@ -17,4 +17,11 @@ router.post('/need', TokenValidation, fileController.addNeed);
 router.put('/need/:id', TokenValidation, fileController.updateNeed);
 router.delete('/need/:id', TokenValidation, fileController.deleteNeed);
 
+/** ------------------------------ Supports ------------------------------------ */
+router.get('/supports/:id', TokenValidation, fileController.getSupports);
+router.post('/serarchS', TokenValidation, fileController.searchSuports);
+router.post('/support', TokenValidation, fileController.addSuport);
+router.put('/support/:id', TokenValidation, fileController.updateSuport);
+router.delete('/support/:id', TokenValidation, fileController.deleteSupport);
+
 export default router;

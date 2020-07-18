@@ -19,5 +19,11 @@ router.post('/serarchN', verifyToken_1.TokenValidation, fileController_1.default
 router.post('/need', verifyToken_1.TokenValidation, fileController_1.default.addNeed);
 router.put('/need/:id', verifyToken_1.TokenValidation, fileController_1.default.updateNeed);
 router.delete('/need/:id', verifyToken_1.TokenValidation, fileController_1.default.deleteNeed);
+/** ------------------------------ Supports ------------------------------------ */
+router.get('/supports/:id', verifyToken_1.TokenValidation, fileController_1.default.getSupports);
+router.post('/serarchS', verifyToken_1.TokenValidation, fileController_1.default.searchSuports);
+router.post('/support', verifyToken_1.TokenValidation, fileController_1.default.addSuport);
+router.put('/support/:id', verifyToken_1.TokenValidation, fileController_1.default.updateSuport);
+router.delete('/support/:id', verifyToken_1.TokenValidation, fileController_1.default.deleteSupport);
 exports.default = router;
 //# sourceMappingURL=fileRoutes.js.map

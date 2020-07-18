@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from 'src/app/services/file.service';
 import { Router } from '@angular/router';
-
 import Swal from 'sweetalert2';
-import { NeedC } from 'src/app/models/needC';
+import { SupportC } from 'src/app/models/supportC';
 
 @Component({
-  selector: 'app-list-needs',
-  templateUrl: './list-needs.component.html',
-  styleUrls: ['./list-needs.component.css']
+  selector: 'app-list-support',
+  templateUrl: './list-support.component.html',
+  styleUrls: ['./list-support.component.css']
 })
-export class ListNeedsComponent implements OnInit {
+export class ListSupportComponent implements OnInit {
 
   public error = [];
   public form = {
@@ -23,64 +22,55 @@ export class ListNeedsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchNeeds() {
+  searchSupports() {
     this.form.id = this.Service.id_Client;
-    return this.Service.searchNeeds(this.form).subscribe(
-      result => this.loadNeeds(result),
+    return this.Service.searchSupports(this.form).subscribe(
+      result => this.loadSupports(result),
       error => this.handleError(error)
     );
   }
 
-  loadNeeds(result) {
-    result.length == 0 ? this.getNeeds(this.Service.id_Client) : this.Service.needs = result;
-  }
-
-  getNeeds(id: number) {
+  getSupports(id: number) {
     this.Service.id_Client = id;
-    return this.Service.getNeedsClient(id.toString()).subscribe(
-      result => { this.Service.needs = result },
+    return this.Service.getSupportsClient(id.toString()).subscribe(
+      result => { this.Service.supports = result },
       error => this.handleError(error)
     );
   }
 
-  addNeed() {
-    this.closeNeeds();
+  loadSupports(result) {
+    result.length == 0 ? this.getSupports(this.Service.id_Client) : this.Service.supports = result;
+  }
+
+  addSupport() {
+    this.closeSupports();
     this.clearError();
-    this.resetNeed();
+    this.resetSuport();
   }
 
-  editNeed(need: NeedC) {
-    this.Service.need = Object.assign({}, need);
-    this.Service.edit = true;
-    this.closeNeeds();
-  }
-
-  deleteNeed(need: NeedC) {
-    console.log(need.id);
-    
-    return this.Service.deleteNeed(need.id ,need).subscribe(
-      data => this.getNeeds(this.Service.id_Client),
-      error => this.handleError(error)
-    );
-  }
-
-  closeNeeds() {
-    var element = document.getElementById("closeNeeds");
+  closeSupports() {
+    var element = document.getElementById("modalSupports");
     element.click();
   }
 
-  resetNeed() {
+  resetSuport() {
     this.Service.edit = false;
-    this.Service.need  = {
+    this.Service.support  = {
       id: 0,
       id_Client: null,
-      future_needs: null,
-      f_future_needs: new Date(),
+      support: null,
+      f_support: new Date(),
       created_at: new Date()
     };
   }
 
-  showModalDelete(need: NeedC) {
+  editSupport(support: SupportC) {
+    this.Service.support = Object.assign({}, support);
+    this.Service.edit = true;
+    this.closeSupports();
+  }
+
+  showModalDelete(support: SupportC) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -90,7 +80,7 @@ export class ListNeedsComponent implements OnInit {
     })
     
     swalWithBootstrapButtons.fire({
-      title: '¿Está seguro que desea eliminar la necesidad del registro?',
+      title: '¿Está seguro que desea eliminar el soporte del registro?',
       text: "¡No podrás revertir esto!",
       icon: 'warning',
       showCancelButton: true,
@@ -103,10 +93,10 @@ export class ListNeedsComponent implements OnInit {
       if (result.value) {
         swalWithBootstrapButtons.fire(
           'Eliminado',
-          'La necesidad ha sido removida del registro.',
+          'El soporte ha sido removido del registro.',
           'success'
         )
-        this.deleteNeed(need);
+        this.deleteSupport(support);
       } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel
@@ -119,6 +109,13 @@ export class ListNeedsComponent implements OnInit {
         this.router.navigateByUrl('/file');
       }
     })
+  }
+
+  deleteSupport(support: SupportC) {
+    return this.Service.deleteSupport(support.id ,support).subscribe(
+      data => this.getSupports(this.Service.id_Client),
+      error => this.handleError(error)
+    );
   }
 
   showModal() {

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import db from '../database';
 import { Need } from 'models/Need';
+import { Support } from 'models/Support';
 
 
 export class FileController {
@@ -89,7 +90,7 @@ export class FileController {
             }
         }
         
-        if (need.future_needs == null || need.f_future_needs == null) msg = 'You must complete the requested fields';
+        if (need.future_needs == null || need.future_needs == ''  || need.f_future_needs == null) msg = 'You must complete the requested fields';
 
         if (dateN <= dateA) msg = 'The date must be greater than the current date';
 
@@ -108,13 +109,10 @@ export class FileController {
         const dateN = new Date(need.f_future_needs);
         var msg: string = '';
         
-        
-        
-        
-        
         if (need.future_needs == null || need.future_needs == '') msg = 'You must complete the requested fields';
 
         if (dateN <= dateA) msg = 'The date must be greater than the current date';
+
         if (msg == '') {
             await db.query('UPDATE future_needs set ? WHERE id = ? AND id_Client = ?', [need, id, need.id_Client]);
             return res.json("Redirect");
@@ -130,6 +128,86 @@ export class FileController {
               
         await db.query('DELETE FROM future_needs WHERE id = ? AND id_Client = ?', [id, need.id_Client]);
         res.status(200).json({ errors: [{"msg": "The need was removed from the client file"}]});
+    }
+
+    /** ------------------------------------------------- Supports ---------------------------------------------------- */
+
+    public async getSupports (req: Request, res: Response) {
+        const { id } = req.params;   
+        const supportC = await db.query('SELECT * FROM supports WHERE id_Client = ? ORDER BY f_support LIMIT 10', [id]);
+        if (supportC.length > 0) {
+            return res.json(supportC);
+        }
+        return res.status(401).json({ errors: [{ "msg": "The client does not have any support in the registry" }] });
+    }
+
+    public async searchSuports (req: Request, res: Response) {
+        const supportC = await db.query('SELECT * FROM supports WHERE support' + " like '%" + req.body.search + "%' ORDER BY f_support LIMIT 10");
+        if (supportC.length > 0) {
+            return res.status(200).json(supportC);
+        }
+        return res.status(401).json({ errors: [{
+            "msg": "There is no match with the filter",
+            }]
+        });
+    }
+
+    public async addSuport(req: Request, res: Response) {  
+        const suport: Support = req.body;
+        const dateA = new Date();
+        const dateS = new Date(suport.f_support);
+        var msg: string = '';
+
+        const supportC = await db.query('SELECT * FROM supports WHERE id_Client = ?', [suport.id_Client]);
+
+        if (supportC.length > 0) {
+            for (let i = 0; i < supportC.length; i++) {
+                
+                if (suport.support == supportC[i].support && suport.in_charge == supportC[i].in_charge) {
+                    msg = 'This support already exists in the registry'
+                }
+                
+            }
+        }
+        
+        if (suport.support == null || suport.support == ''  || suport.f_support == null || suport.in_charge == null || suport.in_charge == '') msg = 'You must complete the requested fields';
+
+        if (dateS > dateA) msg = 'The date must be less than or equal to the current date';
+
+        if (msg == '') {
+            await db.query('INSERT INTO supports set ?', [suport]); 
+            return res.json("Redirect");
+        }
+        
+        return res.status(401).json({ errors: [{ "msg": msg }] });  
+    }
+
+    public async updateSuport(req: Request, res: Response) {
+        const { id } = req.params;  
+        const suport: Support = req.body;
+        const dateA = new Date();
+        const dateS = new Date(suport.f_support);
+        var msg: string = '';
+        
+        if (suport.support == '' || suport.f_support == null || suport.in_charge == '') msg = 'You must complete the requested fields';
+
+        if (dateS > dateA) msg = 'The date must be less than or equal to the current date';
+
+        if (msg == '') {
+
+            await db.query('UPDATE supports set ? WHERE id = ? AND id_Client = ?', [suport, id, suport.id_Client]);
+            return res.json("Redirect");
+        }
+        
+        return res.status(401).json({ errors: [{ "msg": msg }] });  
+    }
+
+    public async deleteSupport (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;  
+        const support: Support = req.body;  
+              
+        await db.query('DELETE FROM supports WHERE id = ? AND id_Client = ?', [id, support.id_Client]);
+        res.status(200).json({ errors: [{"msg": "The detail of the provided support was removed from the file"}]});
     }
     
 }

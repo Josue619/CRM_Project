@@ -57,6 +57,7 @@ CREATE TABLE supports(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_Client INT NOT NULL,
     support TEXT NOT NULL,
+    in_charge TEXT NOT NULL,
     f_support DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FOREIGN KEY fk_supports_users (id_Client) REFERENCES users (id)

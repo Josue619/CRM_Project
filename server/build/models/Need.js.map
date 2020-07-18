@@ -1,1 +1,1 @@
-{"version":3,"file":"Need.js","sourceRoot":"","sources":["../../src/models/Need.ts"],"names":[],"mappings":";;;AAAA,MAAa,IAAI;IAMb;QAJA,cAAS,GAAW,GAAG,CAAC;QACxB,iBAAY,GAAW,EAAE,CAAC;QAC1B,mBAAc,GAAS,IAAI,IAAI,EAAE,CAAC;IAEjB,CAAC;CAErB;AARD,oBAQC"}
+{"version":3,"file":"Need.js","sourceRoot":"","sources":["../../src/models/Need.ts"],"names":[],"mappings":";;;AAAA,MAAa,IAAI;IAAjB;QACI,cAAS,GAAW,GAAG,CAAC;QACxB,iBAAY,GAAW,EAAE,CAAC;QAC1B,mBAAc,GAAS,IAAI,IAAI,EAAE,CAAC;IACtC,CAAC;CAAA;AAJD,oBAIC"}

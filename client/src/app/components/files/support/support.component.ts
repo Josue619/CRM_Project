@@ -4,11 +4,11 @@ import { FileService } from 'src/app/services/file.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-needs',
-  templateUrl: './needs.component.html',
-  styleUrls: ['./needs.component.css']
+  selector: 'app-support',
+  templateUrl: './support.component.html',
+  styleUrls: ['./support.component.css']
 })
-export class NeedsComponent implements OnInit {
+export class SupportComponent implements OnInit {
 
   public error = [];
 
@@ -17,36 +17,36 @@ export class NeedsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addNeed() {
-    delete this.Service.need.id;
-    delete this.Service.need.created_at;
-    this.Service.need.id_Client = this.Service.id_Client;
+  addSupport() {
+    delete this.Service.support.id;
+    delete this.Service.support.created_at;
+    this.Service.support.id_Client = this.Service.id_Client;
 
-    return this.Service.addNeed(this.Service.need).subscribe(
+    return this.Service.addSupport(this.Service.support).subscribe(
       result => this.handleResponse(result),
       error => this.handleError(error)
     );
   }
 
-  updateNeed() {
-    delete this.Service.need.created_at;
-    return this.Service.updateNeed(this.Service.need.id, this.Service.need).subscribe(
+  updateSupport() {
+    delete this.Service.support.created_at;
+    return this.Service.updateSupport(this.Service.support.id, this.Service.support).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
     );
   }
 
-  getNeeds() {
-    return this.Service.getNeedsClient(this.Service.id_Client.toString()).subscribe(
-      result => { this.Service.needs = result },
+  getSupports() {
+    return this.Service.getSupportsClient(this.Service.id_Client.toString()).subscribe(
+      result => { this.Service.supports = result },
       error => this.handleError(error)
     );
   }
 
   cancel() {
-    var element = document.getElementById("closeNeed");
+    var element = document.getElementById("modalSupport");
     element.click();
-    this.getNeeds();
+    this.getSupports();
   }
 
   showModal() {
@@ -60,7 +60,7 @@ export class NeedsComponent implements OnInit {
   }
 
   cancelBtn() {
-    var element = document.getElementById("cancelBtn");
+    var element = document.getElementById("cancelBtnS");
     element.click();
   }
 
@@ -71,7 +71,7 @@ export class NeedsComponent implements OnInit {
 
   handleResponse(result) {
     if (result == 'Redirect') {
-      this.Service.need = {};
+      this.Service.support = {};
       this.cancelBtn();
     }
     

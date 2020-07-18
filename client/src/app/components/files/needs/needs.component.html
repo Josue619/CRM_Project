@@ -18,7 +18,7 @@
                 <br>
 
                 <h4>Necesidad</h4>
-                <textarea class="transparent" name="" id="" [(ngModel)]="this.Service.need.future_needs" cols="30" rows="4" placeholder="Texto..."></textarea>
+                <textarea class="transparent" name="future_needs" [(ngModel)]="this.Service.need.future_needs" cols="30" rows="4" placeholder="Texto..."></textarea>
 
                 <h4>Fecha</h4>
                 <input class="transparent large" type="date" name="date" [ngModel] ="this.Service.need.f_future_needs | date:'yyyy-MM-dd'" (ngModelChange)="this.Service.need.f_future_needs = $event">

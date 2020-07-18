@@ -4,6 +4,7 @@ import { TokenService } from 'src/app/services/token.service';
 import { Observable } from 'rxjs';
 import { RequestC } from '../models/requestC';
 import { NeedC } from '../models/needC';
+import { SupportC } from '../models/supportC';
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class FileService {
   private baseFileUrl = 'http://localhost:3000/api/file';
 
   public requests: any = [];
+  public supports: any = [];
   public needs: any = [];
   public id_Client: number;
   public error = [];
@@ -26,6 +28,14 @@ export class FileService {
     id_Client: null,
     future_needs: null,
     f_future_needs: new Date(),
+    created_at: new Date()
+  };
+
+  public support: SupportC = {
+    id: 0,
+    id_Client: null,
+    support: null,
+    f_support: new Date(),
     created_at: new Date()
   };
 
@@ -78,6 +88,31 @@ export class FileService {
     };
 
     return this.http.delete(`${this.baseFileUrl}/need/${id}`, httpOptions);
+  }
+
+  searchSupports(data): Observable<SupportC> {
+    return this.http.post(`${this.baseFileUrl}/serarchS`, data, {headers: this.headers});
+  }
+
+  getSupportsClient(id: string): Observable<SupportC> {
+    return this.http.get(`${this.baseFileUrl}/supports/${id}`, {headers: this.headers});
+  }
+
+  addSupport(data): Observable<SupportC> {
+    return this.http.post(`${this.baseFileUrl}/support`, data, {headers: this.headers});
+  }
+
+  updateSupport(id: string|number, support: SupportC): Observable<SupportC> {
+    return this.http.put(`${this.baseFileUrl}/support/${id}`, support, {headers: this.headers});
+  }
+
+  deleteSupport(id: string|number, support: SupportC) {
+    const httpOptions = {
+      headers: this.headers,
+      body: support
+    };
+
+    return this.http.delete(`${this.baseFileUrl}/support/${id}`, httpOptions);
   }
 
 }
