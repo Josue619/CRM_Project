@@ -9,9 +9,10 @@ import { ServicessComponent } from '../servicess/servicess.component';
 import Swal from 'sweetalert2';
 import { ListNeedsComponent } from '../list-needs/list-needs.component';
 import { ListSupportComponent } from '../list-support/list-support.component';
+import { ListNotesComponent } from '../list-notes/list-notes.component';
 
 @Component({
-  providers: [RequestsComponent, ListServiceComponent, ServicessComponent, ListNeedsComponent, ListSupportComponent],
+  providers: [RequestsComponent, ListServiceComponent, ListNeedsComponent, ListSupportComponent, ListNeedsComponent, ListNotesComponent],
   selector: 'app-file',
   templateUrl: './file.component.html',
   styleUrls: ['./file.component.css']
@@ -33,7 +34,8 @@ export class FileComponent implements OnInit {
     private req: RequestsComponent,
     private clientS: ListServiceComponent,
     private needC: ListNeedsComponent,
-    private supportC: ListSupportComponent) { }
+    private supportC: ListSupportComponent,
+    private noteC: ListNotesComponent) { }
 
   ngOnInit(): void {
     this.getClients();
@@ -74,6 +76,11 @@ export class FileComponent implements OnInit {
   support(id: number) {
     this.ServiceF.supports = [];
     this.supportC.getSupports(id);
+  }
+
+  note(id: number) {
+    this.ServiceF.todos = [];
+    this.noteC.getNotes(id);
   }
 
   clearRequest() {

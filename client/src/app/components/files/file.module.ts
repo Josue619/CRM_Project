@@ -17,11 +17,13 @@ import { ListNeedsComponent } from './list-needs/list-needs.component';
 import { NeedsComponent } from './needs/needs.component';
 import { ListSupportComponent } from './list-support/list-support.component';
 import { SupportComponent } from './support/support.component';
+import { ListNotesComponent } from './list-notes/list-notes.component';
+import { NotesComponent } from './notes/notes.component';
 
 
 
 @NgModule({
-  declarations: [FileComponent, RequestsComponent, ListServiceComponent, ServicessComponent, ListNeedsComponent, NeedsComponent, ListSupportComponent, SupportComponent],
+  declarations: [FileComponent, RequestsComponent, ListServiceComponent, ServicessComponent, ListNeedsComponent, NeedsComponent, ListSupportComponent, SupportComponent, ListNotesComponent, NotesComponent],
   imports: [
     CommonModule,
     FormsModule,

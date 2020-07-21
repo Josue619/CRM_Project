@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { RequestC } from '../models/requestC';
 import { NeedC } from '../models/needC';
 import { SupportC } from '../models/supportC';
+import { Todo } from '../models/todoC';
 
 
 @Injectable({
@@ -18,6 +19,7 @@ export class FileService {
 
   public requests: any = [];
   public supports: any = [];
+  public todos: Todo[] = [];
   public needs: any = [];
   public id_Client: number;
   public error = [];
@@ -39,11 +41,15 @@ export class FileService {
     created_at: new Date()
   };
 
+  public anyRemainingModel: boolean = true;
+
   constructor(
     private http: HttpClient,
     private Token: TokenService) {
     this.headers = this.headers.append('auth_token', this.Token.get());
   }
+
+  /** ------------------------------------------- Requests Routs ---------------------------------- */
 
   getRequests(id: string): Observable<RequestC> {
     return this.http.get(`${this.baseFileUrl}/requests/${id}`, {headers: this.headers});
@@ -64,6 +70,8 @@ export class FileService {
   searchRequest(data): Observable<RequestC> {
     return this.http.post(`${this.baseFileUrl}/serarch`, data, {headers: this.headers});
   }
+
+  /** ------------------------------------------- Neeeds Routs ---------------------------------- */
 
   getNeedsClient(id: string): Observable<NeedC> {
     return this.http.get(`${this.baseFileUrl}/needs/${id}`, {headers: this.headers});
@@ -90,6 +98,8 @@ export class FileService {
     return this.http.delete(`${this.baseFileUrl}/need/${id}`, httpOptions);
   }
 
+  /** ------------------------------------------- Supports Routs ---------------------------------- */
+
   searchSupports(data): Observable<SupportC> {
     return this.http.post(`${this.baseFileUrl}/serarchS`, data, {headers: this.headers});
   }
@@ -113,6 +123,28 @@ export class FileService {
     };
 
     return this.http.delete(`${this.baseFileUrl}/support/${id}`, httpOptions);
+  }
+
+  /** ------------------------------------------- Notes Routs ---------------------------------- */
+
+  addTodo(todoTitle: string): void {
+
+  }
+
+  remaining(): number {
+    return this.todos.filter(todo => !todo.completed).length;
+  }
+
+  anyRemaining(): boolean {
+    return this.remaining() !== 0;
+  }
+
+  checkAllTodos(): void {
+    
+  }
+
+  clearCompleted(): void {
+    const completed = this.todos.filter(todo => todo.completed).map(todo => todo.id);
   }
 
 }

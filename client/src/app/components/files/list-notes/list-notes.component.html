@@ -1,0 +1,43 @@
+<div class="container">
+
+    <div class="modal fade" id="modalNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" #content>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header justify-content-around">
+                <h5 class="modal-title" id="exampleModalLabel">Notas</h5>
+                <button type="button" id="closeNeeds" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+              </div>
+          
+              <div class="modal-body">
+
+                <input type="text" class="todo-input" placeholder="What needs to be done" [(ngModel)]="todoTitle" (keyup.enter)="addTodo()">
+
+                <notes *ngFor="let todo of todosFiltered()"
+                [todo]="todo">
+                </notes>
+
+                <div class="extra-container">
+                    <div><label><input type="checkbox" (change)="Service.checkAllTodos()"  [(ngModel)]="!Service.anyRemainingModel"> Check All</label></div>
+                    <div>{{ Service.remaining() }} items left</div>
+                </div>
+
+                <div class="extra-container">
+                    <div>
+                      <button [ngClass]="{'active': filter === 'all'}" (click)="filter='all'">All</button>
+                      <button [ngClass]="{'active': filter === 'active'}" (click)="filter='active'">Active</button>
+                      <button [ngClass]="{'active': filter === 'completed'}" (click)="filter='completed'">Completed</button>
+                    </div>
+                
+                    <div *ngIf="atLeastOneCompleted()">
+                      <button (click)="Service.clearCompleted()">Clear Completed</button>
+                    </div>
+                
+                </div>
+
+              </div>
+          
+            </div>
+        </div>
+    </div>
+  
+</div>
