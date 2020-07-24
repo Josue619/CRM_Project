@@ -211,6 +211,59 @@ class FileController {
             res.status(200).json({ errors: [{ "msg": "The detail of the provided support was removed from the file" }] });
         });
     }
+    /** ------------------------------------------------- Notes ---------------------------------------------------- */
+    getNotes(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const supportC = yield database_1.default.query('SELECT * FROM notes WHERE id_Client = ?', [id]);
+            if (supportC.length > 0) {
+                return res.json(supportC);
+            }
+            return res.status(401).json({ errors: [{ "msg": "The client does not have any notes in the registry" }] });
+        });
+    }
+    addNote(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const note = req.body;
+            if (note.title.trim().length == 0)
+                res.status(401).json({ errors: [{ "msg": "Writing the note detail required" }] });
+            yield database_1.default.query('INSERT INTO notes set ?', [note]);
+            res.status(200).json({ errors: [{ "msg": "The notes was successfully created" }] });
+        });
+    }
+    updateNote(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const note = req.body;
+            yield database_1.default.query('UPDATE notes set ? WHERE id = ? AND id_Client = ?', [note, id, note.id_Client]);
+            res.status(200).json({ errors: [{ "msg": "The note was updated" }] });
+        });
+    }
+    deleteNote(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const note = req.body;
+            yield database_1.default.query('DELETE FROM notes WHERE id = ? AND id_Client = ?', [id, note.id_Client]);
+            res.status(200).json({ errors: [{ "msg": "The note was removed from the client file" }] });
+        });
+    }
+    checkAll(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            yield database_1.default.query('UPDATE notes set ? WHERE id_Client = ?', [req.body, id]);
+            res.status(200).json({ errors: [{ "msg": "The notes was updated" }] });
+        });
+    }
+    deleteCompleted(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const notes = req.body;
+            for (let i = 0; i < notes.length; i++) {
+                yield database_1.default.query('DELETE FROM notes WHERE id = ? AND id_Client = ?', [notes[i], id]);
+            }
+            res.status(200).json({ errors: [{ "msg": "Marked notes have been removed" }] });
+        });
+    }
 }
 exports.FileController = FileController;
 const fileController = new FileController();

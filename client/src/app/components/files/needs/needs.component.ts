@@ -66,7 +66,6 @@ export class NeedsComponent implements OnInit {
 
   clearError() {
     this.error = [];
-    //this.cancelBtn();
   }
 
   handleResponse(result) {

@@ -127,8 +127,25 @@ export class FileService {
 
   /** ------------------------------------------- Notes Routs ---------------------------------- */
 
-  addTodo(todoTitle: string): void {
+  getNotes(id: string): Observable<Todo> {
+    return this.http.get(`${this.baseFileUrl}/notes/${id}`, {headers: this.headers});
+  }
 
+  addNote(data): Observable<Todo> {
+    return this.http.post(`${this.baseFileUrl}/notes`, data, {headers: this.headers});
+  }
+
+  updateNote(id: string|number, note: Todo): Observable<Todo> {
+    return this.http.put(`${this.baseFileUrl}/note/${id}`, note, {headers: this.headers});
+  }
+
+  deleteNote(id: string|number, note: Todo) {
+    const httpOptions = {
+      headers: this.headers,
+      body: note
+    };
+
+    return this.http.delete(`${this.baseFileUrl}/note/${id}`, httpOptions);
   }
 
   remaining(): number {
@@ -139,12 +156,19 @@ export class FileService {
     return this.remaining() !== 0;
   }
 
-  checkAllTodos(): void {
-    
+  checkAllNotes(id: string|number, value: boolean) {
+    return this.http.patch(`${this.baseFileUrl}/notes/${id}`, {completed: value}, {headers: this.headers}); 
   }
 
-  clearCompleted(): void {
-    const completed = this.todos.filter(todo => todo.completed).map(todo => todo.id);
+  clearCompleted(id: string|number, completed: any) {
+
+    const httpOptions = {
+      headers: this.headers,
+      body: completed
+    };
+    
+    return this.http.delete(`${this.baseFileUrl}/notes/${id}`, httpOptions);
+
   }
 
 }

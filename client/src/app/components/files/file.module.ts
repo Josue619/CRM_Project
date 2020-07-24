@@ -28,7 +28,7 @@ import { NotesComponent } from './notes/notes.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    FileRoutingModule,
+    FileRoutingModule
   ],
   providers: [ MainService, FileService, AuthService, TokenService, ProductService, AfterLoginService ]
 })

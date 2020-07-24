@@ -24,4 +24,12 @@ router.post('/support', TokenValidation, fileController.addSuport);
 router.put('/support/:id', TokenValidation, fileController.updateSuport);
 router.delete('/support/:id', TokenValidation, fileController.deleteSupport);
 
+/** ------------------------------ Notes ------------------------------------ */
+router.get('/notes/:id', TokenValidation, fileController.getNotes);
+router.post('/notes', TokenValidation, fileController.addNote);
+router.put('/note/:id', TokenValidation, fileController.updateNote);
+router.patch('/notes/:id', TokenValidation, fileController.checkAll);
+router.delete('/note/:id', TokenValidation, fileController.deleteNote);
+router.delete('/notes/:id', TokenValidation, fileController.deleteCompleted);
+
 export default router;

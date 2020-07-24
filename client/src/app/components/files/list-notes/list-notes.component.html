@@ -10,26 +10,26 @@
           
               <div class="modal-body">
 
-                <input type="text" class="todo-input" placeholder="What needs to be done" [(ngModel)]="todoTitle" (keyup.enter)="addTodo()">
+                <input type="text" class="todo-input" placeholder="Qué se debe hacer" [(ngModel)]="note.title" (keyup.enter)="addTodo()">
 
                 <notes *ngFor="let todo of todosFiltered()"
                 [todo]="todo">
                 </notes>
 
                 <div class="extra-container">
-                    <div><label><input type="checkbox" (change)="Service.checkAllTodos()"  [(ngModel)]="!Service.anyRemainingModel"> Check All</label></div>
-                    <div>{{ Service.remaining() }} items left</div>
+                  <div><label><input type="checkbox" (change)="checkAllNotes()"  [(ngModel)]="!Service.anyRemainingModel"> Marcar todas</label></div>
+                  <div>{{ Service.remaining() }}  notas restantes</div>
                 </div>
 
                 <div class="extra-container">
                     <div>
-                      <button [ngClass]="{'active': filter === 'all'}" (click)="filter='all'">All</button>
-                      <button [ngClass]="{'active': filter === 'active'}" (click)="filter='active'">Active</button>
-                      <button [ngClass]="{'active': filter === 'completed'}" (click)="filter='completed'">Completed</button>
+                      <button [ngClass]="{'active': filter === 'all'}" (click)="filter='all'">Todas</button>
+                      <button [ngClass]="{'active': filter === 'active'}" (click)="filter='active'">Activas</button>
+                      <button [ngClass]="{'active': filter === 'completed'}" (click)="filter='completed'">Completadas</button>
                     </div>
                 
                     <div *ngIf="atLeastOneCompleted()">
-                      <button (click)="Service.clearCompleted()">Clear Completed</button>
+                      <button (click)="showModalDelete()">Eliminar completadas</button>
                     </div>
                 
                 </div>

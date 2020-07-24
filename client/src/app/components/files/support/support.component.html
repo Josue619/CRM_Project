@@ -5,7 +5,7 @@
         <div class="modal-content">
           <div class="modal-header justify-content-around">
             <h5 class="modal-title" id="exampleModalLabel"> {{ !this.Service.edit ? 'Agregar Soporte' : 'Modificar Soporte' }} </h5>
-            <button type="button" id="closeSuport" class="close btn btn-danger" data-dismiss="modal" (click)="clearError()">&times;</button>
+            <button type="button" id="closeSuport" class="close btn btn-danger" data-dismiss="modal" (click)="clearError()" (click)="cancelBtn()">&times;</button>
           </div>
   
           <div class="modal-body">
@@ -36,7 +36,7 @@
                     Cancelar
                   </button>
                   <button class="primary ghost" (click)="this.Service.edit ? updateSupport() : addSupport()">
-                    Agregar
+                    {{ !this.Service.edit ? 'Agregar' : 'Modificar' }}
                   </button>
                 </div>
 
