@@ -115,7 +115,7 @@ export class ListNotesComponent implements OnInit {
     this.Service.todos = this.Service.todos.filter(todo => !todo.completed);
   }
 
-  showModalDelete(service: any) {
+  showModalDelete() {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
