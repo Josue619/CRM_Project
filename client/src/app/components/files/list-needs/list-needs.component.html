@@ -24,7 +24,7 @@
                         <th>Necesidad</th>
                         <th>Fecha</th>
                         <th>
-                          <button class="btn btn-success" data-toggle="modal" data-target="#modalNeed" (click)="addNeed()"> Agregar <i class="fa fa-plus-circle"></i></button>
+                          <button class="btn btn-success" data-backdrop="false" data-toggle="modal" data-target="#modalNeed" (click)="addNeed()"> Agregar <i class="fa fa-plus-circle"></i></button>
                         </th>
                     </tr>
                 </thead>  
@@ -38,7 +38,7 @@
                       <div class="form-group row  mx-auto mt-3">
 
                         <div class="mx-auto mt-3">
-                          <button class="btn btn-warning" (click)="editNeed(need)" data-toggle="modal" data-target="#modalNeed">
+                          <button class="btn btn-warning" (click)="editNeed(need)" data-backdrop="false" data-toggle="modal" data-target="#modalNeed">
                             <i class="fas fa-pen-square"></i>
                           </button>
                         </div>

@@ -49,7 +49,7 @@ export class ListSupportComponent implements OnInit {
   }
 
   closeSupports() {
-    var element = document.getElementById("modalSupports");
+    var element = document.getElementById("closeSuports");
     element.click();
   }
 
