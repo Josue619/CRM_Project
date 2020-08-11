@@ -1,1 +1,18 @@
-<p>events works!</p>
+<div class="row">
+
+    <div class="col-md-9 col-12">
+        <p-fullCalendar #fc [events]="events" [options]="optionsMonth"></p-fullCalendar>
+    </div>
+    
+    <div class="col-md-3 col-12">
+        <p-fullCalendar #fc [events]="events" [options]="optionsList"></p-fullCalendar>
+
+        <div class="text-center mb-3 mt-4">
+            <h4>Leyenda</h4>
+            <span class="badge badge-pill legend-task mr-2">Tarea</span>
+            <span class="badge badge-pill legend-appointment mr-2">Cita</span>
+            <span class="badge badge-pill legend-meeting mr-2">Reunión</span>
+        </div>
+    </div>
+
+</div>
