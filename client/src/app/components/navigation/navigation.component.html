@@ -4,22 +4,22 @@
   <div class="bg-light border-right" id="sidebar-wrapper">
     <div class="sidebar-heading"> Menú lateral</div>
     <div class="list-group list-group-flush">
-      
+
       <div class="dropdown">
-        <button class="list-group-item list-group-item-action bg-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Mantenimiento
+        <button class="list-group-item list-group-item-action bg-light dropdown-toggle" type="button"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-bars icono"></i>Mantenimiento
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" routerLink="users" (click)="sideBar()">Clientes</a>
-          <a class="dropdown-item" routerLink="products" (click)="sideBar()">Productos</a>
-          <a class="dropdown-item" href="#" (click)="sideBar()">Otros</a>
+          <a class="dropdown-item" routerLink="users" (click)="sideBar()"> <i class="fas fa-users icono"></i> Clientes</a>
+          <a class="dropdown-item" routerLink="products" (click)="sideBar()"> <i class="fas fa-shopping-cart icono"></i> Productos</a>
         </div>
       </div>
 
-      <a routerLink="file" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Expediente</a>
-      <a routerLink="events" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Planificador</a>
+      <a routerLink="file" class="list-group-item list-group-item-action bg-light" (click)="sideBar()"> <i class="far fa-folder-open icono"> </i>Expediente</a>
+      <a routerLink="planner" class="list-group-item list-group-item-action bg-light" (click)="sideBar()"> <i class="far fa-calendar-alt icono"></i>Planificador</a>
       <a href="#" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Status</a>
-      
+
     </div>
   </div>
 
@@ -33,20 +33,21 @@
       </button>
 
       <a class="navbar-brand" href="#"> CRM <span class="text-primary">System</span>
-        <img src="https://img.icons8.com/color/48/000000/casta-rica-circular.png"/>
+        <img src="https://img.icons8.com/color/48/000000/casta-rica-circular.png" />
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+        aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    
+
       <ul class="navbar-nav mx-auto">
         <li class="nav-item active">
           <a class="nav-link" href="#" routerLink="/">Home <span class="sr-only">(current)</span></a>
         </li>
       </ul>
-    
+
       <div class="collapse navbar-collapse" id="navbarColor02">
-    
+
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" routerLink="login" *ngIf="!loggedIn">Login <span class="sr-only">(current)</span></a>
@@ -55,17 +56,24 @@
             <a class="nav-link" routerLink="signup" *ngIf="!loggedIn">Register</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" routerLink="profile" *ngIf="loggedIn">Profile</a>
+            <a class="nav-link" routerLink="profile" *ngIf="loggedIn">Profile</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="#" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
+            <a class="nav-link" href="#" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
           </li>
         </ul>
-    
+
       </div>
+
     </nav>
+
+    <div class="container-fluid">
+
+      <router-outlet></router-outlet>
+
+    </div>
 
   </div>
 
-  
+
 </div>

@@ -28,7 +28,7 @@ export class FileController {
     }
 
     public async searchRequest(req: Request, res: Response) {
-        const product = await db.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%' AND state = ?", [true]);
+        const product = await db.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%'AND state = ?", [true]);
         if (product.length > 0) {
             return res.status(200).json(product);
         }

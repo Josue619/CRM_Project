@@ -38,7 +38,7 @@ class FileController {
     }
     searchRequest(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const product = yield database_1.default.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%' AND state = ?", [true]);
+            const product = yield database_1.default.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%'AND state = ?", [true]);
             if (product.length > 0) {
                 return res.status(200).json(product);
             }

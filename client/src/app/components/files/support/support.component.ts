@@ -44,7 +44,7 @@ export class SupportComponent implements OnInit {
   }
 
   cancel() {
-    var element = document.getElementById("modalSupport");
+    var element = document.getElementById("closeSuport");
     element.click();
     this.getSupports();
   }
