@@ -24,6 +24,8 @@
     "@fullcalendar/interaction": "^5.2.0",
     "@fullcalendar/list": "^5.2.0",
     "@fullcalendar/timegrid": "^5.2.0",
+    "ddr-block-list": "^8.0.2",
+    "ddr-configuration": "^8.0.1",
     "moment": "^2.27.0",
     "ngx-pagination": "^5.0.0",
     "primeicons": "^4.0.0",

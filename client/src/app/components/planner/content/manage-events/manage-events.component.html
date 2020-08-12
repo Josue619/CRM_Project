@@ -1,1 +1,121 @@
-<p>manage-events works!</p>
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-12">
+            <app-header></app-header>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-12">
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h1>{{ mode === MODE_EDIT ? 'Editar' : 'Añadir' }} evento </h1>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-12">
+
+                                <form #form="ngForm" (ngSubmit)="addEditEvent()">
+
+                                    <div class="row form-group form-class">
+
+                                        <div class="col-md-4 col-12">
+                                            <label for="title">Titulo</label>
+                                            <input type="text" name="title" id="title" class="form-control" [(ngModel)]="event.title" required>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <label for="start">Inicio</label>
+                                            <br>
+                                            <p-calendar [locale]="localeEs" name="start" id="start"
+                                                dateFormat="dd/mm/yy" [(ngModel)]="event.startDate" showTime="true"
+                                                [minDate]="today"></p-calendar>
+
+                                            <p-checkbox name="showEnd" binary="true" label="¿Tiene fin el evento?"
+                                                [(ngModel)]="showEnd"></p-checkbox>
+                                        </div>
+
+                                        <div class="col-md-4 col-12" *ngIf="showEnd">
+                                            <label for="end">Fin</label>
+                                            <br>
+                                            <p-calendar [locale]="localeEs" name="end" id="end" dateFormat="dd/mm/yy"
+                                                [(ngModel)]="event.endDate" showTime="true" [minDate]="event.startDate">
+                                            </p-calendar>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row form-group">
+
+                                        <div class="col-md-4 col-12">
+
+                                            <label for="type">Tipo de evento</label>
+                                            <select class="form-control" name="type" id="type"
+                                                [(ngModel)]="event.className">
+                                                <option value="task">Tarea</option>
+                                                <option value="appointment">Cita</option>
+                                                <option value="meeting">Reunión</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+
+                                            <label for="url">URL</label>
+                                            <input type="text" class="form-control" name="url" id="url"
+                                                [(ngModel)]="event.url">
+
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+
+                                            <label for="description">Descripción</label>
+                                            <textarea class="form-control" name="description" id="description"
+                                                [(ngModel)]="event.description"></textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-12">
+
+                                            <button type="button" type="submit"
+                                                class="btn btn-primary btn-block">{{ mode === MODE_ADD ? 'Añadir' : 'Editar' }}
+                                                Evento</button>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

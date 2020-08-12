@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from 'primeng/fullcalendar';
@@ -12,6 +12,11 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ProfileComponent } from './components/profile/profile.component';
 import { AutofocusDirective } from './Directives/autofocus.directive';
 
+import { DdrConfigurationModule, DdrConfigurationService } from 'ddr-configuration';
+
+export function configFactory(provider: DdrConfigurationService) {
+  return () => provider.getDataFromJSON('./assets/locale//localeEs.json');
+}
 
 @NgModule({
   declarations: [
@@ -28,8 +33,17 @@ import { AutofocusDirective } from './Directives/autofocus.directive';
     CalendarModule,
     CheckboxModule,
     BrowserAnimationsModule,
+    DdrConfigurationModule
   ],
-  providers: [],
+  providers: [
+    DdrConfigurationService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configFactory,
+      deps: [ DdrConfigurationService ],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

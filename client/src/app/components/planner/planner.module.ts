@@ -15,6 +15,10 @@ import { ListEventsComponent } from './content/list-events/list-events.component
 import { ManageEventsComponent } from './content/manage-events/manage-events.component';
 import { PlannerComponent } from './planner/planner.component';
 
+import { PlannerService } from 'src/app/services/planner.service';
+
+import { DdrBlockListModule } from 'ddr-block-list';
+
 
 
 @NgModule({
@@ -27,8 +31,10 @@ import { PlannerComponent } from './planner/planner.component';
     FullCalendarModule,
     CalendarModule,
     CheckboxModule,
+    DdrBlockListModule
   ],
   providers: [ 
+    PlannerService
   ]
 })
 export class PlannerModule { }
