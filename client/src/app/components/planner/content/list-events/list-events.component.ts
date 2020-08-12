@@ -11,14 +11,17 @@ import { PlannerService } from 'src/app/services/planner.service';
 export class ListEventsComponent implements OnInit {
 
   public blockItems: DdrBlockItem[];
+  public eventList: any = [];
 
   public EDIT_EVENT: string = "EDIT_EVENT";
   public DELETE_EVENT: string = "DELETE_EVENT";
 
-  constructor( private eventService: PlannerService, private router: Router ) { }
+  constructor( private eventService: PlannerService, private router: Router ) { 
+    this.blockItems = [];
+  }
 
   ngOnInit(): void {
-    this.blockItems = [];
+    this.getEvents();
   }
 
   getEvents() {
@@ -33,22 +36,20 @@ export class ListEventsComponent implements OnInit {
       }
     ];
 
-    this.eventService.getEvents().subscribe(events => {
-
-      events = events.sort( (e1, e2) => new Date(e2.start).getTime() - new Date(e1.start).getTime() );
-
-      events.forEach(event => {
-
-        let blockItem = new DdrBlockItem();
-        blockItem.item = event;
-        this.borderColor(blockItem, event.className);
-        blockItem.actions = actions;
+    this.eventService.getEvents().subscribe(
+      events => {
+        events.forEach(event => {
+          let blockItem = new DdrBlockItem();
+          blockItem.item = event;
+          this.borderColor(blockItem, event.className);
+          blockItem.actions = actions;
   
-        this.blockItems.push(blockItem);
-  
-      });
-
-    });
+          this.blockItems.push(blockItem);
+          
+        });
+        
+      }
+    );
   }
 
   borderColor(blockItem: DdrBlockItem, className: string) {
@@ -72,7 +73,7 @@ export class ListEventsComponent implements OnInit {
     switch ($event.value) {
       case this.EDIT_EVENT:
         this.eventService.eventToEdit = $event.item;
-        this.router.navigate(['/add-edit-event']);
+        this.router.navigate(['/manage-events']);
         break;
       
       case this.DELETE_EVENT:
@@ -91,7 +92,7 @@ export class ListEventsComponent implements OnInit {
     }
     
     this.eventService.eventToEdit = $event.item;
-    this.router.navigate(['/add-edit-event']);
+    this.router.navigate(['/manage-events']);
   }
 
   typeEvent(event: string) {

@@ -3,6 +3,9 @@ import { PlannerService } from 'src/app/services/planner.service';
 import { DdrConfigurationService } from 'ddr-configuration';
 import { TokenService } from 'src/app/services/token.service';
 import { Event } from 'src/app/models/event.model';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-manage-events',
@@ -22,9 +25,14 @@ export class ManageEventsComponent implements OnInit, OnDestroy {
   public MODE_ADD = 1;
   public MODE_EDIT = 2;
 
-  constructor( private eventService: PlannerService, private config: DdrConfigurationService, private token: TokenService ) { 
+  public error = [];
+
+  constructor( 
+    private eventService: PlannerService, 
+    private config: DdrConfigurationService, 
+    private token: TokenService,
+    private router: Router ) { 
     this.manageEvent();
-    this.getUserId();
   }
 
   ngOnInit(): void {
@@ -36,7 +44,6 @@ export class ManageEventsComponent implements OnInit, OnDestroy {
 
   getUserId() {
     this.id_User = this.token.get() ? this.token.payload(this.token.get())._id : '0';
-    console.log(this.id_User);
     return this.id_User; 
   }
 
@@ -56,9 +63,14 @@ export class ManageEventsComponent implements OnInit, OnDestroy {
 
     } else {
       this.event = new Event({});
+      this.event.id_User = this.getUserId();
+      this.event.title = '';
       this.event.startDate = new Date();
       this.event.endDate = new Date();
+      this.event.description = '';
       this.event.className = "task";
+      this.event.url = '';
+      this.event.emailSent = false;
       this.mode = this.MODE_ADD;
       this.showEnd = false;
     }
@@ -92,18 +104,39 @@ export class ManageEventsComponent implements OnInit, OnDestroy {
   }
 
   addEvent() {
+    this.event.start = moment(this.event.startDate).format('YYYY-MM-DDTHH:mm');
+    this.event.end = null;
+    if (this.event.endDate) {
+      this.event.end = moment(this.event.endDate).format('YYYY-MM-DDTHH:mm');
+    }
 
-    console.log(this.event);
-
-    this.eventService.addEvent(this.event).then(success => {
-      if (success) {
-        console.log("Se ha registrado el evento");
-      }
-      
-    }, error => {
-      console.log(error);
-    });
+    return this.eventService.addEvent(this.event).subscribe(
+      result => this.handleResponse(result),
+      error => this.handleError(error)
+    );
     
+  }
+
+  handleResponse(result) {
+    if (result == 'Redirect') {
+      this.router.navigate(['/list-events']);
+    }
+    
+  }
+
+  handleError(error) {
+    this.error = error.error.errors;
+    this.showModal();
+  }
+
+  showModal() {
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: this.error[0].msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
 }

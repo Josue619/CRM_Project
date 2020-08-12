@@ -8,4 +8,5 @@ export interface IEvent {
     description: string;
     className: string;
     url: string;
+    emailSent: boolean;
 }

@@ -85,4 +85,20 @@ CREATE TABLE notes(
     CONSTRAINT FOREIGN KEY fk_notes_users (id_Client) REFERENCES users (id)
 );
 
-DESCRIBE notes;
+DESCRIBE notes;}
+
+CREATE TABLE planner(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_User INT NOT NULL,
+    title TEXT NOT NULL,
+    start TEXT NOT NULL,
+    end TEXT,
+    description TEXT NOT NULL,
+    className TEXT NOT NULL,
+    url TEXT,
+    emailSent BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FOREIGN KEY fk_planner_users (id_User) REFERENCES users (id)
+);
+
+DESCRIBE planner;

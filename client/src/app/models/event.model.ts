@@ -88,6 +88,14 @@ export class Event implements IEvent {
         _.set(this, 'data.url', value); 
     }
 
+    get emailSent(): boolean {
+        return _.get(this, 'data.emailSent');
+    }
+
+    set emailSent(value: boolean) {
+        _.set(this, 'data.emailSent', value); 
+    }
+
     getData() {
         return _.get(this, 'data');
     }

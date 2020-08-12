@@ -11,6 +11,7 @@ import { Event } from '../../../../models/event.model';
 import esLocale from '@fullcalendar/core/locales/es';
 import Tooltip from 'tooltip.js'
 import { Calendar } from '@fullcalendar/core';
+import { PlannerService } from 'src/app/services/planner.service';
 
 @Component({
   selector: 'app-events',
@@ -26,13 +27,20 @@ export class EventsComponent implements OnInit {
   public optionsMonth: any;
   public optionsList: any;
 
-  constructor() {
+  constructor( private eventService: PlannerService ) {
     Calendar.name;
+    this.getEvents();
     this.optionsM();
     this.optionsL();
   }
 
   ngOnInit(): void {
+  }
+
+  getEvents() {
+    this.eventService.getEvents().subscribe(events => {
+      this.events = events;
+    });
   }
 
   optionsM() {
