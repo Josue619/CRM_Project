@@ -92,15 +92,15 @@ export class ManageEventsComponent implements OnInit, OnDestroy {
   }
 
   editEvent() {
+    this.eventService.eventToEdit.start = moment(this.eventService.eventToEdit.startDate).format('YYYY-MM-DDTHH:mm');
 
-    this.eventService.editEvent().then(success => {
-      if (success) {
-        console.log("Se ha editado el evento");
-      }
-      
-    }, error => {
-      console.log(error);
-    });
+    if (this.eventService.eventToEdit.endDate) {
+      this.eventService.eventToEdit.end = moment(this.eventService.eventToEdit.endDate).format('YYYY-MM-DDTHH:mm'); 
+    }
+    return this.eventService.editEvent().subscribe(
+      data => this.handleResponse(data),
+      error => this.handleError(error)
+    );
   }
 
   addEvent() {
@@ -120,8 +120,7 @@ export class ManageEventsComponent implements OnInit, OnDestroy {
   handleResponse(result) {
     if (result == 'Redirect') {
       this.router.navigate(['/list-events']);
-    }
-    
+    } 
   }
 
   handleError(error) {

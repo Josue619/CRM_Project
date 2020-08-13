@@ -19,9 +19,9 @@ class PlannerController {
     getEvents(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
+            console.log(id);
             const planner = yield database_1.default.query('SELECT * FROM planner WHERE id_User = ?', [id]);
             if (planner.length > 0) {
-                console.log(planner);
                 return res.json(planner);
             }
             return res.status(401).json({ errors: [{ "msg": "The user does not have registered events" }] });
@@ -32,7 +32,6 @@ class PlannerController {
             const event = req.body;
             delete event.startDate;
             delete event.endDate;
-            console.log(event);
             var msg = '';
             if (event.title == '')
                 msg = 'You must add a title to the event';
@@ -43,7 +42,32 @@ class PlannerController {
                 return res.json("Redirect");
             }
             return res.status(401).json({ errors: [{ "msg": msg }] });
-            //return res.json("Redirect");
+        });
+    }
+    editEvent(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const event = req.body;
+            delete event.startDate;
+            delete event.endDate;
+            var msg = '';
+            if (event.title == '')
+                msg = 'You must add a title to the event';
+            if (event.description == '')
+                msg = 'You must add a description to the event';
+            if (msg == '') {
+                yield database_1.default.query('UPDATE planner set ? WHERE id = ? AND id_User = ?', [event, id, event.id_User]);
+                return res.json("Redirect");
+            }
+            return res.status(401).json({ errors: [{ "msg": msg }] });
+        });
+    }
+    deleteEvent(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const event = req.body;
+            yield database_1.default.query('DELETE FROM planner WHERE id = ? AND id_User = ?', [id, event.id_User]);
+            res.status(200).json({ errors: [{ "msg": "The event was removed from the registry" }] });
         });
     }
 }

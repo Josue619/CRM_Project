@@ -9,6 +9,8 @@ const plannerController_1 = __importDefault(require("../controllers/plannerContr
 const router = express_1.Router();
 /** ------------------------------ Planner ------------------------------------ */
 router.get('/events/:id', verifyToken_1.TokenValidation, plannerController_1.default.getEvents);
-router.post('/addEvents', verifyToken_1.TokenValidation, plannerController_1.default.addEvent);
+router.post('/event', verifyToken_1.TokenValidation, plannerController_1.default.addEvent);
+router.put('/event/:id', verifyToken_1.TokenValidation, plannerController_1.default.editEvent);
+router.delete('/event/:id', verifyToken_1.TokenValidation, plannerController_1.default.deleteEvent);
 exports.default = router;
 //# sourceMappingURL=plannerRoutes.js.map

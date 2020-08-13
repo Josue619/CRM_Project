@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DdrBlockItem, DdrAction } from 'ddr-block-list';
 import { Router } from '@angular/router';
+import { Event } from '../../../../models/event.model';
 import { PlannerService } from 'src/app/services/planner.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-events',
@@ -15,6 +17,8 @@ export class ListEventsComponent implements OnInit {
 
   public EDIT_EVENT: string = "EDIT_EVENT";
   public DELETE_EVENT: string = "DELETE_EVENT";
+
+  public error = [];
 
   constructor( private eventService: PlannerService, private router: Router ) { 
     this.blockItems = [];
@@ -48,7 +52,9 @@ export class ListEventsComponent implements OnInit {
           
         });
         
-      }
+      },
+
+      error => this.handleError(error)
     );
   }
 
@@ -76,11 +82,8 @@ export class ListEventsComponent implements OnInit {
         this.router.navigate(['/manage-events']);
         break;
       
-      case this.DELETE_EVENT:
-        this.eventService.deleteEvent($event.item.id);
-        let index = this.blockItems.findIndex(block => block.item.id === $event.item.id);
-        this.blockItems.splice(index, 1);
-        this.blockItems = [];
+      case this.DELETE_EVENT:        
+        this.showModalDelete($event.item.id, $event);        
         break;
     }
 
@@ -103,6 +106,76 @@ export class ListEventsComponent implements OnInit {
       return "Cita";
     }
     return "Reunión";
+  }
+
+  deleteEvent(id: string, $event) {
+    return this.eventService.deleteEvent(id, $event.item).subscribe(
+      data => this.handleResponse($event),
+      error => this.handleError(error)
+    );
+  }
+
+  showModalDelete(id: string, $event) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true,
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: '¿Está seguro que desea eliminar este evento?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        swalWithBootstrapButtons.fire(
+          'Eliminado',
+          'El evento ha sido removido.',
+          'success'
+        )
+        this.deleteEvent(id, $event);
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'No se ha realizado ningún cambio',
+          'error'
+        )
+        this.router.navigateByUrl('/list-events');
+      }
+    })
+  }
+
+  showModal() {
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: this.error[0].msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  handleResponse($event) {
+    let index = this.blockItems.findIndex(block => block.item.id === $event.item.id);
+    this.blockItems.splice(index, 1);
+    this.blockItems = [];
+    this.getEvents();
+  }
+
+  handleError(error) {
+    this.error = error.error.errors;
+    this.showModal();
   }
 
 }

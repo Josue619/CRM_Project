@@ -17,7 +17,7 @@ export class PlannerService {
 
   public eventToEdit: Event;
 
-  constructor( private http: HttpClient, private Token: TokenService ) { 
+  constructor( private http: HttpClient, private Token: TokenService ) {     
     this.id = this.Token.get() ? this.Token.payload(this.Token.get())._id : '0';
     this.headers = this.headers.append('auth_token', this.Token.get());
   }
@@ -27,39 +27,20 @@ export class PlannerService {
   }
 
   addEvent(event: Event): Observable<any> {
-    return this.http.post(`${this.baseFileUrl}/addEvents`, event.getData(), {headers: this.headers});
+    return this.http.post(`${this.baseFileUrl}/event`, event.getData(), {headers: this.headers});
   }
 
-  editEvent() {
-    return new Promise((resolve, reject) => {
-
-      try {
-        this.eventToEdit.start = moment(this.eventToEdit.startDate).format('YYYY-MM-DDTHH:mm');
-
-        if (this.eventToEdit.endDate) {
-          this.eventToEdit.end = moment(this.eventToEdit.endDate).format('YYYY-MM-DDTHH:mm'); 
-        }
-
-        resolve(true);
-
-      } catch (error) {
-        reject('Error al editar el evento');
-      }
-
-    });
+  editEvent(): Observable<any> {    
+    return this.http.put(`${this.baseFileUrl}/event/${this.eventToEdit.id}`, this.eventToEdit, {headers: this.headers});
   }
 
-  deleteEvent(id: string) {
-    return new Promise((resolve, reject) => {
+  deleteEvent(id: string, event: Event) {
+    const httpOptions = {
+      headers: this.headers,
+      body: event
+    };
 
-      try {
-        resolve(true);
-
-      } catch (error) {
-        reject('Error al borrar el evento');
-      }
-
-    });
+    return this.http.delete(`${this.baseFileUrl}/event/${id}`, httpOptions);
   }
 
 }
