@@ -1,5 +1,7 @@
 import { User } from "models/User";
 import nodemailer from 'nodemailer';
+import { Planner } from "models/Planner";
+import moment from 'moment';
 
 export class MailController {
 
@@ -54,6 +56,43 @@ export class MailController {
         `;
 
         const transport = nodemailer.createTransport({
+            host: "mail.gruporv.net",
+            port: 587,
+            secure: false,
+            auth: {
+              user: "crmgrv@gruporv.net",
+              pass: "crmgrv"
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        const info = await transport.sendMail({
+            from: "'CRM SYSTEM' <crmgrv@gruporv.net>",
+            to: user.email,
+            subject: 'Formulario de contacto del sitio web',
+            html: contentHTML
+        });
+
+        console.log('Mensaje: ', info.messageId);
+    };
+
+    public async sendMailEvent(user: User, event: Planner): Promise<void> {
+        const msg = 'Se le recuerda que tiene un evento agendado para hoy';
+        const contentHTML = `
+            <h1>Información de evento</h1>
+
+            <ul>
+                <li>Usuario: ${user.username}</li>
+                <li>Titulo del evento: ${event.title}</li>
+                <li>Descripción: ${event.description}</li>
+                <li>Fecha y hora de inicio: ${ moment(event.start).format('DD/MM/YYYY HH:mm') }</li>
+            </ul>
+            <p>${msg}</p>
+        `;
+
+        const transport = nodemailer.createTransport({
             host: "smtp.mailtrap.io",
             port: 2525,
             secure: false,
@@ -69,7 +108,7 @@ export class MailController {
         const info = await transport.sendMail({
             from: "'CRM SYSTEM' <crm@test.com>",
             to: user.email,
-            subject: 'Formulario de contacto del sitio web',
+            subject: 'Recordatorio de eventos pendientes',
             html: contentHTML
         });
 

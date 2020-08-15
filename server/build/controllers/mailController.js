@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MailController = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
+const moment_1 = __importDefault(require("moment"));
 class MailController {
     sendMail(user) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -65,6 +66,42 @@ class MailController {
             <p>${msg}</p>
         `;
             const transport = nodemailer_1.default.createTransport({
+                host: "mail.gruporv.net",
+                port: 587,
+                secure: false,
+                auth: {
+                    user: "crmgrv@gruporv.net",
+                    pass: "crmgrv"
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            });
+            const info = yield transport.sendMail({
+                from: "'CRM SYSTEM' <crmgrv@gruporv.net>",
+                to: user.email,
+                subject: 'Formulario de contacto del sitio web',
+                html: contentHTML
+            });
+            console.log('Mensaje: ', info.messageId);
+        });
+    }
+    ;
+    sendMailEvent(user, event) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msg = 'Se le recuerda que tiene un evento agendado para hoy';
+            const contentHTML = `
+            <h1>Información de evento</h1>
+
+            <ul>
+                <li>Usuario: ${user.username}</li>
+                <li>Titulo del evento: ${event.title}</li>
+                <li>Descripción: ${event.description}</li>
+                <li>Fecha y hora de inicio: ${moment_1.default(event.start).format('DD/MM/YYYY HH:mm')}</li>
+            </ul>
+            <p>${msg}</p>
+        `;
+            const transport = nodemailer_1.default.createTransport({
                 host: "smtp.mailtrap.io",
                 port: 2525,
                 secure: false,
@@ -79,7 +116,7 @@ class MailController {
             const info = yield transport.sendMail({
                 from: "'CRM SYSTEM' <crm@test.com>",
                 to: user.email,
-                subject: 'Formulario de contacto del sitio web',
+                subject: 'Recordatorio de eventos pendientes',
                 html: contentHTML
             });
             console.log('Mensaje: ', info.messageId);

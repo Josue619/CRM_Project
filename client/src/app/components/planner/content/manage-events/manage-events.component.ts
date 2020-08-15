@@ -52,7 +52,7 @@ export class ManageEventsComponent implements OnInit, OnDestroy {
       this.event = this.eventService.eventToEdit;
       this.today = new Date();
       this.event.startDate = new Date(this.event.start);
-
+      this.event.emailSent = false;
       this.showEnd = this.event.end != null;
 
       if (this.showEnd) {

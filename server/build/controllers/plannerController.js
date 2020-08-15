@@ -19,7 +19,6 @@ class PlannerController {
     getEvents(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            console.log(id);
             const planner = yield database_1.default.query('SELECT * FROM planner WHERE id_User = ?', [id]);
             if (planner.length > 0) {
                 return res.json(planner);
