@@ -14,7 +14,7 @@ async function getEvents() {
 
 main();
 
-cron.schedule(" 0 */5 * * * * ", () => {
+cron.schedule(" 0 */1 * * * * ", () => {
     
     getEvents();
     

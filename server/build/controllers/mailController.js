@@ -102,24 +102,34 @@ class MailController {
             <p>${msg}</p>
         `;
             const transport = nodemailer_1.default.createTransport({
-                host: "smtp.mailtrap.io",
-                port: 2525,
+                host: 'mail.gruporv.net',
+                port: 587,
                 secure: false,
+                requireTLS: true,
                 auth: {
-                    user: "8f820a0b5aed69",
-                    pass: "b6bde7fd60b944"
+                    user: 'crmgrv@gruporv.net',
+                    pass: 'crmgrv'
                 },
                 tls: {
                     rejectUnauthorized: false
                 }
             });
-            const info = yield transport.sendMail({
-                from: "'CRM SYSTEM' <crm@test.com>",
+            const info = {
+                from: "'CRM SYSTEM' <crmgrv@gruporv.net>",
                 to: user.email,
                 subject: 'Recordatorio de eventos pendientes',
+                text: '',
                 html: contentHTML
+            };
+            yield transport.sendMail(info, function (error, success) {
+                if (error) {
+                    console.log('Error occured');
+                    console.log(error.message);
+                    return;
+                }
+                console.log(success.messageId);
+                console.log('Message sent successfully!');
             });
-            console.log('Mensaje: ', info.messageId);
         });
     }
     ;
@@ -137,13 +147,12 @@ class MailController {
             <p>${msg}</p>
         `;
             const transport = nodemailer_1.default.createTransport({
-                service: 'gmail',
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
                 auth: {
-                    user: "josue.martinez.mc@gmail.com",
-                    pass: ""
-                },
-                tls: {
-                    rejectUnauthorized: false
+                    user: 'user@gmail.com',
+                    pass: 'pass'
                 }
             });
             const info = yield transport.sendMail({

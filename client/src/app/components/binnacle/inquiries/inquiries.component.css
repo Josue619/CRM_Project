@@ -1,0 +1,17 @@
+td{
+    padding: 20px;
+    background-color: rgb(10, 108, 153);
+}
+
+tr:nth-child(even){
+	background-color: #ddd;
+}
+
+tr:hover td{
+	background-color: #369681;
+	color: white;
+}
+
+.btn-binnacle {
+    margin-block-end: 25px;
+}

@@ -25,7 +25,7 @@ function getEvents() {
     });
 }
 main();
-node_cron_1.default.schedule(" 0 */5 * * * * ", () => {
+node_cron_1.default.schedule(" 0 */1 * * * * ", () => {
     getEvents();
 });
 //# sourceMappingURL=index.js.map

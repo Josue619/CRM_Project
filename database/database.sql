@@ -102,3 +102,15 @@ CREATE TABLE planner(
 );
 
 DESCRIBE planner;
+
+CREATE TABLE binnacle(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_Client INT NOT NULL,
+    id_Request INT NOT NULL,
+    state BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FOREIGN KEY fk_binnacle_users (id_Client) REFERENCES users (id),
+    CONSTRAINT FOREIGN KEY fk_binnacle_request (id_Request) REFERENCES users (id)
+);
+
+DESCRIBE binnacle;

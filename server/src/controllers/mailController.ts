@@ -23,8 +23,8 @@ export class MailController {
             port: 2525,
             secure: false,
             auth: {
-              user: "8f820a0b5aed69",
-              pass: "b6bde7fd60b944"
+                user: "8f820a0b5aed69",
+                pass: "b6bde7fd60b944"
             },
             tls: {
                 rejectUnauthorized: false
@@ -60,8 +60,8 @@ export class MailController {
             port: 587,
             secure: false,
             auth: {
-              user: "crmgrv@gruporv.net",
-              pass: "crmgrv"
+                user: "crmgrv@gruporv.net",
+                pass: "crmgrv"
             },
             tls: {
                 rejectUnauthorized: false
@@ -87,32 +87,44 @@ export class MailController {
                 <li>Usuario: ${user.username}</li>
                 <li>Titulo del evento: ${event.title}</li>
                 <li>Descripción: ${event.description}</li>
-                <li>Fecha y hora de inicio: ${ moment(event.start).format('DD/MM/YYYY HH:mm') }</li>
+                <li>Fecha y hora de inicio: ${ moment(event.start).format('DD/MM/YYYY HH:mm')}</li>
             </ul>
             <p>${msg}</p>
         `;
 
         const transport = nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
-            port: 2525,
+            host: 'mail.gruporv.net',
+            port: 587,
             secure: false,
+            requireTLS: true,
             auth: {
-              user: "8f820a0b5aed69",
-              pass: "b6bde7fd60b944"
+                user: 'crmgrv@gruporv.net',
+                pass: 'crmgrv'
             },
             tls: {
                 rejectUnauthorized: false
             }
         });
 
-        const info = await transport.sendMail({
-            from: "'CRM SYSTEM' <crm@test.com>",
+        const info = {
+            from: "'CRM SYSTEM' <crmgrv@gruporv.net>",
             to: user.email,
             subject: 'Recordatorio de eventos pendientes',
+            text: '',
             html: contentHTML
+        };
+
+        await transport.sendMail(info, function (error, success) {
+            if (error) {
+                console.log('Error occured');
+                console.log(error.message);
+                return;
+            }
+            console.log(success.messageId);
+
+            console.log('Message sent successfully!');
         });
 
-        console.log('Mensaje: ', info.messageId);
     };
 
     public async sendMailG(user: User): Promise<void> {
@@ -129,13 +141,12 @@ export class MailController {
         `;
 
         const transport = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true, // use SSL
             auth: {
-              user: "josue.martinez.mc@gmail.com",
-              pass: ""
-            },
-            tls: {
-                rejectUnauthorized: false
+                user: 'user@gmail.com',
+                pass: 'pass'
             }
         });
 

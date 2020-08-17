@@ -18,6 +18,18 @@
 
       <a routerLink="file" class="list-group-item list-group-item-action bg-light" (click)="sideBar()"> <i class="far fa-folder-open icono"> </i>Expediente</a>
       <a routerLink="planner" class="list-group-item list-group-item-action bg-light" (click)="sideBar()"> <i class="far fa-calendar-alt icono"></i>Planificador</a>
+
+      <div class="dropdown">
+        <button class="list-group-item list-group-item-action bg-light dropdown-toggle" type="button"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-clipboard-list icono"></i>Bitacora
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" routerLink="binnacle" (click)="sideBar()"> <i class="fas fa-list-ol icono"></i>Lista de bitacoras</a>
+          <a class="dropdown-item" routerLink="inquiries" (click)="sideBar()"> <i class="fas fa-question-circle icono"></i>Consultas de clientes</a>
+        </div>
+      </div>
+
       <a href="#" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Status</a>
 
     </div>

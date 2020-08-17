@@ -10,8 +10,7 @@ import { PlannerComponent } from './planner/planner.component';
 const routes: Routes = [
   { path: 'planner', component: PlannerComponent, canActivate: [AfterLoginService] },
   { path: 'list-events', component: ListEventsComponent, canActivate: [AfterLoginService] },
-  { path: 'manage-events', component: ManageEventsComponent, canActivate: [AfterLoginService] },
-  { path: '**', pathMatch: 'full', redirectTo: 'planner' }
+  { path: 'manage-events', component: ManageEventsComponent, canActivate: [AfterLoginService] }
 ];
 
 @NgModule({
