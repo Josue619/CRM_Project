@@ -37,7 +37,7 @@ class BinnacleController {
     }
     getBinnacles(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const binnacleDB = yield database_1.default.query("SELECT b.id, u.username, u.email, u.card_id, u.code_phone, u.phone, r.query, r.solution " +
+            const binnacleDB = yield database_1.default.query("SELECT b.id, b.id_Client, b.id_Request, u.username, u.email, u.card_id, u.code_phone, u.phone, r.query, r.solution " +
                 "FROM binnacle AS b " +
                 "INNER JOIN users AS u ON b.id_Client = u.id " +
                 "INNER JOIN requests AS r ON b.id_Request = r.id " +
@@ -49,11 +49,32 @@ class BinnacleController {
             return res.status(401).json({ errors: [{ "msg": "There is no content in the blog." }] });
         });
     }
+    searchBinnacles(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const binnacleDB = yield database_1.default.query("SELECT b.id, b.id_Client, b.id_Request, u.username, u.email, u.card_id, u.code_phone, u.phone, r.query, r.solution " +
+                "FROM binnacle AS b " +
+                "INNER JOIN users AS u ON b.id_Client = u.id " +
+                "INNER JOIN requests AS r ON b.id_Request = r.id " +
+                "WHERE (u.username LIKE '%" + req.body.search + "%' OR u.email LIKE '%" + req.body.search + "%' OR " +
+                "u.card_id LIKE '%" + req.body.search + "%' OR u.code_phone LIKE '%" + req.body.search + "%' OR " +
+                "u.phone LIKE '%" + req.body.search + "%' OR r.query LIKE '%" + req.body.search + "%' OR " +
+                "r.solution LIKE '%" + req.body.search + "%')" +
+                "AND b.id_Client = u.id AND b.id_Request = r.id AND b.state = ? " +
+                "ORDER BY b.id DESC LIMIT 10", [true]);
+            if (binnacleDB.length > 0) {
+                return res.status(200).json(binnacleDB);
+            }
+            return res.status(401).json({ errors: [{
+                        "msg": "There is no match with the filter",
+                    }]
+            });
+        });
+    }
     getRequestsCheck(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const solution = 'No definida';
-            const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ? AND state = ? AND solution != ?', [id, true, solution]);
+            const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ? AND state = ? AND solution != ? ORDER BY id DESC LIMIT 10', [id, true, solution]);
             if (request.length > 0) {
                 return res.json(request);
             }
@@ -62,10 +83,12 @@ class BinnacleController {
     }
     searchRequestCheck(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const id = req.body.id;
             const solution = 'No definida';
-            const product = yield database_1.default.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%'AND state = ? AND solution != ?", [true, solution]);
-            if (product.length > 0) {
-                return res.status(200).json(product);
+            const request = yield database_1.default.query("SELECT * FROM requests WHERE (query LIKE '%" + req.body.search + "%' OR solution LIKE '%" + req.body.search + "%') " +
+                "AND id_Client = ? AND state = ? AND solution != ? ORDER BY id DESC LIMIT 10", [id, true, solution]);
+            if (request.length > 0) {
+                return res.status(200).json(request);
             }
             return res.status(401).json({ errors: [{
                         "msg": "There is no match with the filter",
@@ -77,7 +100,7 @@ class BinnacleController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const solution = 'No definida';
-            const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ? AND state = ? AND solution = ?', [id, true, solution]);
+            const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ? AND state = ? AND solution = ? ORDER BY id DESC LIMIT 10', [id, true, solution]);
             if (request.length > 0) {
                 return res.json(request);
             }
@@ -86,15 +109,25 @@ class BinnacleController {
     }
     searchRequest(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const id = req.body.id;
             const solution = 'No definida';
-            const product = yield database_1.default.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%'AND state = ? AND solution = ?", [true, solution]);
-            if (product.length > 0) {
-                return res.status(200).json(product);
+            const request = yield database_1.default.query("SELECT * FROM requests WHERE (query LIKE '%" + req.body.search + "%' OR solution LIKE '%" + req.body.search + "%') " +
+                "AND id_Client = ? AND state = ? AND solution = ? ORDER BY id DESC LIMIT 10", [id, true, solution]);
+            if (request.length > 0) {
+                return res.status(200).json(request);
             }
             return res.status(401).json({ errors: [{
                         "msg": "There is no match with the filter",
                     }]
             });
+        });
+    }
+    deleteBinnacle(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const binnacle = req.body;
+            yield database_1.default.query('UPDATE binnacle SET state = ? WHERE id = ? AND id_Client = ? AND id_Request = ?', [false, id, binnacle.id_Client, binnacle.id_Request]);
+            res.status(200).json({ msg: 'The request was deleted' });
         });
     }
 }

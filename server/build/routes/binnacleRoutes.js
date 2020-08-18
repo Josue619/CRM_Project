@@ -14,5 +14,7 @@ router.get('/requests/:id', verifyToken_1.TokenValidation, binnacleController_1.
 router.post('/serarch', verifyToken_1.TokenValidation, binnacleController_1.default.searchRequest);
 router.get('/binnacles', verifyToken_1.TokenValidation, binnacleController_1.default.getBinnacles);
 router.post('/binnacles', verifyToken_1.TokenValidation, binnacleController_1.default.addBinnacle);
+router.post('/serarchBinnacles', verifyToken_1.TokenValidation, binnacleController_1.default.searchBinnacles);
+router.put('/binnacle/:id', verifyToken_1.TokenValidation, binnacleController_1.default.deleteBinnacle);
 exports.default = router;
 //# sourceMappingURL=binnacleRoutes.js.map

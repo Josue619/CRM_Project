@@ -44,4 +44,12 @@ export class BinnacleService {
   addBinnacles(data) {
     return this.http.post(`${this.baseBinnacleUrl}/binnacles`, data, {headers: this.headers});
   }
+
+  searchBinnacles(data): Observable<any> {
+    return this.http.post(`${this.baseBinnacleUrl}/serarchBinnacles`, data, {headers: this.headers});
+  }
+
+  deleteBinnacle(id: string|number, binnacle: any): Observable<any> {
+    return this.http.put(`${this.baseBinnacleUrl}/binnacle/${id}`, binnacle, {headers: this.headers});
+  }
 }

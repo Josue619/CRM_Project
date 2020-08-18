@@ -41,7 +41,12 @@ export class UserController {
     } 
 
     public async searchClients (req: Request, res: Response) {
-        const users = await db.query('SELECT * FROM users WHERE username' + " like '%" + req.body.search + "%' AND roll = ? AND state = ?", ['Client', true]);
+
+        const users = await db.query("SELECT * FROM users WHERE (username LIKE '%" + req.body.search + "%' OR email LIKE '%" + req.body.search + "%' OR " +
+        "card_id LIKE '%" + req.body.search + "%' OR code_phone LIKE '%" + req.body.search + "%' OR " + 
+        "phone LIKE '%" + req.body.search + "%') " +
+        "AND roll = ? AND state = ? ORDER BY id DESC LIMIT 10", ['Client', true]);
+
         if (users.length > 0) {
             return res.status(200).json(users);
         }

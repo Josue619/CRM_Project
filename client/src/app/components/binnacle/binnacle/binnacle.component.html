@@ -26,6 +26,7 @@
                     <th>Teléfono</th>
                     <th>Consultas</th>
                     <th>Soluciones</th>
+                    <th>Elimilar</th>
                 </tr>
 
             </thead>
@@ -41,10 +42,12 @@
                     <td class="text-light items">{{binnacle.code_phone}} {{binnacle.phone}}</td>
                     <td class="text-light items">{{binnacle.query}}</td>
                     <td class="text-light items">{{binnacle.solution}}</td>
-                    <!--
-                    <td style="text-align:right">
+
+                    <td class="text-info">
+                        <button class="btn btn-danger" (click)="binnacleDelete(binnacle)">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </td>
-                    -->
                 </tr>
 
             </tbody>

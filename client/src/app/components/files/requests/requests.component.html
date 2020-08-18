@@ -30,11 +30,14 @@
                 <tbody style="text-align:center">
                     <tr *ngFor="let req of Service.requests; index as i">
                         <td scope="row">{{i+1}}</td>
-                        <td class="text-info">{{req.query}} </td>
                         <td class="text-info">
                           <br>
-                           <input type="text" [(ngModel)]="req.solution" readonly (dblclick)="tryEditS(req)" *ngIf="!editS" autofocus>
-                           <input type="text" [(ngModel)]="req.solution" (blur)="editRequestS(req)" (keyup.enter)="editRequestS(req)" *ngIf="editS" autofocus>
+                          {{req.query}} 
+                        </td>
+                        <td class="text-info">
+                          <br>
+                           <a class="text-info" (dblclick)="tryEditS(req)" *ngIf="!editS" autofocus>{{ req.solution }}</a>
+                           <textarea col="5" rows="3" [(ngModel)]="req.solution" (blur)="editRequestS(req)" (keyup.enter)="editRequestS(req)" *ngIf="editS" autofocus></textarea>
                         </td>
 
                         <td class="text-info"> 
