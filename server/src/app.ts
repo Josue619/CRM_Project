@@ -11,6 +11,7 @@ import fileRoutes from './routes/fileRoutes';
 import plannerRoutes from './routes/plannerRoutes';
 import productRoutes from './routes/productRoutes';
 import binnacleRoutes from './routes/binnacleRoutes';
+import reportRoutes from './routes/reportRoutes';
 
 class Server {
 
@@ -37,6 +38,7 @@ class Server {
         this.app.use('/api/planner', plannerRoutes);
         this.app.use('/api/product', productRoutes);
         this.app.use('/api/binnacle', binnacleRoutes);
+        this.app.use('/api/report', reportRoutes);
     }
 
     start(): void {

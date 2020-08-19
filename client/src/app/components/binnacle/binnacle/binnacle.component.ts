@@ -26,12 +26,12 @@ export class BinnacleComponent implements OnInit {
 
   searchBinnacle() {
     return this.serviveB.searchBinnacles(this.form).subscribe(
-      result => this.loadUser(result),
+      result => this.loadBinnacle(result),
       error => this.handleError(error)
     );
   }
 
-  loadUser(result) {
+  loadBinnacle(result) {
     result.length == 0 ? this.getBinnacles() : this.binnacles = result;
   }
 

@@ -14,7 +14,4 @@ router.post('/binnacles', TokenValidation, binnacleController.addBinnacle);
 router.post('/serarchBinnacles', TokenValidation, binnacleController.searchBinnacles);
 router.put('/binnacle/:id', TokenValidation, binnacleController.deleteBinnacle);
 
-
-
-
 export default router;

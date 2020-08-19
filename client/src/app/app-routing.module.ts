@@ -6,6 +6,7 @@ import {} from './components/products/product.module';
 import {} from './components/files/file.module';
 import {} from './components/planner/planner.module';
 import {} from './components/binnacle/binnacle.module';
+import {} from './components/reports/report.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: '', loadChildren: './components/files/file.module#FileModule'},
   { path: '', loadChildren: './components/planner/planner.module#PlannerModule'},
   { path: '', loadChildren: './components/binnacle/binnacle.module#BinnacleModule'},
+  { path: '', loadChildren: './components/reports/report.module#ReportModule'},
 ];
 
 @NgModule({

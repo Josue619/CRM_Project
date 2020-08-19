@@ -14,6 +14,7 @@ const fileRoutes_1 = __importDefault(require("./routes/fileRoutes"));
 const plannerRoutes_1 = __importDefault(require("./routes/plannerRoutes"));
 const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
 const binnacleRoutes_1 = __importDefault(require("./routes/binnacleRoutes"));
+const reportRoutes_1 = __importDefault(require("./routes/reportRoutes"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -34,6 +35,7 @@ class Server {
         this.app.use('/api/planner', plannerRoutes_1.default);
         this.app.use('/api/product', productRoutes_1.default);
         this.app.use('/api/binnacle', binnacleRoutes_1.default);
+        this.app.use('/api/report', reportRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
