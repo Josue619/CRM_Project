@@ -1,0 +1,73 @@
+<div class="container">
+
+    <div class="content">
+
+        <div class="header">
+            <h2>Enviar reporte</h2>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3"></div>
+
+            <div class="col-md-6">
+
+                <div class="form-group row  mx-auto justify-content-center">
+
+                    <div class="card-container">
+                        <img class="round" src="https://img.icons8.com/color/96/000000/filled-message.png" alt="user" />
+                        <br>
+                        <br>
+
+                        <h4>Email</h4>
+                        <input class="transparent" type="text" name="emil" [(ngModel)]="this.email" placeholder="@email.com">
+
+                        <br>
+                        <br>
+
+                        <h4>Ingresa el archivo</h4>
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="file" accept=".pdf" (change)="onFileChange($event.target.files)">
+                        </form>
+
+                        <div class="buttons">
+                            <br>
+                            <button class="primary ghost" id="cancelBtn" (click)="cancelBtn()">
+                                Cancelar
+                            </button>
+                            <button class="primary ghost" (click)="onUpload()">
+                                Enviar
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <!--
+                <div class="input-group">
+
+                    
+                    <div class="input-group-prepend">
+                        <button id="btnUpload" class="input-group-text upload" (click)="onUpload()">
+                            Subir
+                        </button>
+                    </div>
+
+                    <div class="custom-file">
+                        <form action="" enctype="multipart/form-data">
+                            <input type="file" class="custom-file-input" id="input-custom-file" accept=".pdf" (change)="onFileChange($event.target.files)">
+                            <label class="custom-file-label" for="input-custom-file">Selecionar Informe </label>
+                        </form>
+                    </div>
+
+                </div>
+                -->
+                </div>
+
+                <div class="col-md-3"></div>
+
+            </div>
+
+        </div>
+
+    </div>

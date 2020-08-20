@@ -1,44 +1,51 @@
 <div class="container" (click)="clearError()">
 
-    <div class="modal fade" id="modalNeed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header justify-content-around">
-            <h5 class="modal-title" id="exampleModalLabel"> {{ !this.Service.edit ? 'Agregar Necesidad' : 'Modificar Necesidad' }} </h5>
-            <button type="button" id="closeNeed" class="close btn btn-danger" data-dismiss="modal" (click)="clearError()" (click)="cancelBtn()">&times;</button>
-          </div>
-  
-          <div class="modal-body">
+  <div class="modal fade" id="modalNeed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header justify-content-around">
+          <h5 class="modal-title" id="exampleModalLabel">
+            {{ !this.Service.edit ? 'Agregar Necesidad' : 'Modificar Necesidad' }} </h5>
+          <button type="button" id="closeNeed" class="close btn btn-danger" data-dismiss="modal" (click)="clearError()"
+            (click)="cancelBtn()">&times;</button>
+        </div>
 
-            <div class="form-group row  mx-auto justify-content-center">
+        <div class="modal-body">
 
-              <div class="card-container">
-                <img class="round" src="https://img.icons8.com/color/96/000000/question-mark.png" alt="user" />
+          <div class="form-group row  mx-auto justify-content-center">
+
+            <div class="card-container">
+              <img class="round" src="https://img.icons8.com/color/96/000000/question-mark.png" alt="user" />
+              <br>
+              <br>
+
+              <h4>Necesidad</h4>
+              <textarea class="transparent" name="future_needs" [(ngModel)]="this.Service.need.future_needs" cols="30"
+                rows="4" placeholder="Texto..."></textarea>
+
+              <h4>Fecha</h4>
+              <input class="transparent large" type="date" name="date"
+                [ngModel]="this.Service.need.f_future_needs | date:'yyyy-MM-dd'"
+                (ngModelChange)="this.Service.need.f_future_needs = $event">
+
+              <div class="buttons">
                 <br>
-                <br>
-
-                <h4>Necesidad</h4>
-                <textarea class="transparent" name="future_needs" [(ngModel)]="this.Service.need.future_needs" cols="30" rows="4" placeholder="Texto..."></textarea>
-
-                <h4>Fecha</h4>
-                <input class="transparent large" type="date" name="date" [ngModel] ="this.Service.need.f_future_needs | date:'yyyy-MM-dd'" (ngModelChange)="this.Service.need.f_future_needs = $event">
-
-                <div class="buttons">
-                  <br>
-                  <button class="primary ghost" id="cancelBtn" data-backdrop="false" data-toggle="modal" data-target="#modalNeeds" (click)="cancel()">
-                    Cancelar
-                  </button>
-                  <button class="primary ghost" (click)="this.Service.edit ? updateNeed() : addNeed()">
-                    {{ !this.Service.edit ? 'Agregar' : 'Modificar' }}
-                  </button>
-                </div>
+                <button class="primary ghost" id="cancelBtn" data-backdrop="false" data-toggle="modal"
+                  data-target="#modalNeeds" (click)="cancel()">
+                  Cancelar
+                </button>
+                <button class="primary ghost" (click)="this.Service.edit ? updateNeed() : addNeed()">
+                  {{ !this.Service.edit ? 'Agregar' : 'Modificar' }}
+                </button>
+              </div>
 
             </div>
 
           </div>
-    
+
         </div>
       </div>
+    </div>
+
   </div>
-  
-</div>

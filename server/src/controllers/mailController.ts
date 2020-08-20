@@ -2,6 +2,7 @@ import { User } from "models/User";
 import nodemailer from 'nodemailer';
 import { Planner } from "models/Planner";
 import moment from 'moment';
+import * as EmailValidator from 'email-validator';
 
 export class MailController {
 
@@ -159,6 +160,85 @@ export class MailController {
 
         console.log('Mensaje: ', info.messageId);
     };
+
+    public async sendReport(user: User): Promise<void> {
+        const msg = 'Los datos de su usuario han sido registrados en el siatema del CRM';
+        const contentHTML = `
+            <h1>Información de usuario</h1>
+
+            <ul>
+                <li>Nombre de usuario: ${user.username}</li>
+                <li>Coreo: ${user.email}</li>
+                <li>Telefono: ${user.phone}</li>
+            </ul>
+            <p>${msg}</p>
+        `;
+
+        const transport = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true, // use SSL
+            auth: {
+                user: 'user@gmail.com',
+                pass: 'pass'
+            }
+        });
+
+        const info = await transport.sendMail({
+            from: "'CRM SYSTEM' <crm@test.com>",
+            to: user.email,
+            subject: 'Formulario de contacto del sitio web',
+            html: contentHTML
+        });
+
+        console.log('Mensaje: ', info.messageId);
+    };
+
+    public async uploadReport(req: any, res: any) {
+        const email = req.body.email;
+        const verifyEmail = EmailValidator.validate(email);
+
+        var msg: string = '';
+
+        if (verifyEmail == false) msg = 'You have not entered a delivery email or the format is wrong';
+
+        if (!req.file == true) msg = 'You must select a file to send';
+
+
+        if (msg == '') {
+            const contentHTML = `
+            <h2>Reporte enviado desde CRM SYSTEM</h2>
+            `;
+
+            const transport = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true, // use SSL
+                auth: {
+                    user: 'josue.martinez.mc@gmail.com',
+                    pass: 'Shadow619'
+                }
+            });
+
+            const info = await transport.sendMail({
+                from: "'CRM SYSTEM' <crm@test.com>",
+                to: email,
+                subject: 'Reporte de sistema',
+                html: contentHTML,
+                attachments: [
+                    {
+                        filename: req.file.originalname,
+                        content: req.file.buffer
+                    }
+                ]
+            });
+            //console.log('Mensaje: ', info.messageId);
+
+            return res.status(200).json("The report was sent successfully");
+        }
+
+        return res.status(401).json({ errors: [{ "msg": msg }] });
+    }
 
 }
 

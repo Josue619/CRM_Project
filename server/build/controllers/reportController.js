@@ -53,6 +53,42 @@ class ReportController {
             });
         });
     }
+    /** ------------------------------------------------- Events Planner ---------------------------------------------------- */
+    getEvents(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const plannerDB = yield database_1.default.query("SELECT p.id, p.id_User, u.username, u.email, p.title, p.description, p.className, p.start, p.end " +
+                "FROM planner AS p " +
+                "INNER JOIN users AS u ON p.id_User = u.id " +
+                "WHERE YEAR(p.start) = YEAR(CURRENT_DATE()) AND MONTH(p.start) = MONTH(CURRENT_DATE()) AND " +
+                "p.id_User = u.id AND p.emailSent = ? " +
+                "ORDER BY p.id DESC LIMIT 10", [true]);
+            if (plannerDB.length > 0) {
+                return res.json(plannerDB);
+            }
+            return res.status(401).json({ errors: [{ "msg": "There is no content in the blog." }] });
+        });
+    }
+    searchEvents(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const plannerDB = yield database_1.default.query("SELECT p.id, p.id_User, u.username, u.email, p.title, p.description, p.className, p.start, p.end " +
+                "FROM planner AS p " +
+                "INNER JOIN users AS u ON p.id_User = u.id " +
+                "WHERE (u.username LIKE '%" + req.body.search + "%' OR u.email LIKE '%" + req.body.search + "%' OR " +
+                "p.title LIKE '%" + req.body.search + "%' OR p.description LIKE '%" + req.body.search + "%' OR " +
+                "p.className LIKE '%" + req.body.search + "%' OR p.start LIKE '%" + req.body.search + "%' OR " +
+                "p.end LIKE '%" + req.body.search + "%') " +
+                "AND YEAR(p.start) = YEAR(CURRENT_DATE()) AND MONTH(p.start) = MONTH(CURRENT_DATE()) " +
+                "AND p.id_User = u.id AND p.emailSent = ? " +
+                "ORDER BY p.id DESC LIMIT 10", [true]);
+            if (plannerDB.length > 0) {
+                return res.status(200).json(plannerDB);
+            }
+            return res.status(401).json({ errors: [{
+                        "msg": "There is no match with the filter",
+                    }]
+            });
+        });
+    }
 }
 exports.ReportController = ReportController;
 const reportController = new ReportController();

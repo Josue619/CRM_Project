@@ -6,10 +6,11 @@ import { ReportRoutingModule } from './report-routing.module';
 import { AfterLoginService } from 'src/app/services/after-login.service';
 import { BinnacleReportComponent } from './binnacle-report/binnacle-report.component';
 import { EventReportComponent } from './event-report/event-report.component';
+import { SendReportComponent } from './send-report/send-report.component';
 
 
 @NgModule({
-  declarations: [ BinnacleReportComponent, EventReportComponent ],
+  declarations: [ BinnacleReportComponent, EventReportComponent, SendReportComponent ],
   imports: [
     CommonModule,
     FormsModule,
