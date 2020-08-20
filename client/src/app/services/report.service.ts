@@ -33,13 +33,6 @@ export class ReportService {
 
   uploadFile(data) {
     return this.http.post(`${this.baseReportUrl}/uploadReport`, data, {headers: this.headers});
-    //return this.http.post(`${this.baseReportUrl}/uploadReport`, data)
-    //  .toPromise()
-    //  .then(res => {
-    //    console.log(res);
-    //    return res;
-    //  })
-    //  .catch();
   }
 
 }
