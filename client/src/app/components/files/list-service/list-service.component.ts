@@ -33,9 +33,8 @@ export class ListServiceComponent implements OnInit {
   }
 
   addService() {
-    var element = document.getElementById("closeButton");
-    element.click();
-    this.router.navigateByUrl('/products');
+    this.closeService();
+    this.clearError();
   }
 
   getServices(id: number) {
@@ -44,6 +43,11 @@ export class ListServiceComponent implements OnInit {
       result => { this.Service.service = result },
       error => this.handleError(error)
     );
+  }
+
+  closeService() {
+    var element = document.getElementById("closService");
+    element.click();
   }
 
   showModal() {

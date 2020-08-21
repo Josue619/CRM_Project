@@ -82,13 +82,22 @@ export class ServicessComponent implements OnInit {
 
   }
 
+  cancelBtn() {
+    var element = document.getElementById("cancelBtn");
+    element.click();
+    this.loadService();
+  }
+
+  cancel() {
+    var element = document.getElementById("closeProduct");
+    element.click();
+  }
+
   handleResponse(data) {
     
     if (data == 'Redirect') {
-      var elementClose = document.getElementById("closeProduct") as any;
-      this.loadService();
       this.Service.error = [];
-      elementClose.click();
+      this.cancelBtn();
     }
   
   }
