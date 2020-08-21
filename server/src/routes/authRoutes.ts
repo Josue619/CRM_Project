@@ -21,4 +21,8 @@ router.post('/signup',
 
 router.post('/signin', authController.signin);
 
+/** ------------------------------------------------- WEB Client ---------------------------------------------------- */
+
+router.post('/login', authController.login);
+
 export default router;

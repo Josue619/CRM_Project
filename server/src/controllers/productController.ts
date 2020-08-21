@@ -11,7 +11,9 @@ export class ProductController {
     } 
 
     public async searchProduct (req: Request, res: Response) {
-        const product = await db.query('SELECT * FROM products WHERE fullname' + " like '%" + req.body.search + "%'");
+        const product = await db.query("SELECT * FROM products WHERE " +
+        "(code LIKE '%" + req.body.search + "%' OR fullname LIKE '%" + req.body.search + "%') ");
+
         if (product.length > 0) {
             return res.status(200).json(product);
         }
@@ -23,7 +25,7 @@ export class ProductController {
 
     public async getClientServices (req: Request, res: Response) {
         const { id } = req.params;   
-        const serviceC = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
+        const serviceC = await db.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ? ORDER BY code LIMIT 10', [id, true]);
         if (serviceC.length > 0) {
             return res.json(serviceC);
         }
@@ -61,8 +63,12 @@ export class ProductController {
     }
 
     public async searchService (req: Request, res: Response) {
+        const id_Client = req.body.id;
 
-        const product = await db.query('SELECT * FROM client_services WHERE fullname' + " like '%" + req.body.search + "%' AND id_Client = ? AND state = ?", [req.body.id, true]);
+        const product = await db.query("SELECT * FROM client_services WHERE " +
+        "(code LIKE '%" + req.body.search + "%' OR fullname LIKE '%" + req.body.search + "%') " +
+        "AND id_Client = ? AND state = ? ORDER BY code LIMIT 10", [id_Client, true]);
+
         if (product.length > 0) {
             return res.status(200).json(product);
         }

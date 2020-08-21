@@ -19,7 +19,8 @@ class FileController {
     getRequests(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const request = yield database_1.default.query('SELECT * FROM requests WHERE id_Client = ? AND state = ?', [id, true]);
+            const request = yield database_1.default.query("SELECT * FROM requests WHERE id_Client = ? AND state = ? " +
+                "ORDER BY id DESC LIMIT 10", [id, true]);
             if (request.length > 0) {
                 return res.json(request);
             }
@@ -38,7 +39,11 @@ class FileController {
     }
     searchRequest(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const product = yield database_1.default.query('SELECT * FROM requests WHERE query' + " like '%" + req.body.search + "%'AND state = ?", [true]);
+            const id_Client = req.body.id;
+            const product = yield database_1.default.query("SELECT * FROM requests WHERE " +
+                "(query LIKE '%" + req.body.search + "%' OR solution LIKE '%" + req.body.search + "%' OR " +
+                "created_at LIKE '%" + req.body.search + "%') AND id_Client = ? AND state = ? " +
+                "ORDER BY id DESC LIMIT 10", [id_Client, true]);
             if (product.length > 0) {
                 return res.status(200).json(product);
             }
@@ -76,7 +81,11 @@ class FileController {
     }
     searchNeeds(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const needC = yield database_1.default.query('SELECT * FROM future_needs WHERE future_needs' + " like '%" + req.body.search + "%'");
+            const id_Client = req.body.id;
+            const needC = yield database_1.default.query("SELECT * FROM future_needs WHERE " +
+                "(future_needs LIKE '%" + req.body.search + "%' OR f_future_needs LIKE '%" + req.body.search + "%') " +
+                "AND id_Client = ? " +
+                "ORDER BY id DESC LIMIT 10", [id_Client]);
             if (needC.length > 0) {
                 return res.status(200).json(needC);
             }
@@ -150,7 +159,11 @@ class FileController {
     }
     searchSuports(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const supportC = yield database_1.default.query('SELECT * FROM supports WHERE support' + " like '%" + req.body.search + "%' ORDER BY f_support LIMIT 10");
+            const id_Client = req.body.id;
+            const supportC = yield database_1.default.query("SELECT * FROM supports WHERE " +
+                "(support LIKE '%" + req.body.search + "%' OR in_charge LIKE '%" + req.body.search + "%' OR " +
+                "f_support LIKE '%" + req.body.search + "%') AND id_Client = ? " +
+                "ORDER BY f_support DESC LIMIT 10", [id_Client]);
             if (supportC.length > 0) {
                 return res.status(200).json(supportC);
             }

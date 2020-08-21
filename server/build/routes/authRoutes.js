@@ -28,5 +28,7 @@ router.post('/signup', [
     express_validator_1.check('password').isLength({ min: 8 }).withMessage('The password must contain 8 characters')
 ], verifyUser_1.UserValidation, authController_1.default.signup);
 router.post('/signin', authController_1.default.signin);
+/** ------------------------------------------------- WEB Client ---------------------------------------------------- */
+router.post('/login', authController_1.default.login);
 exports.default = router;
 //# sourceMappingURL=authRoutes.js.map

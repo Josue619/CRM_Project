@@ -23,7 +23,8 @@ class ProductController {
     }
     searchProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const product = yield database_1.default.query('SELECT * FROM products WHERE fullname' + " like '%" + req.body.search + "%'");
+            const product = yield database_1.default.query("SELECT * FROM products WHERE " +
+                "(code LIKE '%" + req.body.search + "%' OR fullname LIKE '%" + req.body.search + "%') ");
             if (product.length > 0) {
                 return res.status(200).json(product);
             }
@@ -36,7 +37,7 @@ class ProductController {
     getClientServices(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const serviceC = yield database_1.default.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ?', [id, true]);
+            const serviceC = yield database_1.default.query('SELECT * FROM client_services WHERE id_Client = ? AND state = ? ORDER BY code LIMIT 10', [id, true]);
             if (serviceC.length > 0) {
                 return res.json(serviceC);
             }
@@ -69,7 +70,10 @@ class ProductController {
     }
     searchService(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const product = yield database_1.default.query('SELECT * FROM client_services WHERE fullname' + " like '%" + req.body.search + "%' AND id_Client = ? AND state = ?", [req.body.id, true]);
+            const id_Client = req.body.id;
+            const product = yield database_1.default.query("SELECT * FROM client_services WHERE " +
+                "(code LIKE '%" + req.body.search + "%' OR fullname LIKE '%" + req.body.search + "%') " +
+                "AND id_Client = ? AND state = ? ORDER BY code LIMIT 10", [id_Client, true]);
             if (product.length > 0) {
                 return res.status(200).json(product);
             }
