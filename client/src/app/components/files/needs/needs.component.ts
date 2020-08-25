@@ -60,7 +60,7 @@ export class NeedsComponent implements OnInit {
   }
 
   cancelBtn() {
-    var element = document.getElementById("cancelBtn");
+    var element = document.getElementById("cancelBtnN");
     element.click();
   }
 

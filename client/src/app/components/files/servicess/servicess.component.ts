@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class ServicessComponent implements OnInit {
 
+  public pageActual: number = 1;
   public services: ServiceC;
   public error = [];
   public form = {
@@ -83,7 +84,7 @@ export class ServicessComponent implements OnInit {
   }
 
   cancelBtn() {
-    var element = document.getElementById("cancelBtn");
+    var element = document.getElementById("cancelBtnS");
     element.click();
     this.loadService();
   }

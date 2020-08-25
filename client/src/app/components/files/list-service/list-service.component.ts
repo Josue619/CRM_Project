@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class ListServiceComponent implements OnInit {
 
+  public pageActual: number = 1;
   public form = {
     search: null,
     id: null,

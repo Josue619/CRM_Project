@@ -4,6 +4,7 @@ import fileController from '../controllers/fileController';
 
 const router: Router = Router();
 /** ------------------------------ Request ------------------------------------ */
+router.post('/request', TokenValidation, fileController.addRequest);
 router.get('/requests/:id', TokenValidation, fileController.getRequests);
 router.get('/request/:id', TokenValidation, fileController.getRequest);
 router.put('/requests/:id', TokenValidation, fileController.updateRequest);
@@ -25,7 +26,9 @@ router.put('/support/:id', TokenValidation, fileController.updateSuport);
 router.delete('/support/:id', TokenValidation, fileController.deleteSupport);
 
 /** ------------------------------ Notes ------------------------------------ */
+router.post('/serarchT', TokenValidation, fileController.searchNotes);
 router.get('/notes/:id', TokenValidation, fileController.getNotes);
+router.get('/notesC/:id', TokenValidation, fileController.getNotesC);
 router.post('/notes', TokenValidation, fileController.addNote);
 router.put('/note/:id', TokenValidation, fileController.updateNote);
 router.patch('/notes/:id', TokenValidation, fileController.checkAll);

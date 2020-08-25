@@ -47,7 +47,7 @@ export class InquiriesComponent implements OnInit {
   searchRequestCheck() {
     this.form.id = this.Service.id_Client;
     return this.Service.searchRequestCheck(this.form).subscribe(
-      result => this.loadRequest(result),
+      result => this.loadRequestCheck(result),
       error => this.handleError(error)
     );
   }
@@ -57,7 +57,6 @@ export class InquiriesComponent implements OnInit {
   }
 
   getRequestsCheck(id: number) {
-
     this.Service.id_Client = id
     return this.Service.getRequestsCheck(id.toString()).subscribe(
       result => { this.Service.requests = result },

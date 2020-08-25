@@ -18,7 +18,7 @@ export class ReportController {
         if (binnacleDB.length > 0) {
             return res.json(binnacleDB);
         }
-        return res.status(401).json({ errors: [{ "msg": "There is no content in the blog." }] });
+        return res.status(401).json({ errors: [{ "msg": "No hay contenido en la bitácora." }] });
     }
 
     public async searchBinnacles(req: Request, res: Response) {
@@ -39,7 +39,7 @@ export class ReportController {
         }
 
         return res.status(401).json({ errors: [{
-            "msg": "There is no match with the filter",
+            "msg": "No hay coincidencia con la busqueda.",
             }]
         });
     }
@@ -58,7 +58,7 @@ export class ReportController {
         if (plannerDB.length > 0) {
             return res.json(plannerDB);
         }
-        return res.status(401).json({ errors: [{ "msg": "There is no content in the blog." }] });
+        return res.status(401).json({ errors: [{ "msg": "No hay contenido en la bitácora." }] });
     }
 
     public async searchEvents(req: Request, res: Response) {
@@ -78,7 +78,7 @@ export class ReportController {
         }
 
         return res.status(401).json({ errors: [{
-            "msg": "There is no match with the filter",
+            "msg": "No hay coincidencia con la busqueda.",
             }]
         });
     }

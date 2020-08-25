@@ -20,6 +20,7 @@ import { SupportComponent } from './support/support.component';
 import { ListNotesComponent } from './list-notes/list-notes.component';
 import { NotesComponent } from './notes/notes.component';
 
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NotesComponent } from './notes/notes.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    FileRoutingModule
+    FileRoutingModule,
+    NgxPaginationModule
   ],
   providers: [ MainService, FileService, AuthService, TokenService, ProductService, AfterLoginService ]
 })

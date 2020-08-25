@@ -23,7 +23,7 @@ class PlannerController {
             if (planner.length > 0) {
                 return res.json(planner);
             }
-            return res.status(401).json({ errors: [{ "msg": "The user does not have registered events" }] });
+            return res.status(401).json({ errors: [{ "msg": "El usuario no tiene eventos registrados." }] });
         });
     }
     addEvent(req, res) {
@@ -33,9 +33,9 @@ class PlannerController {
             delete event.endDate;
             var msg = '';
             if (event.title == '')
-                msg = 'You must add a title to the event';
+                msg = 'Debe agregar un título al evento.';
             if (event.description == '')
-                msg = 'You must add a description to the event';
+                msg = 'Debe agregar una descripción al evento';
             if (msg == '') {
                 yield database_1.default.query('INSERT INTO planner set ?', [event]);
                 return res.json("Redirect");
@@ -51,9 +51,9 @@ class PlannerController {
             delete event.endDate;
             var msg = '';
             if (event.title == '')
-                msg = 'You must add a title to the event';
+                msg = 'Debe agregar un título al evento.';
             if (event.description == '')
-                msg = 'You must add a description to the event';
+                msg = 'Debe agregar una descripción al evento.';
             if (msg == '') {
                 yield database_1.default.query('UPDATE planner set ? WHERE id = ? AND id_User = ?', [event, id, event.id_User]);
                 return res.json("Redirect");
@@ -66,7 +66,7 @@ class PlannerController {
             const { id } = req.params;
             const event = req.body;
             yield database_1.default.query('DELETE FROM planner WHERE id = ? AND id_User = ?', [id, event.id_User]);
-            res.status(200).json({ errors: [{ "msg": "The event was removed from the registry" }] });
+            res.status(200).json({ errors: [{ "msg": "El evento fue eliminado del registro del usuario." }] });
         });
     }
 }

@@ -41,7 +41,7 @@ class ProductController {
             if (serviceC.length > 0) {
                 return res.json(serviceC);
             }
-            return res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
+            return res.status(401).json({ errors: [{ "msg": "Este cliente no tiene servicios asociados." }] });
         });
     }
     addServices(req, res) {
@@ -59,7 +59,7 @@ class ProductController {
                     res.json("Redirect");
                 }
                 else {
-                    res.status(401).json({ errors: [{ "msg": "The client already has the selected service" }] });
+                    res.status(401).json({ errors: [{ "msg": "El cliente ya cuenta con este servicio." }] });
                 }
             }
             if (servClient.length == 0) {
@@ -78,7 +78,7 @@ class ProductController {
                 return res.status(200).json(product);
             }
             return res.status(401).json({ errors: [{
-                        "msg": "There is no match with the filter",
+                        "msg": "No hay coincidencia con la busqueda.",
                     }]
             });
         });
@@ -87,7 +87,7 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             const service = req.body;
             yield database_1.default.query('DELETE FROM client_services WHERE id_Client = ? AND id_Product = ?', [service.id_Client, service.id_Product]);
-            res.status(200).json({ errors: [{ "msg": "The service was removed from the client file" }] });
+            res.status(200).json({ errors: [{ "msg": "El servicio fue eliminado del archivo del cliente." }] });
         });
     }
 }

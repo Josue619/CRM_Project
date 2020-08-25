@@ -60,7 +60,7 @@ export class SupportComponent implements OnInit {
   }
 
   cancelBtn() {
-    var element = document.getElementById("cancelBtnS");
+    var element = document.getElementById("cancelBtnSP");
     element.click();
   }
 

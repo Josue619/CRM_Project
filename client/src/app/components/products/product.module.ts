@@ -10,13 +10,16 @@ import { TokenService } from '../../services/token.service';
 import { AfterLoginService } from 'src/app/services/after-login.service';
 import { ProductListComponent } from './product-list/product-list.component';
 
+import {NgxPaginationModule} from 'ngx-pagination';
+
 @NgModule({
   declarations: [ProductListComponent],
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    ProductRoutingModule
+    ProductRoutingModule,
+    NgxPaginationModule
   ],
   providers: [ MainService, AuthService, TokenService, ProductService, AfterLoginService ]
 })

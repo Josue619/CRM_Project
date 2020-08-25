@@ -16,7 +16,7 @@ export class BinnacleController {
             for (let i = 0; i < binnacleDB.length; i++) {
                 
                 if (binnacle.id_Client == binnacleDB[i].id_Client && binnacle.id_Request == binnacleDB[i].id_Request) {
-                    msg = 'This query is already in the registry of the blog'
+                    msg = 'Esta consulta ya está en el registro de la bitácora.'
                 }
                 
             }
@@ -24,7 +24,7 @@ export class BinnacleController {
 
         if (msg == '') {
             await db.query('INSERT INTO binnacle set ?', [binnacle]); 
-            return res.json("The information was added to the log successfully");
+            return res.json("La información se agregó al registro con éxito.");
         }
         
         return res.status(401).json({ errors: [{ "msg": msg }] });  
@@ -42,7 +42,7 @@ export class BinnacleController {
         if (binnacleDB.length > 0) {
             return res.json(binnacleDB);
         }
-        return res.status(401).json({ errors: [{ "msg": "There is no content in the blog." }] });
+        return res.status(401).json({ errors: [{ "msg": "No hay contenido en la bitácora." }] });
     }
 
     public async searchBinnacles(req: Request, res: Response) {
@@ -62,7 +62,7 @@ export class BinnacleController {
         }
 
         return res.status(401).json({ errors: [{
-            "msg": "There is no match with the filter",
+            "msg": "No hay coincidencia con la busqueda.",
             }]
         });
     }
@@ -74,7 +74,7 @@ export class BinnacleController {
         if (request.length > 0) {
             return res.json(request);
         }
-        return res.status(401).json({ errors: [{ "msg": "This client has no answered queries." }] });
+        return res.status(401).json({ errors: [{ "msg": "El cliente no tiene consultas resueltas." }] });
     }
 
     public async searchRequestCheck (req: Request, res: Response) {
@@ -88,7 +88,7 @@ export class BinnacleController {
             return res.status(200).json(request);
         }
         return res.status(401).json({ errors: [{
-            "msg": "There is no match with the filter",
+            "msg": "No hay coincidencia con la busqueda.",
             }]
         });
     }
@@ -100,7 +100,7 @@ export class BinnacleController {
         if (request.length > 0) {
             return res.json(request);
         }
-        return res.status(401).json({ errors: [{ "msg": "This customer has no queries waiting." }] });
+        return res.status(401).json({ errors: [{ "msg": "El cliente no posee consultas en proceso." }] });
     }
 
     public async searchRequest(req: Request, res: Response) {
@@ -114,7 +114,7 @@ export class BinnacleController {
             return res.status(200).json(request);
         }
         return res.status(401).json({ errors: [{
-            "msg": "There is no match with the filter",
+            "msg": "No hay coincidencia con la busqueda.",
             }]
         });
     }
@@ -124,7 +124,7 @@ export class BinnacleController {
         const binnacle: Binnacle = req.body;
         
         await db.query('UPDATE binnacle SET state = ? WHERE id = ? AND id_Client = ? AND id_Request = ?', [false, id, binnacle.id_Client, binnacle.id_Request]);
-        res.status(200).json({msg: 'The request was deleted'});
+        res.status(200).json({msg: 'La solicitud fue eliminada.'});
     }
 
 }

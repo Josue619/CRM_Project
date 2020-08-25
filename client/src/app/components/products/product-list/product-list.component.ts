@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-list',
@@ -8,6 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductListComponent implements OnInit {
 
+  public pageActual: number = 1;
   public products: any = [];
   public error = [];
   public form = {
@@ -45,9 +47,19 @@ export class ProductListComponent implements OnInit {
   statusDelete() {
   }
 
+  showModalError(msg: string) {
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   handleError(error) {
     this.error = error.error.errors;
-    console.log(this.error[0]);
+    this.showModalError(this.error[0].msg);
   }
 
 }

@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 })
 export class RequestsComponent implements OnInit {
 
+  public pageActual: number = 1;
+  
   public reqOne: RequestC;
   public color: string;
   public editS = false;

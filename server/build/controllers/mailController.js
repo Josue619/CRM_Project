@@ -252,7 +252,7 @@ class MailController {
                     ]
                 });
                 //console.log('Mensaje: ', info.messageId);
-                return res.status(200).json("The report was sent successfully");
+                return res.status(200).json("El informe se envió correctamente.");
             }
             return res.status(401).json({ errors: [{ "msg": msg }] });
         });

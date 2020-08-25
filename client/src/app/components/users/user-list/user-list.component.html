@@ -1,8 +1,11 @@
 <div class="container">
-  
+
   <h1>Usuarios</h1>
-    
+
   <table class="table table-striped table-bordered" style="text-align:center">
+
+    <thead class="thead-dark">
+
       <tr>
         <th>#</th>
         <th>Nombre</th>
@@ -11,43 +14,53 @@
         <th>Teléfono</th>
         <th>
           <div style="text-align:center">
-              <button class="btn btn-success" [disabled]="roll" (click)="resetForm()" data-backdrop="false" data-toggle="modal" data-target="#modalClient"><i class="fa fa-plus-circle"></i></button>
-              <br>
-              <br>
-              <div class="input-group" style="justify-content: center;">
-                <form #listvForm=ngForm (ngSubmit)="searchClients()">
-                  <input type="text" name="search" id="search" [(ngModel)]="form.search" class="form-control" placeholder="Search user">
-                </form>
-              </div>
+            <button class="btn btn-success" [disabled]="roll" (click)="resetForm()" data-backdrop="false"
+              data-toggle="modal" data-target="#modalClient"><i class="fa fa-plus-circle"></i></button>
+            <br>
+            <br>
+            <div class="input-group" style="justify-content: center;">
+              <form #listvForm=ngForm (ngSubmit)="searchClients()">
+                <input type="text" name="search" id="search" [(ngModel)]="form.search" class="form-control"
+                  placeholder="Search user">
+              </form>
+            </div>
           </div>
         </th>
-    </tr>
-  
+
+      </tr>
+
+    </thead>
+
+    <tbody style="text-align:center">
+
       <tr *ngFor="let user of users; index as i">
         <input type="hidden" name="id" id="id" [(ngModel)]="form.id" value="{{user.id}}">
-        <td scope="row">{{i+1}}</td>
-        <td class="text-info">{{user.username}} </td>
-        <td class="text-info">{{user.email}} </td>
-        <td class="text-info">{{user.card_id}} </td>
-        <td class="text-info">{{user.code_phone}} {{user.phone}}</td>
+        <td class="text-light" scope="row">{{i+1}}</td>
+        <td class="text-light">{{user.username}} </td>
+        <td class="text-light">{{user.email}} </td>
+        <td class="text-light">{{user.card_id}} </td>
+        <td class="text-light">{{user.code_phone}} {{user.phone}}</td>
         <td style="text-align:right">
           <div class="form-group row  mx-auto mt-3">
-              <div class="col-sm-6">
-                <button class="btn btn-warning" [disabled]="roll" (click)="editMethod(user)" data-backdrop="false" data-toggle="modal" data-target="#modalClient">
-                  <i class="fas fa-pen-square"></i>
-                </button>
-              </div>
-              <div class="col-sm-2">
-                <button class="btn btn-danger" [disabled]="delete" [disabled]="roll" (click)="statusDelete(user)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>
+            <div class="col-sm-6">
+              <button class="btn btn-warning" [disabled]="roll" (click)="editMethod(user)" data-backdrop="false"
+                data-toggle="modal" data-target="#modalClient">
+                <i class="fas fa-pen-square"></i>
+              </button>
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-danger" [disabled]="delete" [disabled]="roll" (click)="statusDelete(user)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
           </div>
         </td>
-    </tr>
-  
+      </tr>
+
+    </tbody>
+
   </table>
-      
+
 </div>
 
 <app-user></app-user>

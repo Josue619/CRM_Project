@@ -28,7 +28,7 @@ class ReportController {
             if (binnacleDB.length > 0) {
                 return res.json(binnacleDB);
             }
-            return res.status(401).json({ errors: [{ "msg": "There is no content in the blog." }] });
+            return res.status(401).json({ errors: [{ "msg": "No hay contenido en la bitácora." }] });
         });
     }
     searchBinnacles(req, res) {
@@ -48,7 +48,7 @@ class ReportController {
                 return res.status(200).json(binnacleDB);
             }
             return res.status(401).json({ errors: [{
-                        "msg": "There is no match with the filter",
+                        "msg": "No hay coincidencia con la busqueda.",
                     }]
             });
         });
@@ -65,7 +65,7 @@ class ReportController {
             if (plannerDB.length > 0) {
                 return res.json(plannerDB);
             }
-            return res.status(401).json({ errors: [{ "msg": "There is no content in the blog." }] });
+            return res.status(401).json({ errors: [{ "msg": "No hay contenido en la bitácora." }] });
         });
     }
     searchEvents(req, res) {
@@ -84,7 +84,7 @@ class ReportController {
                 return res.status(200).json(plannerDB);
             }
             return res.status(401).json({ errors: [{
-                        "msg": "There is no match with the filter",
+                        "msg": "No hay coincidencia con la busqueda.",
                     }]
             });
         });

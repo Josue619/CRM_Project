@@ -51,7 +51,7 @@ export class UserController {
             return res.status(200).json(users);
         }
         return res.status(401).json({ errors: [{
-            "msg": "There is no match with the filter",
+            "msg": "No hay coincidencia con la busqueda.",
             }]
         });
     } 
@@ -62,20 +62,20 @@ export class UserController {
         if (users.length > 0) {
             return res.json(users[0]);
         }
-        res.status(404).json({text: 'The user dosen´t exists'});
+        res.status(404).json({text: 'El usuario no existe en el registro.'});
     } 
 
     public async updateClient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;  
         await db.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
-        res.json({message: 'The user was updated'});
+        res.json({message: 'El usuario fue actualizado.'});
     }
 
     public async deleteClient (req: Request, res: Response): Promise<void> {
         const { id } = req.params; 
         req.body.state = false; 
         await db.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
-        res.json({message: 'The user was deleted'});
+        res.json({message: 'El usuario fue eliminado.'});
     }
     
 }

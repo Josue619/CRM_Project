@@ -8,6 +8,7 @@ const verifyToken_1 = require("../libs/verifyToken");
 const fileController_1 = __importDefault(require("../controllers/fileController"));
 const router = express_1.Router();
 /** ------------------------------ Request ------------------------------------ */
+router.post('/request', verifyToken_1.TokenValidation, fileController_1.default.addRequest);
 router.get('/requests/:id', verifyToken_1.TokenValidation, fileController_1.default.getRequests);
 router.get('/request/:id', verifyToken_1.TokenValidation, fileController_1.default.getRequest);
 router.put('/requests/:id', verifyToken_1.TokenValidation, fileController_1.default.updateRequest);
@@ -26,7 +27,9 @@ router.post('/support', verifyToken_1.TokenValidation, fileController_1.default.
 router.put('/support/:id', verifyToken_1.TokenValidation, fileController_1.default.updateSuport);
 router.delete('/support/:id', verifyToken_1.TokenValidation, fileController_1.default.deleteSupport);
 /** ------------------------------ Notes ------------------------------------ */
+router.post('/serarchT', verifyToken_1.TokenValidation, fileController_1.default.searchNotes);
 router.get('/notes/:id', verifyToken_1.TokenValidation, fileController_1.default.getNotes);
+router.get('/notesC/:id', verifyToken_1.TokenValidation, fileController_1.default.getNotesC);
 router.post('/notes', verifyToken_1.TokenValidation, fileController_1.default.addNote);
 router.put('/note/:id', verifyToken_1.TokenValidation, fileController_1.default.updateNote);
 router.patch('/notes/:id', verifyToken_1.TokenValidation, fileController_1.default.checkAll);

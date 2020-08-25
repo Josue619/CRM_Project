@@ -32,11 +32,11 @@
             </thead>
 
             <tbody style="text-align:center">
-              <tr *ngFor="let product of Service.products; index as i">
+              <tr *ngFor="let product of Service.products | paginate: { itemsPerPage: 4, currentPage: pageActual }; let i = index">
                 <input type="hidden" name="id" id="id" [(ngModel)]="form.id" value="{{product.id}}">
-                <td scope="row">{{i+1}}</td>
-                <td class="text-info">{{product.code}} </td>
-                <td class="text-info">{{product.fullname}} </td>
+                <td class="text-light" scope="row">{{i+1}}</td>
+                <td class="text-light">{{product.code}} </td>
+                <td class="text-light">{{product.fullname}} </td>
                 <td style="text-align:right">
                   <div class="form-group row  mx-auto mt-3">
 
@@ -52,7 +52,9 @@
 
           </table>
 
-          <button class="primary ghost" id="cancelBtn" ddata-backdrop="false" data-toggle="modal"
+          <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+
+          <button class="primary ghost" id="cancelBtnS" ddata-backdrop="false" data-toggle="modal"
             data-target="#modalServices" (click)="cancel()" [hidden]="true">
             Cancelar
           </button>

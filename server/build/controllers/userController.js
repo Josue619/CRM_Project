@@ -57,7 +57,7 @@ class UserController {
                 return res.status(200).json(users);
             }
             return res.status(401).json({ errors: [{
-                        "msg": "There is no match with the filter",
+                        "msg": "No hay coincidencia con la busqueda.",
                     }]
             });
         });
@@ -69,14 +69,14 @@ class UserController {
             if (users.length > 0) {
                 return res.json(users[0]);
             }
-            res.status(404).json({ text: 'The user dosen´t exists' });
+            res.status(404).json({ text: 'El usuario no existe en el registro.' });
         });
     }
     updateClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             yield database_1.default.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
-            res.json({ message: 'The user was updated' });
+            res.json({ message: 'El usuario fue actualizado.' });
         });
     }
     deleteClient(req, res) {
@@ -84,7 +84,7 @@ class UserController {
             const { id } = req.params;
             req.body.state = false;
             yield database_1.default.query('UPDATE users set ? WHERE id = ?', [req.body, id]);
-            res.json({ message: 'The user was deleted' });
+            res.json({ message: 'El usuario fue eliminado.' });
         });
     }
 }

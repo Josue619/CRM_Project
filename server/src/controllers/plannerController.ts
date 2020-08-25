@@ -14,7 +14,7 @@ export class PlannerController {
         if (planner.length > 0) {
             return res.json(planner);
         }
-        return res.status(401).json({ errors: [{ "msg": "The user does not have registered events" }] });
+        return res.status(401).json({ errors: [{ "msg": "El usuario no tiene eventos registrados." }] });
     }
 
     public async addEvent(req: Request, res: Response) {
@@ -24,9 +24,9 @@ export class PlannerController {
 
         var msg: string = '';
 
-        if (event.title == '') msg = 'You must add a title to the event';
+        if (event.title == '') msg = 'Debe agregar un título al evento.';
 
-        if (event.description == '') msg = 'You must add a description to the event';
+        if (event.description == '') msg = 'Debe agregar una descripción al evento';
 
         if (msg == '') {
             await db.query('INSERT INTO planner set ?', [event]);
@@ -44,9 +44,9 @@ export class PlannerController {
 
         var msg: string = '';
 
-        if (event.title == '') msg = 'You must add a title to the event';
+        if (event.title == '') msg = 'Debe agregar un título al evento.';
 
-        if (event.description == '') msg = 'You must add a description to the event';
+        if (event.description == '') msg = 'Debe agregar una descripción al evento.';
 
         if (msg == '') {
             await db.query('UPDATE planner set ? WHERE id = ? AND id_User = ?', [event, id, event.id_User]);
@@ -61,7 +61,7 @@ export class PlannerController {
         const event: Planner = req.body;
 
         await db.query('DELETE FROM planner WHERE id = ? AND id_User = ?', [id, event.id_User]);
-        res.status(200).json({ errors: [{ "msg": "The event was removed from the registry" }] });
+        res.status(200).json({ errors: [{ "msg": "El evento fue eliminado del registro del usuario." }] });
     }
 
 }

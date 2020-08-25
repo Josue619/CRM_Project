@@ -29,7 +29,7 @@ export class ProductController {
         if (serviceC.length > 0) {
             return res.json(serviceC);
         }
-        return res.status(401).json({ errors: [{ "msg": "This client does not have associated services" }] });
+        return res.status(401).json({ errors: [{ "msg": "Este cliente no tiene servicios asociados." }] });
     }
 
     public async addServices (req: Request, res: Response) {
@@ -48,7 +48,7 @@ export class ProductController {
                 await db.query('INSERT INTO client_services set ?', [service]); 
                 res.json("Redirect");
             }else {
-                res.status(401).json({ errors: [{ "msg": "The client already has the selected service" }] });
+                res.status(401).json({ errors: [{ "msg": "El cliente ya cuenta con este servicio." }] });
             }
             
         }
@@ -73,7 +73,7 @@ export class ProductController {
             return res.status(200).json(product);
         }
         return res.status(401).json({ errors: [{
-            "msg": "There is no match with the filter",
+            "msg": "No hay coincidencia con la busqueda.",
             }]
         });
     }
@@ -81,7 +81,7 @@ export class ProductController {
     public async deleteService (req: Request, res: Response): Promise<void> {
         const service: Service = req.body;        
         await db.query('DELETE FROM client_services WHERE id_Client = ? AND id_Product = ?', [service.id_Client, service.id_Product]);
-        res.status(200).json({ errors: [{"msg": "The service was removed from the client file"}]});
+        res.status(200).json({ errors: [{"msg": "El servicio fue eliminado del archivo del cliente."}]});
     }
     
 }
