@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainService } from 'src/app/services/main.service';
 import { User } from 'src/app/models/user';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user',
@@ -36,6 +37,9 @@ export class UserComponent implements OnInit {
   addUser() {
     delete this.Service.form.id;
     delete this.Service.form.created_at;
+    this.error = [];
+    console.log(this.Service.form);
+    
     return this.Service.addClient(this.Service.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
@@ -44,6 +48,7 @@ export class UserComponent implements OnInit {
 
   updateUser() {
     delete this.Service.form.created_at;
+    this.error = [];
     return this.Service.updateClient(this.Service.form.id, this.Service.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
@@ -57,7 +62,17 @@ export class UserComponent implements OnInit {
 
   handleError(error) {
     this.error = error.error.errors;
-    //console.log(this.error);
+    this.showModalError(this.error[0].msg);
+  }
+
+  showModalError(msg: string) {
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
 }

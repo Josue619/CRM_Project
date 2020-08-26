@@ -10,9 +10,9 @@ const user: User = new User();
 
 router.post('/client', 
 [
-    check('email').isEmail().withMessage('Wrong email format').custom(async email => {
+    check('email').isEmail().withMessage('Formato de correo electrónico incorrecto').custom(async email => {
       if (await user.verifyEmail(email)) {
-        throw new Error('Email already registered')
+        throw new Error('El correo electrónico ya existe en el registro.')
       }
     })
   ], 
@@ -27,7 +27,7 @@ router.get('/client/:id', TokenValidation, userController.getOne);
 
 router.put('/clients/:id', 
 [ 
-  check('email').isEmail().withMessage('Wrong email format')
+  check('email').isEmail().withMessage('Formato de correo electrónico incorrecto')
 ],
 UserValidation, TokenValidation, userController.updateClient);
 

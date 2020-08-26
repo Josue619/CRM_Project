@@ -28,6 +28,18 @@ class UserController {
             user.email.toLocaleLowerCase();
             //Encrypting password
             user.password = yield userClass.encryptPassword(user.password);
+            if (user.username == null || user.username == '')
+                return res.status(401).json({ errors: [{ "msg": "Debe ingresar un nombre en el campo reservado." }] });
+            if (user.card_id == null || user.card_id.toString().length <= 8)
+                return res.status(401).json({ errors: [{ "msg": "El número de cédula debe contener al menos 9 dígitos." }] });
+            if (user.code_phone == null)
+                return res.status(401).json({ errors: [{ "msg": "Debe seleccionar un codigo de país." }] });
+            if (user.phone == null)
+                return res.status(401).json({ errors: [{ "msg": "El número de teléfono debe contener 8 dígitos." }] });
+            if (user.phone.toString().length != 8)
+                return res.status(401).json({ errors: [{ "msg": "El número de teléfono debe contener 8 dígitos." }] });
+            if (user.roll == null)
+                return res.status(401).json({ errors: [{ "msg": "Debe seleccionar un cargo." }] });
             //Creating new user
             yield database_1.default.query('INSERT INTO users set ?', user);
             const savedUser = yield database_1.default.query('SELECT * FROM users WHERE email = ?', [user.email]);

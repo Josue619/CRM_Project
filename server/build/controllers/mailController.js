@@ -50,15 +50,12 @@ class MailController {
             <p>${msg}</p>
         `;
             const transport = nodemailer_1.default.createTransport({
-                host: "smtp.mailtrap.io",
-                port: 2525,
-                secure: false,
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
                 auth: {
-                    user: "8f820a0b5aed69",
-                    pass: "b6bde7fd60b944"
-                },
-                tls: {
-                    rejectUnauthorized: false
+                    user: 'josue.martinez.mc@gmail.com',
+                    pass: 'Shadow619'
                 }
             });
             const info = yield transport.sendMail({
@@ -86,15 +83,12 @@ class MailController {
             <p>${msg}</p>
         `;
             const transport = nodemailer_1.default.createTransport({
-                host: "mail.gruporv.net",
-                port: 587,
-                secure: false,
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
                 auth: {
-                    user: "crmgrv@gruporv.net",
-                    pass: "crmgrv"
-                },
-                tls: {
-                    rejectUnauthorized: false
+                    user: 'josue.martinez.mc@gmail.com',
+                    pass: 'Shadow619'
                 }
             });
             const info = yield transport.sendMail({
@@ -122,16 +116,12 @@ class MailController {
             <p>${msg}</p>
         `;
             const transport = nodemailer_1.default.createTransport({
-                host: 'mail.gruporv.net',
-                port: 587,
-                secure: false,
-                requireTLS: true,
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
                 auth: {
-                    user: 'crmgrv@gruporv.net',
-                    pass: 'crmgrv'
-                },
-                tls: {
-                    rejectUnauthorized: false
+                    user: 'josue.martinez.mc@gmail.com',
+                    pass: 'Shadow619'
                 }
             });
             const info = {
@@ -171,8 +161,8 @@ class MailController {
                 port: 465,
                 secure: true,
                 auth: {
-                    user: 'user@gmail.com',
-                    pass: 'pass'
+                    user: 'josue.martinez.mc@gmail.com',
+                    pass: 'Shadow619'
                 }
             });
             const info = yield transport.sendMail({
@@ -203,8 +193,8 @@ class MailController {
                 port: 465,
                 secure: true,
                 auth: {
-                    user: 'user@gmail.com',
-                    pass: 'pass'
+                    user: 'josue.martinez.mc@gmail.com',
+                    pass: 'Shadow619'
                 }
             });
             const info = yield transport.sendMail({
@@ -223,9 +213,9 @@ class MailController {
             const verifyEmail = EmailValidator.validate(email);
             var msg = '';
             if (verifyEmail == false)
-                msg = 'You have not entered a delivery email or the format is wrong';
+                msg = 'No ha introducido un correo electrónico de entrega o el formato es incorrecto';
             if (!req.file == true)
-                msg = 'You must select a file to send';
+                msg = 'Debes seleccionar un archivo para enviar';
             if (msg == '') {
                 const contentHTML = `
             <h2>Reporte enviado desde CRM SYSTEM</h2>

@@ -20,12 +20,12 @@ const authController_1 = __importDefault(require("../controllers/authController"
 const router = express_1.Router();
 const user = new User_1.User();
 router.post('/signup', [
-    express_validator_1.check('email').isEmail().withMessage('Wrong email format').custom((email) => __awaiter(void 0, void 0, void 0, function* () {
+    express_validator_1.check('email').isEmail().withMessage('Formato de correo electrónico incorrecto').custom((email) => __awaiter(void 0, void 0, void 0, function* () {
         if (yield user.verifyEmail(email)) {
-            throw new Error('Email already registered');
+            throw new Error('El correo electrónico ya existe en el registro.');
         }
     })),
-    express_validator_1.check('password').isLength({ min: 8 }).withMessage('The password must contain 8 characters')
+    express_validator_1.check('password').isLength({ min: 8 }).withMessage('La contraseña debe contener 8 caracteres')
 ], verifyUser_1.UserValidation, authController_1.default.signup);
 router.post('/signin', authController_1.default.signin);
 /** ------------------------------------------------- WEB Client ---------------------------------------------------- */

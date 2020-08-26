@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{!this.Service.edit ? 'Register user' : 'Update user'}}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{!this.Service.edit ? 'Registrar usuario' : 'Actualizar usuario'}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -12,35 +12,29 @@
         
         <form #clientForm=ngForm (ngSubmit)="this.Service.edit ? updateUser() : addUser()">
 
-          <div class="alert alert-danger" [hidden]="!error[0]">
-            <li *ngFor="let err of error">
-              {{ err.msg }}
-            </li>
-          </div>
-
           <div class="form-group">
             <input type="hidden" name="id_user" id="id_user" class="form-control" [(ngModel)]="this.Service.form.id" required>
           </div>
 
           <div class="form-group">
-              <label for="username">Full Name</label>
-              <input type="text" name="username" id="username" class="form-control" placeholder="Name" [(ngModel)]="this.Service.form.username" required>
+              <label for="username">Nombre Completo</label>
+              <input type="text" name="username" id="username" class="form-control" placeholder="Nombre" [(ngModel)]="this.Service.form.username" required>
           </div>
 
           <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email">Correo</label>
               <input type="email" name="email" id="email" class="form-control" placeholder="ejemplo@email.com" [(ngModel)]="this.Service.form.email" required>
           </div>
 
           <div class="form-group">
-            <label for="card_id">Card ID</label>
-            <input type="number" min="0" pattern="^[0-9]+" name="card_id" id="card_id" [(ngModel)]="this.Service.form.card_id" class="form-control" placeholder="ID Number" required>
+            <label for="card_id">Cédula</label>
+            <input type="number" min="0" pattern="^[0-9]+" name="card_id" id="card_id" [(ngModel)]="this.Service.form.card_id" class="form-control" placeholder="Cédula ..." required>
           </div>
 
           <div class="form-group">
 
             <div class="input-group">
-              <label for="telephone"> Phone Number-> </label>
+              <label for="telephone"> Número de Teléfono-> </label>
       
               <div class="input-group-addon">
                 <select name="code_phone" id="code_phone" class="form-control" [(ngModel)]="this.Service.form.code_phone" required>
@@ -51,21 +45,21 @@
 
               <span class="input-group-addon">-</span>
 
-              <input type="number" min="0" pattern="^[0-9]+" name="phone" class="form-control" id="phone" [(ngModel)]="this.Service.form.phone" placeholder="phone" required>
+              <input type="number" min="0" pattern="^[0-9]+" name="phone" class="form-control" id="phone" [(ngModel)]="this.Service.form.phone" placeholder="Teléfono" required>
 
             </div>
 
           </div>
 
           <div class="form-group">
-              <label for="card_id">Roll</label>
+              <label for="card_id">Cargo</label>
               <select name="roll" id="roll" class="form-control" [(ngModel)]="this.Service.form.roll" required>
-                  <option value="Client">Client</option>
+                  <option value="Client">Cliente</option>
               </select>
           </div>
 
           <div class="form-group text-center">
-              <button type="submit" class="btn btn-primary mr-2">Save</button>
+              <button type="submit" class="btn btn-primary mr-2">Guardar</button>
           </div>
           
         </form>

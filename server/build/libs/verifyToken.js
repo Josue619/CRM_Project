@@ -12,7 +12,7 @@ exports.TokenValidation = (req, res, next) => {
     if (!token)
         return res.status(401).json({ errors: [{
                     "location": "body",
-                    "msg": "Access denied, invalid token",
+                    "msg": "Acceso denegado, token inválido",
                     "param": "auth_token"
                 }]
         });

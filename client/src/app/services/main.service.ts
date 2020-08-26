@@ -17,13 +17,13 @@ export class MainService {
   public edit: boolean = false;
   public form: User = {
     id: 0,
-    username: null,
-    email: null,
-    password: null,
-    card_id: null,
-    code_phone: null,
-    phone: null,
-    roll: null,
+    username: '',
+    email: '',
+    password: '',
+    card_id: 0,
+    code_phone: 0,
+    phone: 0,
+    roll: '',
     state: true,
     created_at: new Date()
   };

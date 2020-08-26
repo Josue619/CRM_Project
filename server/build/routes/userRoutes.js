@@ -21,9 +21,9 @@ const userController_1 = __importDefault(require("../controllers/userController"
 const router = express_1.Router();
 const user = new User_1.User();
 router.post('/client', [
-    express_validator_1.check('email').isEmail().withMessage('Wrong email format').custom((email) => __awaiter(void 0, void 0, void 0, function* () {
+    express_validator_1.check('email').isEmail().withMessage('Formato de correo electrónico incorrecto').custom((email) => __awaiter(void 0, void 0, void 0, function* () {
         if (yield user.verifyEmail(email)) {
-            throw new Error('Email already registered');
+            throw new Error('El correo electrónico ya existe en el registro.');
         }
     }))
 ], verifyUser_1.UserValidation, verifyToken_1.TokenValidation, userController_1.default.createClient);
@@ -31,7 +31,7 @@ router.get('/clients', verifyToken_1.TokenValidation, userController_1.default.g
 router.post('/serarchClient', verifyToken_1.TokenValidation, userController_1.default.searchClients);
 router.get('/client/:id', verifyToken_1.TokenValidation, userController_1.default.getOne);
 router.put('/clients/:id', [
-    express_validator_1.check('email').isEmail().withMessage('Wrong email format')
+    express_validator_1.check('email').isEmail().withMessage('Formato de correo electrónico incorrecto')
 ], verifyUser_1.UserValidation, verifyToken_1.TokenValidation, userController_1.default.updateClient);
 router.put('/client/:id', verifyToken_1.TokenValidation, userController_1.default.deleteClient);
 exports.default = router;

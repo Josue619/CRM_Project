@@ -8,17 +8,29 @@ import mailController from './mailController';
 
 export class UserController {
     
-    public async createClient (req: Request, res: Response): Promise<void> {
+    public async createClient (req: Request, res: Response) {
         const userClass: User = new User();
         const code = userClass.generatePassword();
         req.body.password = code;
-
+        
         //Saving new user
         let user: User = req.body;
         user.email.toLocaleLowerCase();
 
         //Encrypting password
         user.password = await userClass.encryptPassword(user.password);
+
+        if (user.username == null || user.username == '') return res.status(401).json({ errors: [{ "msg": "Debe ingresar un nombre en el campo reservado." }] });
+
+        if (user.card_id == null || user.card_id.toString().length <= 8) return res.status(401).json({ errors: [{ "msg": "El número de cédula debe contener al menos 9 dígitos." }] });
+
+        if (user.code_phone == null) return res.status(401).json({ errors: [{ "msg": "Debe seleccionar un codigo de país." }] });
+
+        if (user.phone == null) return res.status(401).json({ errors: [{ "msg": "El número de teléfono debe contener 8 dígitos." }] });
+
+        if (user.phone.toString().length != 8) return res.status(401).json({ errors: [{ "msg": "El número de teléfono debe contener 8 dígitos." }] });
+
+        if (user.roll == null) return res.status(401).json({ errors: [{ "msg": "Debe seleccionar un cargo." }] });
 
         //Creating new user
         await db.query('INSERT INTO users set ?', user)

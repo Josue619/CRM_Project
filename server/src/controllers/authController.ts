@@ -7,7 +7,7 @@ import mailController from './mailController';
 
 export class AuthController {
     
-    public async signup (req: Request, res: Response): Promise<void> {
+    public async signup (req: Request, res: Response) {
         const userClass: User = new User();
 
         //Saving new user
@@ -16,6 +16,10 @@ export class AuthController {
 
         //Encrypting password
         user.password = await userClass.encryptPassword(user.password);
+
+        if (user.card_id.toString().length <= 8) return res.status(401).json({ errors: [{ "msg": "El número de cédula debe contener al menos 9 dígitos." }] });
+
+        if (user.phone.toString().length != 8) return res.status(401).json({ errors: [{ "msg": "El número de teléfono debe contener 8 dígitos." }] });
 
         //Creating new user
         await db.query('INSERT INTO users set ?', user)
@@ -39,11 +43,14 @@ export class AuthController {
         const iss = 'http://localhost:3000/api/auth/signin';
 
         const user = await db.query('SELECT * FROM users WHERE email = ?', [email]);
-        if (!user[0]) return res.status(400).json('Email or password is wrong');
-        if (user[0].roll == 'Client') return res.status(400).json('This user does not have authorization in the system');
+
+        if (!user[0]) return res.status(400).json('El correo electrónico o la contraseña son incorrectos.');
+
+        if (user[0].roll == 'Client') return res.status(400).json('Este usuario no tiene autorización en el sistema.');
 
         const correctPass: boolean = await userClass.validatedPassword(req.body.password, user[0].password);
-        if (!correctPass) return res.status(400).json('Invalid Password');
+
+        if (!correctPass) return res.status(400).json('Contraseña invalida.');
 
         const token: string = jwt.sign({_id: user[0].id, iss: iss} , process.env.TOKEN_SECRET || 'tokentest', {
             expiresIn: 60 * 60 * 24
@@ -58,7 +65,7 @@ export class AuthController {
     public async profile(req: Request, res: Response) {
         const user = await db.query('SELECT * FROM users WHERE id = ?', [req.userId]);
         user[0].password = '0';
-        if (!user[0]) return res.status(404).json('No User Found');
+        if (!user[0]) return res.status(404).json('Usuario no encontrado');
         res.json(user[0]);
     };
     

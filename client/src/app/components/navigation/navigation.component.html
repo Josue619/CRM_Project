@@ -22,7 +22,7 @@
       <div class="dropdown">
         <button class="list-group-item list-group-item-action bg-light dropdown-toggle" type="button"
           id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-clipboard-list icono"></i>Bitacora
+          <i class="fas fa-clipboard-list icono"></i>Bitácora
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" routerLink="binnacle" (click)="sideBar()"> <i class="fas fa-list-ol icono"></i>Lista de bitacoras</a>
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <a href="#" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Status</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light" (click)="sideBar()">Estado</a>
 
     </div>
   </div>
@@ -66,7 +66,7 @@
 
       <ul class="navbar-nav mx-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#" routerLink="/">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#" routerLink="/">Inicio <span class="sr-only">(current)</span></a>
         </li>
       </ul>
 
@@ -74,16 +74,16 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="login" *ngIf="!loggedIn">Login <span class="sr-only">(current)</span></a>
+            <a class="nav-link" routerLink="login" *ngIf="!loggedIn">Iniciar sesión <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="signup" *ngIf="!loggedIn">Register</a>
+            <a class="nav-link" routerLink="signup" *ngIf="!loggedIn">Registrarse</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="profile" *ngIf="loggedIn">Profile</a>
+            <a class="nav-link" routerLink="profile" *ngIf="loggedIn">Perfil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
+            <a class="nav-link" href="#" (click)="logout($event)" *ngIf="loggedIn">Cerrar sesión</a>
           </li>
         </ul>
 

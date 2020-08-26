@@ -9,12 +9,12 @@ const user: User = new User();
 
 router.post('/signup', 
 [
-    check('email').isEmail().withMessage('Wrong email format').custom(async email => {
+    check('email').isEmail().withMessage('Formato de correo electrónico incorrecto').custom(async email => {
       if (await user.verifyEmail(email)) {
-        throw new Error('Email already registered')
+        throw new Error('El correo electrónico ya existe en el registro.')
       }
     }),
-    check('password').isLength({ min: 8 }).withMessage('The password must contain 8 characters')
+    check('password').isLength({ min: 8 }).withMessage('La contraseña debe contener 8 caracteres')
   ], 
     UserValidation, authController.signup
 );
