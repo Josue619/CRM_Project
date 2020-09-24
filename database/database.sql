@@ -110,7 +110,7 @@ CREATE TABLE binnacle(
     state BOOLEAN NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FOREIGN KEY fk_binnacle_users (id_Client) REFERENCES users (id),
-    CONSTRAINT FOREIGN KEY fk_binnacle_request (id_Request) REFERENCES users (id)
+    CONSTRAINT FOREIGN KEY fk_binnacle_request (id_Request) REFERENCES requests (id)
 );
 
 DESCRIBE binnacle;
